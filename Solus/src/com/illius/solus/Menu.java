@@ -5,6 +5,9 @@ import java.util.Random;
 import java.awt.Font;
 
 import java.io.InputStream;
+import java.util.logging.ConsoleHandler;
+import java.util.logging.Logger;
+import java.util.logging.SimpleFormatter;
 
 
 import org.newdawn.slick.GameContainer;
@@ -22,6 +25,7 @@ import org.newdawn.slick.util.ResourceLoader;
 
 
 public class Menu extends BasicGameState implements KeyListener {
+    private static final Logger logger = Logger.getLogger(Solus.class.getName());
     private UnicodeFont titleFont, optionsFont;
     private Random rng;
     private Input input;
@@ -38,6 +42,10 @@ public class Menu extends BasicGameState implements KeyListener {
         return STATE_ID;
     }
     public Menu() {
+        logger.setUseParentHandlers(false);
+        ConsoleHandler consoleHandler = new ConsoleHandler();
+        consoleHandler.setFormatter(new SimpleFormatter());
+        logger.addHandler(consoleHandler);
     }
 
     public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
@@ -111,10 +119,11 @@ public class Menu extends BasicGameState implements KeyListener {
         if(switchToGame)
             stateBasedGame.enterState(Game.STATE_ID);
         for(int x = 0; x < stars.length; x++) {
-            if(stars[x][0] >= 0)
+            if(stars[x][0] >= 0) {
                 stars[x][0]--;
-            else
-                stars[x][0] = Engine.GAME_WIDTH-1;
+            } else {
+                stars[x][0] = Engine.GAME_WIDTH - 1;
+            }
         }
 
     }

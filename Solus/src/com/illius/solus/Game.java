@@ -1,6 +1,9 @@
 package com.illius.solus;
 
 import java.awt.Font;
+import java.util.logging.ConsoleHandler;
+import java.util.logging.Logger;
+import java.util.logging.SimpleFormatter;
 
 import org.newdawn.slick.*;
 import org.newdawn.slick.font.effects.ColorEffect;
@@ -8,6 +11,7 @@ import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
 public class Game extends BasicGameState implements MusicListener {
+    private static final Logger logger = Logger.getLogger(Solus.class.getName());
     private Engine engine;
     private Input input;
     private SpriteSheet playerRightSheet;
@@ -18,7 +22,6 @@ public class Game extends BasicGameState implements MusicListener {
     protected boolean movingLeft = false;
     protected boolean movingRight = false;
     protected boolean sprinting = false;
-    protected boolean jumped = false;
     private boolean allowJump = true;
     public Font loadingFont;
     public UnicodeFont font;
@@ -31,6 +34,14 @@ public class Game extends BasicGameState implements MusicListener {
     public float sprintMulitplier = 1;
     public int fps;
     public static final int STATE_ID = 1;
+
+    public Game() {
+        logger.setUseParentHandlers(false);
+        ConsoleHandler consoleHandler = new ConsoleHandler();
+        consoleHandler.setFormatter(new SimpleFormatter());
+        logger.addHandler(consoleHandler);
+    }
+
     public int getID() {
         return STATE_ID;
     }
@@ -97,12 +108,23 @@ public class Game extends BasicGameState implements MusicListener {
             playerLeftAnimation.setAutoUpdate(true);
             playerRightAnimation.setAutoUpdate(true);
         }
-        if (xPos <= Engine.GAME_HEIGHT - 192) {
-            yVel = 4;
+        if (yPos <= Engine.GAME_HEIGHT - 224) {
+            yVel = 6;
         }
+
+        //jump
         if (input.isKeyDown(Input.KEY_UP)) {
-            jumped = true;
-            jump();
+            if (yPos == Engine.GAME_HEIGHT - 128) {
+                allowJump = true;
+            } else {
+                allowJump = false;
+            }
+            if (allowJump) {
+                yVel = -6;
+                if (yPos <= Engine.GAME_HEIGHT - 224 && yPos != Engine.GAME_HEIGHT - 128) {
+                    yVel = +6;
+                }
+            }
         }
         if (sprintEnergy > 100) {
             sprintEnergy = 100;
@@ -144,27 +166,9 @@ public class Game extends BasicGameState implements MusicListener {
         fps = engine.getFPS();
     }
 
-    private void jump() {
-        //TODO fix jump
-        jumped = true;
-        if (yPos == Engine.GAME_HEIGHT - 128) {
-            allowJump = true;
-        } else {
-            allowJump = false;
-        }
-        if (allowJump) {
-            if (yPos > Engine.GAME_HEIGHT - 224) {
-                yVel = -6;
-            }
-            if (yPos == Engine.GAME_HEIGHT - 224) {
-                yVel = -6;
-            }
-        }
-        jumped = false;
-    }
 
     public void fireWeapon() {
-        System.out.println("Fired weapon");
+        logger.info("Fired weapon");
     }
 
     public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) throws SlickException {

@@ -2,6 +2,7 @@ package com.illius.solus;
 
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import java.util.logging.ConsoleHandler;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 import java.util.logging.StreamHandler;
@@ -23,7 +24,10 @@ public class Engine extends StateBasedGame implements Runnable {
 
     public Engine() {
         super("Solus");
-        logger.addHandler(new StreamHandler(System.out, new SimpleFormatter()));
+        logger.setUseParentHandlers(false);
+        ConsoleHandler consoleHandler = new ConsoleHandler();
+        consoleHandler.setFormatter(new SimpleFormatter());
+        logger.addHandler(consoleHandler);
     }
 
     public String getGameState(int stateID) {
@@ -67,7 +71,7 @@ public class Engine extends StateBasedGame implements Runnable {
     }
 
     public void initStatesList(GameContainer gameContainer) throws SlickException {
-        addState(new Menu());
+       // addState(new Menu());
         addState(new Game());
     }
 }
