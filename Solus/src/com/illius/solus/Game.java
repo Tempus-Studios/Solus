@@ -22,13 +22,13 @@ public class Game extends BasicGameState implements MusicListener {
     protected boolean movingLeft = false;
     protected boolean movingRight = false;
     protected boolean sprinting = false;
-    private boolean allowJump = true;
     public Font loadingFont;
     public UnicodeFont font;
+    public static float aGravity = .3f;
     public float xPos = 32;
-    public float yPos = Engine.GAME_HEIGHT - 128;
-    public float xVel = 0;
-    public float yVel = 0;
+    public float yPos = Engine.GAME_HEIGHT - 160;
+    public float xVel = 0f;
+    public float yVel = 0.00000f;
     public float playerHealth = 100;
     public float sprintEnergy = 100;
     public float sprintMulitplier = 1;
@@ -67,14 +67,11 @@ public class Game extends BasicGameState implements MusicListener {
         if (xPos < 32) {
             xPos = 32;
         }
-        if (xPos > Engine.GAME_WIDTH - 128) {
-            xPos = Engine.GAME_WIDTH - 128;
+        if (xPos > Engine.GAME_WIDTH - 160) {
+            xPos = Engine.GAME_WIDTH - 160;
         }
-        if (yPos > Engine.GAME_HEIGHT - 128) {
-            yPos = Engine.GAME_HEIGHT - 128;
-        }
-        if (yPos < Engine.GAME_HEIGHT - 224) {
-            yPos = Engine.GAME_HEIGHT - 224;
+        if (yPos > Engine.GAME_HEIGHT - 160) {
+            yPos = Engine.GAME_HEIGHT - 160;
         }
         //Moving left
         if (input.isKeyDown(Input.KEY_LEFT)) {
@@ -99,7 +96,7 @@ public class Game extends BasicGameState implements MusicListener {
         if (!movingLeft && !movingRight) {
             xVel = 0;
         }
-        if (xVel == 0 || yPos < Engine.GAME_HEIGHT - 128) {
+        if (xVel == 0 || yPos < Engine.GAME_HEIGHT - 160) {
             playerLeftAnimation.setAutoUpdate(false);
             playerRightAnimation.setAutoUpdate(false);
             playerLeftAnimation.setCurrentFrame(0);
@@ -108,22 +105,14 @@ public class Game extends BasicGameState implements MusicListener {
             playerLeftAnimation.setAutoUpdate(true);
             playerRightAnimation.setAutoUpdate(true);
         }
-        if (yPos <= Engine.GAME_HEIGHT - 224) {
-            yVel = 6;
+        if (yPos < Engine.GAME_HEIGHT - 160) {
+            yVel += aGravity;
         }
 
         //jump
         if (input.isKeyDown(Input.KEY_UP)) {
-            if (yPos == Engine.GAME_HEIGHT - 128) {
-                allowJump = true;
-            } else {
-                allowJump = false;
-            }
-            if (allowJump) {
-                yVel = -6;
-                if (yPos <= Engine.GAME_HEIGHT - 224 && yPos != Engine.GAME_HEIGHT - 128) {
-                    yVel = +6;
-                }
+            if (yPos == Engine.GAME_HEIGHT - 160) {
+                yVel = -9;
             }
         }
         if (sprintEnergy > 100) {
