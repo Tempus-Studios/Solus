@@ -13,18 +13,26 @@ import org.newdawn.slick.state.StateBasedGame;
 public class Game extends BasicGameState implements MusicListener {
     private static final Logger logger = Logger.getLogger(Solus.class.getName());
     private Engine engine;
+    private WeaponLoader weaponLoader;
     private Input input;
     private SpriteSheet playerRightSheet;
     private SpriteSheet playerLeftSheet;
+    private SpriteSheet infioRightSheet;
+    private SpriteSheet infioLeftSheet;
     private Animation playerLeftAnimation;
     private Animation playerRightAnimation;
+    private Animation infioLeftAnimation;
+    private Animation infioRightAnimation;
     private Music menuMusic;
     protected boolean movingLeft = false;
     protected boolean movingRight = false;
+    protected boolean facingLeft =false;
     protected boolean sprinting = false;
+    protected boolean isFired = false;
+    protected boolean jumping = false;
     public Font loadingFont;
     public UnicodeFont font;
-    public static float aGravity = .3f;
+    public static float aGravity = .4f;
     public float xPos = 32;
     public float yPos = Engine.GAME_HEIGHT - 160;
     public float xVel = 0f;
@@ -53,10 +61,19 @@ public class Game extends BasicGameState implements MusicListener {
         font.addAsciiGlyphs();
         font.getEffects().add(new ColorEffect(java.awt.Color.BLACK));
         font.loadGlyphs();
+
         playerLeftSheet = new SpriteSheet("/res/sprite/player-left.png", 32, 32);
         playerRightSheet = new SpriteSheet("/res/sprite/player-right.png", 32, 32);
         playerLeftAnimation = new Animation(playerLeftSheet, 150);
         playerRightAnimation = new Animation(playerRightSheet, 150);
+
+        infioLeftSheet = new SpriteSheet("/res/sprite/InfioLeft.png", 32,32);
+        infioRightSheet = new SpriteSheet("/res/sprite/InfioRight.png", 32,32);
+        infioLeftAnimation = new Animation(infioLeftSheet, 100);
+        infioRightAnimation = new Animation(infioRightSheet, 100);
+        infioLeftAnimation.setAutoUpdate(false);
+        infioRightAnimation.setAutoUpdate(false);
+
         menuMusic = new Music("res/audio/Locus.ogg");
         menuMusic.addListener(this);
         menuMusic.setPosition(0);
@@ -76,6 +93,7 @@ public class Game extends BasicGameState implements MusicListener {
         //Moving left
         if (input.isKeyDown(Input.KEY_LEFT)) {
             xVel = -3;
+            facingLeft = true;
             movingLeft = true;
         } else {
             movingLeft = false;
@@ -83,6 +101,7 @@ public class Game extends BasicGameState implements MusicListener {
         //Moving right
         if (input.isKeyDown(Input.KEY_RIGHT)) {
             xVel = 3;
+            facingLeft = false;
             movingRight = true;
         } else {
             movingRight = false;
@@ -111,9 +130,11 @@ public class Game extends BasicGameState implements MusicListener {
 
         //jump
         if (input.isKeyDown(Input.KEY_UP)) {
+            jumping = true;
             if (yPos == Engine.GAME_HEIGHT - 160) {
                 yVel = -9;
             }
+            jumping = false;
         }
         if (sprintEnergy > 100) {
             sprintEnergy = 100;
@@ -123,27 +144,42 @@ public class Game extends BasicGameState implements MusicListener {
         }
         if (sprintEnergy > 0) {
             if (!(!movingLeft && !movingRight)) {
-                if (input.isKeyDown(Input.KEY_LSHIFT)) {
+                if (input.isKeyDown(Input.KEY_LSHIFT) && !input.isKeyDown(Input.KEY_SPACE)) {
                     sprinting = true;
                 } else {
                     sprinting = false;
                 }
             }
         }
-        if (sprinting) {
-            playerLeftAnimation.setDuration(1,125);
-            playerRightAnimation.setDuration(1,125);
-            sprintEnergy -= -0.1;
-            sprintMulitplier = 2;
-        } else {
-            playerLeftAnimation.setDuration(1,175);
-            playerRightAnimation.setDuration(1,175);
-            sprintMulitplier = 1;
-        }
-        if (input.isKeyDown(Input.KEY_Z)) {
-            if (!sprinting) {
-                fireWeapon();
+
+            if (sprinting) {
+                playerLeftAnimation.setDuration(1, 125);
+                playerRightAnimation.setDuration(1, 125);
+                sprintEnergy -= -0.1;
+                sprintMulitplier = 2;
+            } else {
+                playerLeftAnimation.setDuration(1, 175);
+                playerRightAnimation.setDuration(1, 175);
+                sprintMulitplier = 1;
             }
+
+        if (input.isKeyDown(Input.KEY_SPACE)) {
+            sprinting = false;
+            isFired = true;
+
+        }
+        if(isFired) {
+            logger.info("Fired weapon");
+            if(facingLeft) {
+                infioLeftAnimation.restart();
+                infioLeftAnimation.setAutoUpdate(isFired);
+                infioLeftAnimation.stopAt(2);
+            } else {
+                infioRightAnimation.restart();
+                infioRightAnimation.setAutoUpdate(isFired);
+                infioRightAnimation.stopAt(2);
+            }
+            isFired = false;
         }
         xVel *= sprintMulitplier;
         xPos += xVel;
@@ -156,10 +192,6 @@ public class Game extends BasicGameState implements MusicListener {
     }
 
 
-    public void fireWeapon() {
-        logger.info("Fired weapon");
-    }
-
     public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) throws SlickException {
         //Set font
         graphics.setFont(font);
@@ -168,12 +200,18 @@ public class Game extends BasicGameState implements MusicListener {
         graphics.fillRect(0, 0, Engine.GAME_WIDTH, Engine.GAME_HEIGHT);
         //FPS counter
         graphics.drawString("FPS: " + fps, 8, 8);
-        //Render player animation
-        if (movingRight || (!movingLeft && !movingRight)) {
+
+        //Render player animation + guns
+        if (!facingLeft) {
+            infioRightAnimation.draw(xPos + 40,yPos - 35, 128,128);
             playerRightAnimation.draw(xPos, yPos, 128, 128);
-        } else {
+        } else if (facingLeft) {
+            infioLeftAnimation.draw(xPos - 40,yPos - 35, 128,128);
             playerLeftAnimation.draw(xPos, yPos, 128, 128);
+
         }
+
+
     }
 
     public void musicSwapped(Music music1, Music music2) {

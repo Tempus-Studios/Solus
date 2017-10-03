@@ -52,7 +52,7 @@ public class Solus {
         }
     }
     public static void main(String[] args) {
-        logger.info("Starting Locus " + GAME_VERSION);
+        logger.info("Launching Solus " + GAME_VERSION);
         ThreadPool threadPool = new ThreadPool(2);
         EventQueue.invokeLater(new Runnable() {
             @Override
@@ -63,7 +63,7 @@ public class Solus {
         Runtime.getRuntime().addShutdownHook(new Thread() {
             @Override
             public void run() {
-                logger.info("Closing Locus ");
+                logger.info("Closing Solus ");
             }
         });
     }

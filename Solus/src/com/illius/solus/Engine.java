@@ -39,6 +39,9 @@ public class Engine extends StateBasedGame implements Runnable {
             case 1: {
                 gameState = "STATE_GAME";
             }
+            case 2: {
+                gameState = "STATE_SETTINGS";
+            }
             break;
             default: {
                 gameState = "STATE_MENU";
@@ -71,7 +74,7 @@ public class Engine extends StateBasedGame implements Runnable {
     }
 
     public void initStatesList(GameContainer gameContainer) throws SlickException {
-       // addState(new Menu());
+        //addState(new Menu());
         addState(new Game());
     }
 }
