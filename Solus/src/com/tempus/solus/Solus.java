@@ -45,14 +45,14 @@ public class Solus {
         logger.addHandler(consoleHandler);
         FileHandler fileHandler;
         try {
-            fileHandler = new FileHandler("res/game_log.log", true);
+            fileHandler = new FileHandler(LOG_PATH, true);
             fileHandler.setFormatter(new SimpleFormatter());
         } catch (IOException ex) {
-            ex.printStackTrace();
+            logger.severe(ex.getMessage());
         }
     }
     public static void main(String[] args) {
-        logger.info("Starting Locus " + GAME_VERSION);
+        logger.info("Starting Solus " + GAME_VERSION);
         ThreadPool threadPool = new ThreadPool(2);
         EventQueue.invokeLater(new Runnable() {
             @Override
@@ -63,7 +63,7 @@ public class Solus {
         Runtime.getRuntime().addShutdownHook(new Thread() {
             @Override
             public void run() {
-                logger.info("Closing Locus ");
+                logger.info("Closing Solus ");
             }
         });
     }

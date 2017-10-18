@@ -1,19 +1,22 @@
-package com.illius.solus.entity;
+package com.tempus.solus.entity;
 
-import com.illius.solus.Engine;
+import com.tempus.solus.Engine;
+
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 
 public class Bullet extends Image implements Entity {
     private int damage;
-    public int x;
-    public int y;
-    public Bullet(String path, int d) throws SlickException {
+    private int xPos;
+    private int yPos;
+    private int xVel;
+
+    public Bullet(String path, int damage) throws SlickException {
         super(path);
-        damage = d;
-        x = 64;
-        y = Engine.GAME_HEIGHT - 190;
+        damage = damage;
+        xPos = 64;
+        yPos = Engine.GAME_HEIGHT - 190;
     }
 
     public int getDamage() {
@@ -21,7 +24,7 @@ public class Bullet extends Image implements Entity {
     }
 
     @Override
-    public void render(Graphics g) {
+    public void render(Graphics graphics) {
 
     }
 

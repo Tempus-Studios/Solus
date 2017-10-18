@@ -63,5 +63,6 @@ public class Engine extends StateBasedGame implements KeyListener, Runnable {
     public void initStatesList(GameContainer gameContainer) throws SlickException {
         //addState(new Menu());
         addState(new Game());
+        addState(new DeathScreen());
     }
 }

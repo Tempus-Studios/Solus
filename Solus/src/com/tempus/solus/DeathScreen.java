@@ -1,27 +1,21 @@
-package com.illius.solus;
-
+package com.tempus.solus;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
-import org.newdawn.slick.KeyListener;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
-import java.util.logging.ConsoleHandler;
 import java.util.logging.Logger;
-import java.util.logging.SimpleFormatter;
 
-public class Settings extends BasicGameState implements KeyListener {
-    private static final Logger logger = Logger.getLogger(Solus.class.getName());
-    public Settings() {
-        logger.setUseParentHandlers(false);
-        ConsoleHandler consoleHandler = new ConsoleHandler();
-        consoleHandler.setFormatter(new SimpleFormatter());
-        logger.addHandler(consoleHandler);
-    }
+public class DeathScreen extends BasicGameState{
+    private static final Logger logger = Logger.getLogger(DeathScreen.class.getName());
+    public static final int STATE_ID = 2;
+
     @Override
-    public int getID() {return 3;}
+    public int getID() {
+        return STATE_ID;
+    }
 
     @Override
     public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
@@ -35,6 +29,6 @@ public class Settings extends BasicGameState implements KeyListener {
 
     @Override
     public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int i) throws SlickException {
-
+        //TODO: death screen
     }
 }

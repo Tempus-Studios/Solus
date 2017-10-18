@@ -1,4 +1,4 @@
-package com.illius.solus.entity;
+package com.tempus.solus.entity;
 
 
 import org.newdawn.slick.Graphics;

@@ -22,7 +22,9 @@ public class Settings extends BasicGameState implements KeyListener {
         logger.addHandler(consoleHandler);
     }
     @Override
-    public int getID() {return 3;}
+    public int getID() {
+        return STATE_ID;
+    }
 
     @Override
     public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
