@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Weapon implements Entity{
+    //saves some typing lel
+    public static String LOCATION = "/res/sprite/weapons/";
     private String[] path = new String[2];
     private int gun_id;
     private int range;
@@ -17,13 +19,17 @@ public class Weapon implements Entity{
     private int ammo;
     private int total_ammo;
     private int max_ammo;
+    public enum GunType {
+        PISTOL, RIFLE, TANK, ALIENRIFLE, SNIPER, LAUNCHER
+    }
+    private GunType gunType;
     protected boolean automatic;
-    protected boolean isRifle;
 
 
-    public Weapon(String pL, String pR, String n, int d, int r, int cs, boolean a, boolean rifle) throws SlickException {
-        path[0] = pL;
-        path[1] = pR;
+
+    public Weapon(String pL, String pR, String n, int d, int r, int cs, boolean a, GunType gt) throws SlickException {
+        path[0] = LOCATION + pL;
+        path[1] = LOCATION + pR;
         range = r;
         damage = d;
         name = n;
@@ -32,12 +38,21 @@ public class Weapon implements Entity{
         max_ammo = 6*cs;
         total_ammo = max_ammo;
         automatic = a;
-        isRifle = rifle;
+        gunType = gt;
         for (int i = 0; i < clip_size; i++) {
-            if (!isRifle) {
-                clip.add(new Bullet("/res/sprite/pistol-bullet.png", damage));
-            } else {
-                clip.add(new Bullet("/res/sprite/rifle-bullet.png", damage));
+            switch(gunType) {
+                case PISTOL: {
+                    clip.add(new Bullet("/res/sprite/bullets/pistol-bullet.png", damage, 10));
+                    break;
+                }
+                case RIFLE: {
+                    clip.add(new Bullet("/res/sprite/bullets/rifle-bullet.png", damage, 15));
+                    break;
+                }
+                case TANK: {
+                    clip.add(new Bullet("/res/sprite/bullets/tank-bullet.png", damage, 5));
+                }
+                default: break;
             }
         }
     }
@@ -60,14 +75,7 @@ public class Weapon implements Entity{
         }
     }
     public void reload() throws SlickException {
-        if(total_ammo >= clip_size) {
-            for(int i = 0; i < clip_size; i++) {
-                clip.add(new Bullet("/res/sprite/pistol-bullet.png", damage));
-            }
-        }
-    }
-    public boolean isARifle() {
-        return isRifle;
+
     }
     public int getDamage() {
         return damage;
@@ -75,7 +83,7 @@ public class Weapon implements Entity{
 
 
     @Override
-    public void render(Graphics g) {
+    public void render(Graphics g, float playerX, float playerY) {
 
     }
 

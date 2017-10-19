@@ -9,14 +9,15 @@ import org.newdawn.slick.SlickException;
 public class Bullet extends Image implements Entity {
     private int damage;
     private int xPos;
-    private int yPos;
-    private int xVel;
+    private static int xVel;
+    private boolean isHit;
 
-    public Bullet(String path, int damage) throws SlickException {
+    public Bullet(String path, int d, int velocity) throws SlickException {
         super(path);
-        damage = damage;
-        xPos = 64;
-        yPos = Engine.GAME_HEIGHT - 190;
+        damage = d;
+        xPos = 0;
+        xVel = velocity;
+        isHit = false;
     }
 
     public int getDamage() {
@@ -24,12 +25,14 @@ public class Bullet extends Image implements Entity {
     }
 
     @Override
-    public void render(Graphics graphics) {
-
+    public void render(Graphics graphics, float playerX, float playerY) {
+        if(!isHit) {
+            graphics.drawImage(this, playerX + xPos, playerY + 30);
+        }
     }
 
     @Override
     public void update(int delta) {
-
+        xPos += xVel;
     }
 }

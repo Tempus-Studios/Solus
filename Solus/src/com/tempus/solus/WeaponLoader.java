@@ -1,6 +1,7 @@
 package com.tempus.solus;
 
 import com.tempus.solus.entity.Weapon;
+import com.tempus.solus.entity.Weapon.GunType;
 
 import org.newdawn.slick.SlickException;
 
@@ -17,14 +18,12 @@ public class WeaponLoader {
         equippedWeapon = weaponsList[0];
     }
 
+    public static void initWeaponsList() throws SlickException {
+        weaponsList[0] = new Weapon("infio-left.png","infio-right.png", "Infio",20, PISTOL_RANGE, 12,false, GunType.PISTOL);
+        weaponsList[1] = new Weapon("asr15-left.png","asr15-right.png","ASR-15", 15, RIFLE_RANGE, 30,true, GunType.RIFLE);
+    }
     public void setWeapon(Weapon w) {
         equippedWeapon = w;
-    }
-
-
-    public static void initWeaponsList() throws SlickException {
-        weaponsList[0] = new Weapon("/res/sprite/weapon-infio-left.png","/res/sprite/weapon-asr15-left.png", "Infio",20, PISTOL_RANGE, 12,false, false);
-        weaponsList[1] = new Weapon("/res/sprite/weapon-infio-left.png","/res/sprite/weapon-asr15-right.png","ASR-15", 15, RIFLE_RANGE, 30,true, true);
     }
     public Weapon getEquippedWeapon() {
         return equippedWeapon;
