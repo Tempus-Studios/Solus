@@ -14,27 +14,14 @@ import java.util.logging.ConsoleHandler;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 
-public class Player {
+public class Player extends Entity {
     private static final Logger logger = Logger.getLogger(Player.class.getName());
     private SpriteSheet playerLeftSheet;
     private SpriteSheet playerRightSheet;
     private Animation playerLeftAnimation;
     private Animation playerRightAnimation;
-    private boolean isAlive;
-    private boolean isMovingLeft;
-    private boolean isMovingRight;
-    private boolean isFacingLeft;
-    private boolean isFacingRight;
     private boolean isSprinting;
-    private boolean isJumping;
     private boolean isSprintRequested;
-    private boolean isFired;
-    private float xPos;
-    private float yPos;
-    private float xVel;
-    private float yVel;
-    private float yAcc;
-    public float playerHealth;
     private float sprintEnergy;
     private float sprintMultiplier;
 
@@ -45,97 +32,25 @@ public class Player {
         logger.addHandler(consoleHandler);
         try {
             init();
-        } catch(SlickException ex) {
+        } catch (SlickException ex) {
             logger.severe("Failed to initialize player");
         }
-    }
-
-    public float getXPos() {
-        return xPos;
-    }
-
-    public float getYPos() {
-        return yPos;
-    }
-
-    public float getXel() {
-        return xVel;
-    }
-
-    public float getYVel() {
-        return yVel;
-    }
-
-    public float getYAcc() {
-        return yAcc;
-    }
-
-    public float getPlayerHealth() {
-        return playerHealth;
     }
 
     public float getSprintEnergy() {
         return sprintEnergy;
     }
 
-    public boolean isAlive() {
-        return isAlive;
-    }
-
-    public boolean isMovingLeft() {
-        return isMovingLeft;
-    }
-
-    public boolean isMovingRight() {
-        return isMovingRight;
-    }
-
-    public boolean isFacingLeft() {
-        return isFacingLeft;
-    }
-
-    public boolean isFacingRight() {
-        return isFacingRight;
-    }
-
-    public void healPlayer(float health) {
-        playerHealth += health;
-    }
-
-    public void damagePlayer(float damage) {
-        playerHealth -= damage;
-    }
-
-    public void setMovingLeft(boolean movingLeft) {
-        isMovingLeft = movingLeft;
-    }
-
-    public void setMovingRight(boolean movingRight) {
-        isMovingRight = movingRight;
-    }
-
-    public void setFacingLeft(boolean facingLeft) {
-        isFacingLeft = facingLeft;
-    }
-
-    public void setFacingRight(boolean facingRight) {
-        isFacingRight = facingRight;
-    }
-
-    public void setJumping(boolean jumping) {
-        isJumping = jumping;
-    }
-
     public void setSprintRequested(boolean sprintRequested) {
         isSprintRequested = sprintRequested;
     }
+
 
     public void init() throws SlickException {
         isAlive = true;
         isMovingLeft = false;
         isMovingRight = false;
         isFacingLeft = false;
-        isFacingRight = true;
         isSprinting = false;
         isJumping = false;
         isSprintRequested = false;
@@ -144,7 +59,7 @@ public class Player {
         xVel = 0;
         yVel = 0;
         yAcc = 0.4f;
-        playerHealth = 100;
+        health = 100;
         sprintEnergy = 100;
         sprintMultiplier = 1;
         playerLeftSheet = new SpriteSheet("/res/sprite/player-left.png", 32, 32);
@@ -155,17 +70,17 @@ public class Player {
         playerRightAnimation.setAutoUpdate(false);
     }
 
-    public void update(StateBasedGame stateBasedGame, int delta) throws SlickException {
+    public void update(int delta) throws SlickException {
         if (xPos < 32) {
             xPos = 32;
         }
         if (xPos > Engine.GAME_WIDTH - 160) {
             xPos = Engine.GAME_WIDTH - 160;
         }
-        if (yPos > (float) (Engine.GAME_HEIGHT - 160)) {
+        if (yPos > ((float) (Engine.GAME_HEIGHT - 160))) {
             yPos = Engine.GAME_HEIGHT - 160;
         }
-        if (yPos < Engine.GAME_HEIGHT - 160) {
+        if (yPos < ((float) (Engine.GAME_HEIGHT - 160))) {
             yVel += yAcc;
         }
         //Moving left
@@ -175,7 +90,7 @@ public class Player {
         }
         //Moving right
         if (isMovingRight) {
-            isFacingRight = true;
+            isFacingLeft = false;
             xVel = 3;
         }
         //Standing still
@@ -201,7 +116,7 @@ public class Player {
                 }
             }
         }
-        if (isFacingRight) {
+        if (!isFacingLeft) {
             if (!isMovingRight) {
                 if (xVel > 0) {
                     xVel -= 0.01;
@@ -250,27 +165,24 @@ public class Player {
         if (!isSprinting) {
             sprintEnergy++;
         }
-        if (playerHealth < 0) {
-            playerHealth = 0;
+        if (health < 0) {
+            health = 0;
         }
-        if (playerHealth > 100) {
-            playerHealth = 100;
+        if (health > 100) {
+            health = 100;
         }
-        if (playerHealth == 0) {
+        if (health == 0) {
             isAlive = false;
         } else {
             isAlive = true;
         }
     }
-
     public void render(Graphics graphics) throws SlickException {
-        graphics.drawString("Hello", Engine.GAME_WIDTH / 2, Engine.GAME_HEIGHT / 2);
         if (isFacingLeft) {
             playerLeftAnimation.draw(xPos, yPos, 128, 128);
-        } else {
-            if (isFacingRight) {
-                playerRightAnimation.draw(xPos, yPos, 128, 128);
-            }
+        } else if (!isFacingLeft) {
+            playerRightAnimation.draw(xPos, yPos, 128, 128);
         }
     }
 }
+
