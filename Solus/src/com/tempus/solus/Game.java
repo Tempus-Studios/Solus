@@ -1,5 +1,7 @@
 package com.tempus.solus;
 
+import com.tempus.solus.entity.Player;
+
 import java.awt.Font;
 
 import java.io.InputStream;
@@ -26,11 +28,10 @@ public class Game extends BasicGameState implements KeyListener{
     private static final Logger logger = Logger.getLogger(Solus.class.getName());
     private Engine engine;
     private WeaponLoader weaponLoader;
+    private Player player;
     private Image healthIcon;
     private Image sprintIcon;
     private Image ammoIcon;
-    private SpriteSheet playerLeftSheet;
-    private SpriteSheet playerRightSheet;
     private SpriteSheet weaponLeftSheet;
     private SpriteSheet weaponRightSheet;
     private SpriteSheet tankLeftSheet;
@@ -42,15 +43,7 @@ public class Game extends BasicGameState implements KeyListener{
     private Animation tankLeftAnimation;
     private Animation tankRightAnimation;
     private boolean isPaused;
-    private boolean isAlive;
     private boolean isRestartRequested;
-    private boolean isMovingLeft;
-    private boolean isMovingRight;
-    private boolean isFacingLeft;
-    private boolean isFacingRight;
-    private boolean isSprinting;
-    private boolean isJumping;
-    private boolean isSprintRequested;
     private boolean isFired;
     private boolean isEnemyAggro;
     private boolean enemyFacingLeft;
@@ -58,20 +51,11 @@ public class Game extends BasicGameState implements KeyListener{
     public Font loadingFont2;
     public UnicodeFont font;
     public UnicodeFont fpsFont;
-    public static float aGravity;
-    public float xPos;
-    public float yPos;
-    public float xVel;
-    public float yVel;
-    public float playerHealth;
-    private float sprintEnergy;
-    private float sprintMultiplier;
     private float enemyPos;
     private int timeElapsed;
     private int fps;
-    private int shotsFired;
-    private boolean foo1;
-    private boolean foo2;
+    private int shotsFiredSA;
+    private int shotsFiredA;
     public static final int STATE_ID = 1;
 
     public Game() {
@@ -88,32 +72,19 @@ public class Game extends BasicGameState implements KeyListener{
 
     @Override
     public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
-        isPaused = false;
-        isAlive = true;
-        isRestartRequested = false;
-        isMovingLeft = false;
-        isMovingRight = false;
-        isFacingLeft = false;
-        isFacingRight = true;
-        isSprinting = false;
-        isJumping = false;
-        isSprintRequested = false;
-        isFired = false;
-        isEnemyAggro = false;
-        enemyFacingLeft = true;
-        aGravity = 0.4f;
-        xPos = 32;
-        yPos = Engine.GAME_HEIGHT - 160;
-        xVel = 0;
-        yVel = 0;
-        playerHealth = 100;
-        sprintEnergy = 100;
-        sprintMultiplier = 1;
-        enemyPos = Engine.GAME_WIDTH - 192;
         engine = new Engine();
+        player = new Player();
         weaponLoader = new WeaponLoader();
         loadingFont = null;
         loadingFont2 = null;
+        isPaused = false;
+        isRestartRequested = false;
+        isFired = false;
+        isEnemyAggro = false;
+        enemyFacingLeft = true;
+        enemyPos = Engine.GAME_WIDTH - 192;
+        shotsFiredA = 0;
+        shotsFiredSA = 0;
         try {
             InputStream inputStream = ResourceLoader.getResourceAsStream("/res/PressStart2P.ttf");
             loadingFont = Font.createFont(Font.TRUETYPE_FONT, inputStream);
@@ -142,10 +113,6 @@ public class Game extends BasicGameState implements KeyListener{
         healthIcon = new Image("/res/sprite/icons/HealthIcon.png");
         sprintIcon = new Image("/res/sprite/icons/SprintEnergyIcon.png");
         ammoIcon = new Image("/res/sprite/icons/AmmoIcon.png");
-        playerLeftSheet = new SpriteSheet("/res/sprite/human-enemy-left.png", 32, 32);
-        playerRightSheet = new SpriteSheet("/res/sprite/human-enemy-right.png", 32, 32);
-        playerLeftAnimation = new Animation(playerLeftSheet, 150);
-        playerRightAnimation = new Animation(playerRightSheet, 150);
         weaponLeftSheet = new SpriteSheet(weaponLoader.getEquippedWeapon().getPath()[0], 32,32);
         weaponRightSheet = new SpriteSheet(weaponLoader.getEquippedWeapon().getPath()[1], 32,32);
         weaponLeftAnimation = new Animation(weaponLeftSheet, 100);
@@ -162,139 +129,46 @@ public class Game extends BasicGameState implements KeyListener{
 
     @Override
     public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int delta) throws SlickException {
-        if (isAlive && !isPaused) {
-            if (xPos < 32) {
-                xPos = 32;
-            }
-            if (xPos > Engine.GAME_WIDTH - 160) {
-                xPos = Engine.GAME_WIDTH - 160;
-            }
-            if (yPos > (float) (Engine.GAME_HEIGHT - 160)) {
-                yPos = Engine.GAME_HEIGHT - 160;
-            }
-            if (yPos < Engine.GAME_HEIGHT - 160) {
-                yVel += aGravity;
-            }
-
-            //Moving left
-            if (isMovingLeft) {
-                isFacingLeft = true;
-                xVel = -3;
-            }
-            //Moving right
-            if (isMovingRight) {
-                isFacingRight = true;
-                xVel = 3;
-            }
-            //Standing still
-            if (isMovingLeft && isMovingRight) {
-                xVel = 0;
-            }
-            if (!isMovingLeft && !isMovingRight) {
-                xVel = 0;
-            }
-            if (xVel == 0 || yPos < Engine.GAME_HEIGHT - 160) {
-                playerLeftAnimation.setAutoUpdate(false);
-                playerRightAnimation.setAutoUpdate(false);
-                playerLeftAnimation.setCurrentFrame(0);
-                playerRightAnimation.setCurrentFrame(0);
-            } else {
-                playerLeftAnimation.setAutoUpdate(true);
-                playerRightAnimation.setAutoUpdate(true);
-            }
-
-
-            if (isFacingLeft) {
-                if (!isMovingLeft) {
-                    if (xVel < 0) {
-                        xVel += 0.01;
-                    }
-                }
-            }
-            if (isFacingRight) {
-                if (!isMovingRight) {
-                    if (xVel > 0) {
-                        xVel -= 0.01;
-                    }
-                }
-            }
-            //Jumping
-            if (isJumping) {
-                if (yPos == Engine.GAME_HEIGHT - 160) {
-                    yVel = -9;
-                }
-                isJumping = false;
-            }
-            //Sprinting
-            if (sprintEnergy > 100) {
-                sprintEnergy = 100;
-            }
-            if (sprintEnergy < 0) {
-                sprintEnergy = 0;
-            }
-            if (sprintEnergy > 0) {
-                if (!(!isMovingLeft && !isMovingRight)) {
-                    if (isSprintRequested) {
-                        isSprinting = true;
-                    } else {
-                        isSprinting = false;
-                    }
-                }
-            }
-            if (isSprinting) {
-                if (yPos == Engine.GAME_HEIGHT - 160) {
-                    playerLeftAnimation.setDuration(1, 125);
-                    playerRightAnimation.setDuration(1, 125);
-                    sprintEnergy -= -0.1;
-                    sprintMultiplier = 2;
-                }
-            } else {
-                playerLeftAnimation.setDuration(1, 175);
-                playerRightAnimation.setDuration(1, 175);
-                sprintMultiplier = 1;
-            }
-            if(isFired) {
+        if (player.isAlive() && !isPaused) {
+            player.update(stateBasedGame, delta);
+            if (isFired) {
                 //semi-auto
                 if (!weaponLoader.getEquippedWeapon().isAutomatic()) {
-                    if (isFacingLeft) {
+                    if (player.isFacingLeft()) {
                         weaponLeftAnimation.restart();
                         weaponLeftAnimation.setAutoUpdate(isFired);
                         weaponLeftAnimation.stopAt(2);
-                        shotsFired += 1;
-                        logger.info("Fired semi-automatically: " + shotsFired);
+                        shotsFiredSA++;
+                        logger.info("Fired semi-automatically: " + shotsFiredSA);
                         isFired = false;
                     } else {
                         weaponRightAnimation.restart();
                         weaponRightAnimation.setAutoUpdate(isFired);
                         weaponRightAnimation.stopAt(2);
-                        shotsFired += 1;
-                        logger.info("Fired semi-automatically: " + shotsFired);
+                        shotsFiredSA++;
+                        logger.info("Fired semi-automatically: " + shotsFiredSA);
                         isFired = false;
                     }
                     //automatic
                 } else {
-                    if (isFacingLeft) {
+                    if (player.isFacingLeft()) {
                         weaponLeftAnimation.setAutoUpdate(isFired);
                         if (weaponLeftAnimation.getFrame() == 1) {
                             weaponLoader.getEquippedWeapon().decrementAmmo();
-                            shotsFired += 1;
+                            logger.info("Fired automatically: " + shotsFiredA);
+                            shotsFiredA++;
                         }
                     } else {
                         weaponRightAnimation.setAutoUpdate(isFired);
-                        if(weaponRightAnimation.getFrame() == 1) {
+                        if (weaponRightAnimation.getFrame() == 1) {
                             weaponLoader.getEquippedWeapon().decrementAmmo();
-                            shotsFired += 1;
+                            logger.info("Fired automatically: " + shotsFiredA);
+                            shotsFiredA++;
                         }
                     }
                 }
             }
             //Player motion
-            xVel *= sprintMultiplier;
-            xPos += xVel;
-            yPos += yVel;
-            if (!isSprinting) {
-                sprintEnergy++;
-            }
             if (enemyPos <= 32) {
                 enemyFacingLeft = false;
             }
@@ -306,34 +180,22 @@ public class Game extends BasicGameState implements KeyListener{
             } else {
                 enemyPos++;
             }
-            if (Math.abs((enemyPos - xPos)) <= 448) {
+            if (Math.abs((enemyPos - player.getXPos())) <= 448) {
                 isEnemyAggro = true;
             } else {
                 isEnemyAggro = false;
             }
-            playerHealth += 0.025;
+            player.healPlayer(0.025f);
             if (isEnemyAggro) {
                 if (timeElapsed >= 1000) {
-                    playerHealth -= 0.2;
-                    //timeElapsed = 0;
+                    player.damagePlayer(0.2f);
                 }
-            }
-            if (playerHealth < 0) {
-                playerHealth = 0;
-            }
-            if (playerHealth > 100) {
-                playerHealth = 100;
-            }
-            if (playerHealth == 0) {
-                isAlive = false;
             }
             timeElapsed += delta;
             fps = engine.getFPS();
+
         } else {
-            if (isPaused) {
-                //TODO: pause menu
-            }
-            if (!isAlive) {
+            if (!player.isAlive()) {
                 if (isRestartRequested) {
                     stateBasedGame.getState(Game.STATE_ID).init(gameContainer, stateBasedGame);
                     stateBasedGame.enterState(Game.STATE_ID);
@@ -345,25 +207,24 @@ public class Game extends BasicGameState implements KeyListener{
     @Override
     public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) throws SlickException {
         //Set font
-        if (isAlive && !isPaused) {
+        if (player.isAlive() && !isPaused) {
             //Draw background
             graphics.setColor(Color.white);
             graphics.fillRect(0, 0, Engine.GAME_WIDTH, Engine.GAME_HEIGHT);
             graphics.setColor(Color.gray);
             graphics.fillRoundRect(64, 28, 320, 32, 8, 100);
-            //TODO: make color transitions
-            if (playerHealth >= 50) {
+            if (player.getPlayerHealth() >= 50) {
                 graphics.setColor(Color.green);
             } else {
-                if (playerHealth >= 20) {
+                if (player.getPlayerHealth() >= 20) {
                     graphics.setColor(Color.yellow);
                 } else {
                     graphics.setColor(Color.red);
                 }
             }
-            if (playerHealth > 1.5 ) {
+            if (player.getPlayerHealth() > 1.5 ) {
                 for (int i = 0; i < 6; i++) {
-                    graphics.fillRoundRect(64, 28, (float) ((playerHealth * 3.2)), 32, 8, 100);
+                    graphics.fillRoundRect(64, 28, (float) ((player.getPlayerHealth() * 3.2)), 32, 8, 100);
                 }
             }
             graphics.setColor(Color.red);
@@ -379,13 +240,12 @@ public class Game extends BasicGameState implements KeyListener{
             } else {
                 tankRightAnimation.draw(enemyPos, Engine.GAME_HEIGHT - 224, 192, 192);
             }
-            if (isFacingLeft) {
-                weaponLeftAnimation.draw(xPos - 40, yPos - 35, 128, 128);
-                playerLeftAnimation.draw(xPos, yPos, 128, 128);
+            player.render(graphics);
+            if (player.isFacingLeft()) {
+                weaponLeftAnimation.draw(player.getXPos() - 40, player.getYPos() - 35, 128, 128);
             } else {
-                if (isFacingRight) {
-                    weaponRightAnimation.draw(xPos + 40, yPos - 35, 128, 128);
-                    playerRightAnimation.draw(xPos, yPos, 128, 128);
+                if (player.isFacingRight()) {
+                    weaponRightAnimation.draw(player.getXPos() + 40, player.getYPos() - 35, 128, 128);
                 }
             }
         } else {
@@ -396,7 +256,7 @@ public class Game extends BasicGameState implements KeyListener{
                 graphics.setFont(font);
                 graphics.drawString("PAUSED", Engine.GAME_WIDTH / 2 - 72, Engine.GAME_HEIGHT / 2 - 96);
             }
-            if (!isAlive) {
+            if (!player.isAlive()) {
                 graphics.setColor(Color.black);
                 graphics.fillRect(0, 0, Engine.GAME_WIDTH, Engine.GAME_HEIGHT);
                 graphics.setColor(Color.white);
@@ -410,35 +270,47 @@ public class Game extends BasicGameState implements KeyListener{
     public void keyPressed(int code, char c) {
         switch (code) {
             case Input.KEY_LEFT: {
-                foo1 = false;
-                isFacingLeft = false;
-                isFacingRight = false;
-                isMovingLeft = true;
-                isMovingRight = false;
+                player.setFacingLeft(true);
+                player.setFacingRight(false);
+                player.setMovingLeft(true);
+                player.setMovingRight(false);
                 break;
             }
             case Input.KEY_RIGHT: {
-                foo2 = false;
-                isFacingLeft = false;
-                isFacingRight = true;
-                isMovingLeft = false;
-                isMovingRight = true;
+                player.setFacingLeft(false);
+                player.setFacingRight(true);
+                player.setMovingLeft(false);
+                player.setMovingRight(true);
                 break;
             }
             case Input.KEY_UP: {
-                isJumping = true;
+                player.setJumping(true);
                 break;
             }
             case Input.KEY_LSHIFT: {
-                isSprintRequested = true;
+                player.setSprintRequested(true);
                 break;
             }
             case Input.KEY_SPACE: {
-                isSprintRequested = false;
+                player.setSprintRequested(false);
                 isFired = true;
                 break;
             }
-            case Input.KEY_E: {
+            case Input.KEY_1: {
+                weaponLoader.setWeapon(weaponLoader.getWeaponAt(0));
+                try {
+                    weaponLeftSheet = new SpriteSheet(weaponLoader.getEquippedWeapon().getPath()[0], 32, 32);
+                    weaponRightSheet = new SpriteSheet(weaponLoader.getEquippedWeapon().getPath()[1], 32, 32);
+                } catch (SlickException ex) {
+                    logger.severe(ex.getMessage());
+                }
+                weaponLeftAnimation = new Animation(weaponLeftSheet, 100);
+                weaponRightAnimation = new Animation(weaponRightSheet, 100);
+                weaponLeftAnimation.setAutoUpdate(false);
+                weaponRightAnimation.setAutoUpdate(false);
+                break;
+            }
+            case Input.KEY_2: {
                 weaponLoader.setWeapon(weaponLoader.getWeaponAt(1));
                 try {
                     weaponLeftSheet = new SpriteSheet(weaponLoader.getEquippedWeapon().getPath()[0], 32, 32);
@@ -461,7 +333,7 @@ public class Game extends BasicGameState implements KeyListener{
                 break;
             }
             case Input.KEY_ENTER: {
-                if (!isAlive) {
+                if (!player.isAlive()) {
                     isRestartRequested = true;
                 }
                 break;
@@ -476,16 +348,16 @@ public class Game extends BasicGameState implements KeyListener{
     public void keyReleased(int code, char c) {
         switch (code) {
             case Input.KEY_LEFT: {
-                isMovingLeft = false;
+                player.setMovingLeft(false);
                 break;
             }
             case Input.KEY_RIGHT: {
-                isMovingRight = false;
+                player.setMovingRight(false);
                 break;
             }
             case Input.KEY_SPACE: {
                 isFired = false;
-                if(weaponLoader.getEquippedWeapon().isAutomatic()) {
+                if (weaponLoader.getEquippedWeapon().isAutomatic()) {
                     weaponLeftAnimation.setAutoUpdate(isFired);
                     weaponRightAnimation.setAutoUpdate(isFired);
                 }
@@ -494,7 +366,7 @@ public class Game extends BasicGameState implements KeyListener{
                 break;
             }
             case Input.KEY_LSHIFT: {
-                isSprintRequested = false;
+                player.setSprintRequested(false);
                 break;
             }
             default: {

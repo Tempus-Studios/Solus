@@ -7,50 +7,48 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Weapon implements Entity{
-    //saves some typing lel
-    public static String LOCATION = "/res/sprite/weapons/";
-    private String[] path = new String[2];
-    private int gun_id;
-    private int range;
-    private int damage;
-    private String name;
-    public List<Bullet> clip = new ArrayList<Bullet>();
-    private int clip_size;
-    private int ammo;
-    private int total_ammo;
-    private int max_ammo;
-    public enum GunType {
+    //TODO: append from root dir
+    public enum WeaponType {
         PISTOL, RIFLE, TANK, ALIENRIFLE, SNIPER, LAUNCHER
     }
-    private GunType gunType;
-    protected boolean automatic;
+    private WeaponType weaponType;
+    private static String WEAPON_DIRECTORY = "/res/sprite/weapons/";
+    private String[] path = new String[2];
+    private int range;
+    private int damage;
+    private String weaponName;
+    public List<Bullet> magazine = new ArrayList<Bullet>();
+    private int magSize;
+    private int ammo;
+    private int totalAmmo;
+    private int maxAmmo;
 
+    private boolean automatic;
 
-
-    public Weapon(String pL, String pR, String n, int d, int r, int cs, boolean a, GunType gt) throws SlickException {
-        path[0] = LOCATION + pL;
-        path[1] = LOCATION + pR;
-        range = r;
-        damage = d;
-        name = n;
-        clip_size = cs;
-        ammo = cs;
-        max_ammo = 6*cs;
-        total_ammo = max_ammo;
+    public Weapon(String pathLeft, String pathRight, String name, int dmg, int rng, int mag, boolean a, WeaponType type) throws SlickException {
+        path[0] = WEAPON_DIRECTORY + pathLeft;
+        path[1] = WEAPON_DIRECTORY + pathRight;
+        weaponName = name;
+        range = rng;
+        damage = dmg;
+        magSize = mag;
+        ammo = mag;
+        maxAmmo = 6 * mag;
+        totalAmmo = maxAmmo;
         automatic = a;
-        gunType = gt;
-        for (int i = 0; i < clip_size; i++) {
-            switch(gunType) {
+        weaponType = type;
+        for (int i = 0; i < magSize; i++) {
+            switch (weaponType) {
                 case PISTOL: {
-                    clip.add(new Bullet("/res/sprite/bullets/pistol-bullet.png", damage, 10));
+                    magazine.add(new Bullet("/res/sprite/bullets/pistol-bullet.png", damage, 10));
                     break;
                 }
                 case RIFLE: {
-                    clip.add(new Bullet("/res/sprite/bullets/rifle-bullet.png", damage, 15));
+                    magazine.add(new Bullet("/res/sprite/bullets/rifle-bullet.png", damage, 15));
                     break;
                 }
                 case TANK: {
-                    clip.add(new Bullet("/res/sprite/bullets/tank-bullet.png", damage, 5));
+                    magazine.add(new Bullet("/res/sprite/bullets/tank-bullet.png", damage, 5));
                 }
                 default: break;
             }
@@ -58,7 +56,7 @@ public class Weapon implements Entity{
     }
 
     public String getName() {
-        return name;
+        return weaponName;
     }
     public String[] getPath() {
         return path;
@@ -83,7 +81,7 @@ public class Weapon implements Entity{
 
 
     @Override
-    public void render(Graphics g, float playerX, float playerY) {
+    public void render(Graphics graphics, float playerX, float playerY) {
 
     }
 
