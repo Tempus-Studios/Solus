@@ -2,13 +2,11 @@ package com.tempus.solus.entity;
 
 
 import com.tempus.solus.Solus;
-import org.newdawn.slick.Graphics;
-import org.newdawn.slick.SlickException;
 
 import java.util.logging.Logger;
 
 public abstract class Entity {
-    static final Logger logger = Logger.getLogger(Solus.class.getName());
+    private static final Logger logger = Logger.getLogger(Solus.class.getName());
     public boolean isFacingLeft;
     public boolean isMovingLeft;
     public boolean isMovingRight;
@@ -59,6 +57,7 @@ public abstract class Entity {
     public boolean isFacingLeft() {
         return isFacingLeft;
     }
+
     public void heal(float heal) {
         health += heal;
     }
@@ -77,6 +76,7 @@ public abstract class Entity {
     public void setFacingLeft(boolean facingLeft) {
         isFacingLeft = facingLeft;
     }
+
     public void setJumping(boolean jumping) {
         isJumping = jumping;
     }

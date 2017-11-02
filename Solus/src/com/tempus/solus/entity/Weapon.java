@@ -8,10 +8,12 @@ import org.newdawn.slick.SpriteSheet;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.ConsoleHandler;
+import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 
 public class Weapon extends Entity {
     //saves some typing lel
+    private static final Logger logger = Logger.getLogger(Weapon.class.getName());
     public static String WEAPON_DIRECTORY = "/res/sprite/weapons/";
     private Animation leftWeaponAnimation;
     private Animation rightWeaponAnimation;
@@ -35,12 +37,19 @@ public class Weapon extends Entity {
     }
     private WeaponType weaponType;
 
-
-    public Weapon(String pathLeft, String pathRight, String name, int dmg, int ran, int rate, int mag, boolean auto, WeaponType type) throws SlickException {
+    public Weapon(String pathLeft, String pathRight, String name, int dmg, int rng, int rof, int mag, boolean auto, WeaponType type) {
         logger.setUseParentHandlers(false);
         ConsoleHandler consoleHandler = new ConsoleHandler();
         consoleHandler.setFormatter(new SimpleFormatter());
         logger.addHandler(consoleHandler);
+        try {
+            init(pathLeft, pathRight, name, dmg, rng, rof, mag, auto, type);
+        } catch (SlickException ex) {
+            logger.info(ex.getMessage());
+        }
+    }
+
+    public void init(String pathLeft, String pathRight, String name, int dmg, int rng, int rof, int mag, boolean auto, WeaponType type) throws SlickException {
         playerXPos = 0;
         playerYPos = 0;
         playerFacingLeft = false;
@@ -48,11 +57,11 @@ public class Weapon extends Entity {
         shotsFired = 0;
         path[0] = WEAPON_DIRECTORY + pathLeft;
         path[1] = WEAPON_DIRECTORY + pathRight;
-        leftWeaponAnimation = new Animation(new SpriteSheet(path[0], 32, 32), rate);
-        rightWeaponAnimation = new Animation(new SpriteSheet(path[1], 32, 32), rate);
+        leftWeaponAnimation = new Animation(new SpriteSheet(path[0], 32, 32), rof);
+        rightWeaponAnimation = new Animation(new SpriteSheet(path[1], 32, 32), rof);
         leftWeaponAnimation.setAutoUpdate(false);
         rightWeaponAnimation.setAutoUpdate(false);
-        range = ran;
+        range = rng;
         damage = dmg;
         weaponName = name;
         magSize = mag;
@@ -79,6 +88,7 @@ public class Weapon extends Entity {
             }
         }
     }
+
     private void shoot() {
         magazine.get(0).render(playerXPos, playerYPos, playerFacingLeft);
     }

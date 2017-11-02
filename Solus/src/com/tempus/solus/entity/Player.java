@@ -127,6 +127,7 @@ public class Player extends Entity {
         if (isJumping) {
             if (yPos == Engine.GAME_HEIGHT - 160) {
                 yVel = -9;
+                sprintEnergy -= 15;
             }
             isJumping = false;
         }
@@ -137,20 +138,24 @@ public class Player extends Entity {
         if (sprintEnergy < 0) {
             sprintEnergy = 0;
         }
-        if (sprintEnergy > 0) {
+        if (sprintEnergy > 2) {
             if (!(!isMovingLeft && !isMovingRight)) {
                 if (isSprintRequested) {
                     isSprinting = true;
                 } else {
                     isSprinting = false;
                 }
+            } else {
+                isSprinting = false;
             }
+        } else {
+            isSprinting = false;
         }
         if (isSprinting) {
+            sprintEnergy -= 0.3f;
             if (yPos == Engine.GAME_HEIGHT - 160) {
                 playerLeftAnimation.setDuration(1, 125);
                 playerRightAnimation.setDuration(1, 125);
-                sprintEnergy -= -0.1;
                 sprintMultiplier = 2;
             }
         } else {
@@ -163,7 +168,7 @@ public class Player extends Entity {
         xPos += xVel;
         yPos += yVel;
         if (!isSprinting) {
-            sprintEnergy++;
+            sprintEnergy += 0.25f;
         }
         if (health < 0) {
             health = 0;

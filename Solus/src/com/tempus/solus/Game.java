@@ -163,6 +163,7 @@ public class Game extends BasicGameState implements KeyListener{
             graphics.fillRect(0, 0, Engine.GAME_WIDTH, Engine.GAME_HEIGHT);
             graphics.setColor(Color.gray);
             graphics.fillRoundRect(64, 28, 320, 32, 8, 100);
+            graphics.fillRoundRect(64, 76, 320, 32, 8, 100);
             if (player.getHealth() >= 50) {
                 graphics.setColor(Color.green);
             } else {
@@ -172,15 +173,25 @@ public class Game extends BasicGameState implements KeyListener{
                     graphics.setColor(Color.red);
                 }
             }
-            if (player.getHealth() > 1.5 ) {
-                for (int i = 0; i < 6; i++) {
+            if (player.getHealth() > 1.5) {
+                for (int i = 0; i < 5; i++) {
                     graphics.fillRoundRect(64, 28, (float) ((player.getHealth() * 3.2)), 32, 8, 100);
+                }
+            }
+            if (player.getSprintEnergy() >= 15) {
+                graphics.setColor(Color.blue);
+            } else {
+                graphics.setColor(Color.orange);
+            }
+            if (player.getSprintEnergy() > 1.5) {
+                for (int i = 0; i < 5; i++) {
+                    graphics.fillRoundRect(64, 76, (float) (player.getSprintEnergy() * 3.2), 32, 8, 100);
                 }
             }
             graphics.setColor(Color.red);
             graphics.setFont(font);
             graphics.drawImage(healthIcon, 16, 28);
-            graphics.drawImage(sprintIcon, 16, 64);
+            graphics.drawImage(sprintIcon, 16, 76);
             graphics.setColor(Color.black);
             graphics.setFont(fpsFont);
             graphics.drawString("FPS:" + fps, Engine.GAME_WIDTH - 80, Engine.GAME_HEIGHT - 16);
@@ -229,19 +240,20 @@ public class Game extends BasicGameState implements KeyListener{
                 break;
             }
             case Input.KEY_UP: {
-                player.setJumping(true);
+                if (player.getSprintEnergy() >= 15) {
+                    player.setJumping(true);
+                }
                 break;
             }
             case Input.KEY_LSHIFT: {
-                player.setSprintRequested(true);
+                if (player.getSprintEnergy() >= 15) {
+                    player.setSprintRequested(true);
+                }
                 break;
             }
             case Input.KEY_SPACE: {
                 player.setSprintRequested(false);
                 weaponLoader.getEquippedWeapon().update();
-                break;
-            }
-            case Input.KEY_1: {
                 break;
             }
             case Input.KEY_ESCAPE: {
@@ -256,6 +268,14 @@ public class Game extends BasicGameState implements KeyListener{
                 if (!player.isAlive()) {
                     isRestartRequested = true;
                 }
+                break;
+            }
+            case Input.KEY_1: {
+                weaponLoader.setWeapon(weaponLoader.getWeaponAt(0));
+                break;
+            }
+            case Input.KEY_2: {
+                weaponLoader.setWeapon(weaponLoader.getWeaponAt(1));
                 break;
             }
             default: {
