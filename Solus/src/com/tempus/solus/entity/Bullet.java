@@ -39,20 +39,19 @@ public class Bullet extends Entity {
     //@Override
     public void render(float playerX, float playerY, boolean isFacingLeft) {
         isRendered = true;
-        if(isFacingLeft) {
+        if (isFacingLeft) {
             xVel = -xVel;
         }
-        if(!isHit && isRendered) {
+        if (!isHit && isRendered) {
             xPos = playerX;
             initialXPos = playerX;
             bullet.draw(xPos, playerY + 30, 4);
-
         }
     }
 
     //@Override
     public void update(int delta) {
-        if(isRendered) {
+        if (isRendered) {
             xPos += xVel;
         }
         if((xPos > (initialXPos + range)) || (xPos < (initialXPos - range)) || isHit) {

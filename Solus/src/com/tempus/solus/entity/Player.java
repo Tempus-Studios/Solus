@@ -10,6 +10,7 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
 import org.newdawn.slick.state.StateBasedGame;
 
+import java.nio.file.WatchEvent;
 import java.util.logging.ConsoleHandler;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
@@ -20,6 +21,8 @@ public class Player extends Entity {
     private SpriteSheet playerRightSheet;
     private Animation playerLeftAnimation;
     private Animation playerRightAnimation;
+    private Weapon weapon1;
+    private Weapon weapon2;
     private boolean isSprinting;
     private boolean isSprintRequested;
     private float sprintEnergy;
@@ -31,7 +34,7 @@ public class Player extends Entity {
         consoleHandler.setFormatter(new SimpleFormatter());
         logger.addHandler(consoleHandler);
         try {
-            init();
+            this.init();
         } catch (SlickException ex) {
             logger.severe("Failed to initialize player");
         }
@@ -177,7 +180,7 @@ public class Player extends Entity {
             health = 100;
         }
         if (health == 0) {
-            isAlive = false;
+            //isAlive = false;
         } else {
             isAlive = true;
         }
@@ -190,4 +193,3 @@ public class Player extends Entity {
         }
     }
 }
-

@@ -1,28 +1,33 @@
 package com.tempus.solus.entity;
 
-import org.newdawn.slick.Animation;
-import org.newdawn.slick.Graphics;
-import org.newdawn.slick.SlickException;
-import org.newdawn.slick.SpriteSheet;
-
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.logging.ConsoleHandler;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 
+import com.tempus.solus.WeaponLoader;
+import org.newdawn.slick.Animation;
+import org.newdawn.slick.Graphics;
+import org.newdawn.slick.SlickException;
+import org.newdawn.slick.SpriteSheet;
+
+
+
 public class Weapon extends Entity {
-    //saves some typing lel
     private static final Logger logger = Logger.getLogger(Weapon.class.getName());
-    public static String WEAPON_DIRECTORY = "/res/sprite/weapons/";
+    private Player player;
     private Animation leftWeaponAnimation;
     private Animation rightWeaponAnimation;
+    public static String WEAPON_DIRECTORY = "/res/sprite/weapons/";
     private String[] path = new String[2];
+    public List<Bullet> magazine = new LinkedList<>();
+    private String weaponName;
+    private int weaponID;
     private int range;
     private int damage;
     private int shotsFired;
-    private String weaponName;
-    public List<Bullet> magazine = new ArrayList<Bullet>();
     private int magSize;
     private int ammo;
     private int totalAmmo;
@@ -43,13 +48,14 @@ public class Weapon extends Entity {
         consoleHandler.setFormatter(new SimpleFormatter());
         logger.addHandler(consoleHandler);
         try {
-            init(pathLeft, pathRight, name, dmg, rng, rof, mag, auto, type);
+            this.init(pathLeft, pathRight, name, dmg, rng, rof, mag, auto, type);
         } catch (SlickException ex) {
             logger.info(ex.getMessage());
         }
     }
 
     public void init(String pathLeft, String pathRight, String name, int dmg, int rng, int rof, int mag, boolean auto, WeaponType type) throws SlickException {
+        player = new Player();
         playerXPos = 0;
         playerYPos = 0;
         playerFacingLeft = false;
@@ -89,16 +95,16 @@ public class Weapon extends Entity {
         }
     }
 
-    private void shoot() {
-        magazine.get(0).render(playerXPos, playerYPos, playerFacingLeft);
+    public String[] getPath() {
+        return path;
     }
 
-    public String getName() {
+    public String getWeaponName() {
         return weaponName;
     }
 
-    public String[] getPath() {
-        return path;
+    public int getWeaponID() {
+        return weaponID;
     }
 
     public int getAmmo() {
@@ -117,64 +123,75 @@ public class Weapon extends Entity {
     public int getShots() {
         return shotsFired;
     }
-    public void update() {
-            //semi-auto
-            if (!this.isAutomatic()) {
-                if (this.isFacingLeft) {
-                    leftWeaponAnimation.restart();
-                    leftWeaponAnimation.setAutoUpdate(true);
-                    if(leftWeaponAnimation.getFrame() == 1) {
-                        shoot();
-                        shotsFired += 1;
-                        logger.info("Fired semi-automatically: " + shotsFired);
-                    }
-                    leftWeaponAnimation.stopAt(2);
-                    return;
-                } else {
-                    rightWeaponAnimation.restart();
-                    rightWeaponAnimation.setAutoUpdate(true);
-                    if(rightWeaponAnimation.getFrame() == 1) {
-                        shoot();
-                        shotsFired += 1;
-                        logger.info("Fired semi-automatically: " + shotsFired);
-                    }
-                    rightWeaponAnimation.stopAt(2);
-                    return;
-                }
-                //automatic
-            } else {
-                if (isFacingLeft) {
-                    leftWeaponAnimation.setAutoUpdate(true);
-                    if (leftWeaponAnimation.getFrame() == 1) {
-                           shotsFired += 1;
-                    }
-                } else {
-                    rightWeaponAnimation.setAutoUpdate(true);
-                    if (rightWeaponAnimation.getFrame() == 1) {
-                          shotsFired += 1;
-                    }
-                }
-            }
 
+    private void shoot() {
+        magazine.get(0).render(playerXPos, playerYPos, playerFacingLeft);
+        for (Bullet bullet : magazine) {
+            bullet.render(playerXPos, playerYPos, isFacingLeft);
+        }
     }
 
     public void reload() throws SlickException {
 
     }
+
     public void reset() {
-        if(this.isAutomatic()) {
+        if (this.isAutomatic()) {
             leftWeaponAnimation.setAutoUpdate(false);
             rightWeaponAnimation.setAutoUpdate(false);
         }
         leftWeaponAnimation.setCurrentFrame(0);
         rightWeaponAnimation.setCurrentFrame(0);
     }
+
     public int getDamage() {
         return damage;
     }
 
+    public void update(int delta) {
+        //semi-auto
+        if (!this.isAutomatic()) {
+            if (this.isFacingLeft) {
+                leftWeaponAnimation.restart();
+                leftWeaponAnimation.setAutoUpdate(true);
+                if (leftWeaponAnimation.getFrame() == 1) {
+                    shoot();
+                    shotsFired += 1;
+                    logger.info("Fired semi-automatically: " + shotsFired);
+                }
+                leftWeaponAnimation.stopAt(2);
+                //return;
+            } else {
+                rightWeaponAnimation.restart();
+                rightWeaponAnimation.setAutoUpdate(true);
+                if (rightWeaponAnimation.getFrame() == 1) {
+                    shoot();
+                    shotsFired += 1;
+                    logger.info("Fired semi-automatically: " + shotsFired);
+                }
+                rightWeaponAnimation.stopAt(2);
+                //return;
+            }
+            //automatic
+        } else {
+            if (isFacingLeft) {
+                leftWeaponAnimation.setAutoUpdate(true);
+                if (leftWeaponAnimation.getFrame() == 1) {
+                    shotsFired += 1;
+                }
+            } else {
+                rightWeaponAnimation.setAutoUpdate(true);
+                if (rightWeaponAnimation.getFrame() == 1) {
+                    shotsFired += 1;
+                }
+            }
+        }
+        //update bullets
+        for (Bullet bullet : magazine) {
+            bullet.update(delta);
+        }
+    }
 
-    //@Override
     public void render(Graphics graphics, float playerX, float playerY, boolean isFacingLeft) {
         playerFacingLeft = isFacingLeft;
         isRendered = true;
@@ -183,5 +200,6 @@ public class Weapon extends Entity {
         } else {
             rightWeaponAnimation.draw(playerX + 40, playerY - 35, 128, 128);
         }
+        //render bullets
     }
 }

@@ -3,8 +3,8 @@ package com.tempus.solus;
 
 import com.tempus.solus.entity.Entity;
 import com.tempus.solus.entity.Player;
-import java.awt.Font;
 
+import java.awt.Font;
 import java.io.InputStream;
 import java.util.logging.ConsoleHandler;
 import java.util.logging.Logger;
@@ -50,6 +50,7 @@ public class Game extends BasicGameState implements KeyListener{
     private float enemyPos;
     private int timeElapsed;
     private int fps;
+    private int delta;
     public static final int STATE_ID = 1;
 
     public Game() {
@@ -117,6 +118,7 @@ public class Game extends BasicGameState implements KeyListener{
 
     @Override
     public void update(GameContainer gameContainer, StateBasedGame stateBasedGame, int delta) throws SlickException {
+        this.delta = delta;
         if (player.isAlive() && !isPaused) {
             player.update(delta);
             //bullet movement
@@ -147,10 +149,10 @@ public class Game extends BasicGameState implements KeyListener{
             timeElapsed += delta;
             fps = engine.getFPS();
         } else if (!player.isAlive()) {
-                if (isRestartRequested) {
-                    stateBasedGame.getState(Game.STATE_ID).init(gameContainer, stateBasedGame);
-                    stateBasedGame.enterState(Game.STATE_ID);
-                }
+            if (isRestartRequested) {
+                stateBasedGame.getState(Game.STATE_ID).init(gameContainer, stateBasedGame);
+                stateBasedGame.enterState(Game.STATE_ID);
+            }
         }
     }
 
@@ -253,7 +255,7 @@ public class Game extends BasicGameState implements KeyListener{
             }
             case Input.KEY_SPACE: {
                 player.setSprintRequested(false);
-                weaponLoader.getEquippedWeapon().update();
+                weaponLoader.getEquippedWeapon().update(delta);
                 break;
             }
             case Input.KEY_ESCAPE: {
@@ -276,6 +278,14 @@ public class Game extends BasicGameState implements KeyListener{
             }
             case Input.KEY_2: {
                 weaponLoader.setWeapon(weaponLoader.getWeaponAt(1));
+                break;
+            }
+            case Input.KEY_Q: {
+                weaponLoader.cycleWeapon(-1, weaponLoader.getCurrentWeaponIndex());
+                break;
+            }
+            case Input.KEY_E: {
+                weaponLoader.cycleWeapon(1, weaponLoader.getCurrentWeaponIndex());
                 break;
             }
             default: {
