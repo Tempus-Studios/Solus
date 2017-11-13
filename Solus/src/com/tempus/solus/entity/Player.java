@@ -171,7 +171,7 @@ public class Player extends Entity {
         xPos += xVel;
         yPos += yVel;
         if (!isSprinting) {
-            sprintEnergy += 0.25f;
+            sprintEnergy += 0.2f;
         }
         if (health < 0) {
             health = 0;

@@ -35,10 +35,18 @@ public class Menu extends BasicGameState implements KeyListener {
     private int stars[][] = new int[25][2];
     private int menuBarY = Engine.GAME_HEIGHT / 2 - 50;
     private int nextState;
-    private static final int PLAY = Engine.GAME_HEIGHT / 2 -50;
+    private static final int PLAY = Engine.GAME_HEIGHT / 2 - 50;
     private static final int SETTINGS = PLAY + 100;
     private static final int QUIT = SETTINGS + 100;
+    private static final int ABOUT = PLAY;
+    private static final int CONTROLS = ABOUT + 75;
+    private static final int AUDIO_VIDEO  =CONTROLS + 75;
+    private static final int BACK = AUDIO_VIDEO + 75;
     public static final int STATE_ID = 0;
+    public enum MenuState {
+        MAIN_MENU, SETTINGS, ABOUT, CONTROLS, AUDIO_VIDEO
+    }
+    public MenuState menuState = MenuState.MAIN_MENU;
 
     public int getID() {
         return STATE_ID;
@@ -115,66 +123,132 @@ public class Menu extends BasicGameState implements KeyListener {
             int size = starLocationGenerator.nextInt(4);
             graphics.fillOval(stars[i][0], stars[i][1], size, size);
         }
-        graphics.drawString("SOLUS", Engine.GAME_WIDTH / 4 + 64, Engine.GAME_HEIGHT / 8);
-        graphics.fillRoundRect(Engine.GAME_WIDTH/2 - 162.5f, menuBarY, 325,75,5);
-        graphics.setFont(optionsFont);
-        if (menuBarY == PLAY) {
-            graphics.setColor(Color.black);
+
+        if(menuState == MenuState.MAIN_MENU) {
+            graphics.drawString("SOLUS", Engine.GAME_WIDTH / 4 + 64, Engine.GAME_HEIGHT / 8);
+            graphics.fillRoundRect(Engine.GAME_WIDTH / 2 - 162.5f, menuBarY, 325, 75, 5);
+            graphics.setFont(optionsFont);
+
+            if (menuBarY == PLAY) {
+                graphics.setColor(Color.black);
+            } else {
+                graphics.setColor(Color.white);
+            }
+            graphics.drawString("PLAY", Engine.GAME_WIDTH / 2 - 75, PLAY + 20);
+            if (menuBarY == SETTINGS) {
+                graphics.setColor(Color.black);
+            } else {
+                graphics.setColor(Color.white);
+            }
+            graphics.drawString("SETTINGS", Engine.GAME_WIDTH / 2 - 140, SETTINGS + 20);
+            if (menuBarY == QUIT) {
+                graphics.setColor(Color.black);
+            } else {
+                graphics.setColor(Color.white);
+            }
+            graphics.drawString("QUIT", Engine.GAME_WIDTH / 2 - 75, QUIT + 20);
         } else {
-            graphics.setColor(Color.white);
+            graphics.drawString("SETTINGS", Engine.GAME_WIDTH / 4 + 32, Engine.GAME_HEIGHT / 8);
+            graphics.fillRoundRect(Engine.GAME_WIDTH / 2 - 162.5f, menuBarY, 325, 75, 5);
+            graphics.setFont(optionsFont);
+
+            if (menuBarY == ABOUT) {
+                graphics.setColor(Color.black);
+            } else {
+                graphics.setColor(Color.white);
+            }
+            graphics.drawString("ABOUT", Engine.GAME_WIDTH / 2 - 75, ABOUT + 20);
+            if (menuBarY == CONTROLS) {
+                graphics.setColor(Color.black);
+            } else {
+                graphics.setColor(Color.white);
+            }
+            graphics.drawString("CONTROLS", Engine.GAME_WIDTH / 2 - 140, CONTROLS + 20);
+            if (menuBarY == AUDIO_VIDEO) {
+                graphics.setColor(Color.black);
+            } else {
+                graphics.setColor(Color.white);
+            }
+            graphics.drawString("AUDIO/VIDEO", Engine.GAME_WIDTH / 2 - 75, AUDIO_VIDEO + 20);
+            if (menuBarY == BACK) {
+                graphics.setColor(Color.black);
+            } else {
+                graphics.setColor(Color.white);
+            }
+            graphics.drawString("BACK", Engine.GAME_WIDTH / 2 - 75, BACK + 20);
         }
-        graphics.drawString("PLAY", Engine.GAME_WIDTH / 2 - 75, PLAY + 20);
-        if (menuBarY == SETTINGS) {
-            graphics.setColor(Color.black);
-        } else {
-            graphics.setColor(Color.white);
-        }
-        graphics.drawString("SETTINGS", Engine.GAME_WIDTH / 2 - 140, SETTINGS + 20);
-        if (menuBarY ==QUIT) {
-            graphics.setColor(Color.black);
-        } else {
-            graphics.setColor(Color.white);
-        }
-        graphics.drawString("QUIT", Engine.GAME_WIDTH / 2 - 75, QUIT + 20);
     }
 
     @Override
     public void keyPressed(int code, char c) {
-        switch (code) {
-            case Input.KEY_UP: {
-                if (menuBarY == PLAY) {
-                    menuBarY = QUIT;
-                } else {
-                    menuBarY -= 100;
-                }
-                break;
-            }
-            case Input.KEY_DOWN: {
-                if (menuBarY == QUIT) {
-                    menuBarY = PLAY;
-                } else {
-                    menuBarY += 100;
-                }
-                break;
-            }
-            case Input.KEY_ENTER: {
-                isStateChangeRequested = true;
-                if (menuBarY == PLAY) {
-                    nextState = Game.STATE_ID;
-                } else {
-                    if (menuBarY == SETTINGS) {
-                        nextState = Settings.STATE_ID;
+        if(menuState == MenuState.MAIN_MENU) {
+            switch (code) {
+                case Input.KEY_UP: {
+                    if (menuBarY == PLAY) {
+                        menuBarY = QUIT;
                     } else {
-                        if (menuBarY == QUIT) {
-                            //maybe prompt an 'are you sure you wanna quit' dialog
-                            isCloseRequested = true;
-                        }
+                        menuBarY -= 100;
                     }
+                    break;
                 }
-                break;
+                case Input.KEY_DOWN: {
+                    if (menuBarY == QUIT) {
+                        menuBarY = PLAY;
+                    } else {
+                        menuBarY += 100;
+                    }
+                    break;
+                }
+                case Input.KEY_ENTER: {
+                    isStateChangeRequested = true;
+                    if (menuBarY == PLAY) {
+                        nextState = Game.STATE_ID;
+                    } else if (menuBarY == SETTINGS) {
+                        menuBarY = PLAY;
+                        menuState = MenuState.SETTINGS;
+                    } else if (menuBarY == QUIT) {
+                        //maybe prompt an 'are you sure you wanna quit' dialog
+                        isCloseRequested = true;
+                    }
+                    break;
+                }
+                default: {
+                    break;
+                }
             }
-            default: {
-                break;
+        } else if(menuState == MenuState.SETTINGS){
+            switch (code) {
+                case Input.KEY_UP: {
+                    if (menuBarY == ABOUT) {
+                        menuBarY = BACK;
+                    } else {
+                        menuBarY -= 75;
+                    }
+                    break;
+                }
+                case Input.KEY_DOWN: {
+                    if (menuBarY == QUIT) {
+                        menuBarY = PLAY;
+                    } else {
+                        menuBarY += 75;
+                    }
+                    break;
+                }
+                case Input.KEY_ENTER: {
+                    if (menuBarY == ABOUT) {
+                        menuState = MenuState.ABOUT;
+                    } else if (menuBarY == CONTROLS) {
+                        menuState = MenuState.CONTROLS;
+                    } else if (menuBarY == AUDIO_VIDEO) {
+                        menuState = MenuState.AUDIO_VIDEO;
+                    } else if (menuBarY == BACK) {
+                        menuState = MenuState.SETTINGS;
+                    }
+                    break;
+                }
+                default: {
+                    break;
+                }
             }
         }
     }

@@ -38,7 +38,7 @@ public class Weapon extends Entity {
     private float playerYPos;
     private boolean playerFacingLeft;
     public enum WeaponType {
-        PISTOL, RIFLE, TANK, ALIENRIFLE, SNIPER, LAUNCHER
+        PISTOL, RIFLE, TANK, BOLT_RIFLE, SNIPER, LAUNCHER
     }
     private WeaponType weaponType;
 

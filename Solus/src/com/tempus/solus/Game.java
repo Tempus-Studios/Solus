@@ -23,10 +23,12 @@ import org.newdawn.slick.UnicodeFont;
 import org.newdawn.slick.font.effects.ColorEffect;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
+import org.newdawn.slick.tiled.TiledMap;
 import org.newdawn.slick.util.ResourceLoader;
 
 public class Game extends BasicGameState implements KeyListener{
     private static final Logger logger = Logger.getLogger(Solus.class.getName());
+    private TiledMap testTM;
     private Engine engine;
     private Player player;
     private Entity tank;
@@ -69,6 +71,7 @@ public class Game extends BasicGameState implements KeyListener{
     public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
         engine = new Engine();
         player = new Player();
+        testTM = new TiledMap("/res/level/test-level-map.tmx");
         loadingFont = null;
         loadingFont2 = null;
         isPaused = false;
@@ -163,9 +166,12 @@ public class Game extends BasicGameState implements KeyListener{
             //Draw background
             graphics.setColor(Color.white);
             graphics.fillRect(0, 0, Engine.GAME_WIDTH, Engine.GAME_HEIGHT);
+            graphics.scale(2,2);
+            testTM.render(0, -320);
+            graphics.scale(.5f,.5f);
             graphics.setColor(Color.gray);
             graphics.fillRoundRect(64, 28, 320, 32, 8, 100);
-            graphics.fillRoundRect(64, 76, 320, 32, 8, 100);
+            graphics.fillRoundRect(64, 76, 240, 24, 8, 100);
             if (player.getHealth() >= 50) {
                 graphics.setColor(Color.green);
             } else {
@@ -187,13 +193,13 @@ public class Game extends BasicGameState implements KeyListener{
             }
             if (player.getSprintEnergy() > 1.5) {
                 for (int i = 0; i < 5; i++) {
-                    graphics.fillRoundRect(64, 76, (float) (player.getSprintEnergy() * 3.2), 32, 8, 100);
+                    graphics.fillRoundRect(64, 76, (float) (player.getSprintEnergy() * 2.4), 24, 8, 100);
                 }
             }
             graphics.setColor(Color.red);
             graphics.setFont(font);
-            graphics.drawImage(healthIcon, 16, 28);
-            graphics.drawImage(sprintIcon, 16, 76);
+            healthIcon.draw(16,28);
+            sprintIcon.draw(16,76, .8f);
             graphics.setColor(Color.black);
             graphics.setFont(fpsFont);
             graphics.drawString("FPS:" + fps, Engine.GAME_WIDTH - 80, Engine.GAME_HEIGHT - 16);
