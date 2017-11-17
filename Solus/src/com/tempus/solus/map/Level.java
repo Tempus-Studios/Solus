@@ -35,9 +35,9 @@ public class Level {
     }
 
     public void render(Graphics graphics , int x, int y) {
-        graphics.scale(2,2);
+        graphics.scale(1, 1);
         map.render(x,y);
-        graphics.scale(.5f,.5f);
+        //graphics.scale(.5f,.5f);
     }
 
 }

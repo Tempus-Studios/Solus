@@ -1,6 +1,7 @@
 package com.tempus.solus;
 
 
+import com.tempus.solus.map.Level;
 import com.tempus.solus.entity.Entity;
 import com.tempus.solus.entity.Player;
 
@@ -28,8 +29,9 @@ import org.newdawn.slick.util.ResourceLoader;
 
 public class Game extends BasicGameState implements KeyListener{
     private static final Logger logger = Logger.getLogger(Solus.class.getName());
-    private TiledMap testTM;
+    //private TiledMap testTM;
     private Engine engine;
+    private Level level;
     private Player player;
     private Entity tank;
     private WeaponLoader weaponLoader;
@@ -70,8 +72,9 @@ public class Game extends BasicGameState implements KeyListener{
     @Override
     public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
         engine = new Engine();
+        level = new Level("LEVEL_TEST", "/res/level/test-level-map.tmx");
         player = new Player();
-        testTM = new TiledMap("/res/level/test-level-map.tmx");
+        //testTM = new TiledMap("/res/level/test-level-map.tmx");
         loadingFont = null;
         loadingFont2 = null;
         isPaused = false;
@@ -109,8 +112,6 @@ public class Game extends BasicGameState implements KeyListener{
         healthIcon = new Image("/res/sprite/icons/HealthIcon.png");
         sprintIcon = new Image("/res/sprite/icons/SprintEnergyIcon.png");
         ammoIcon = new Image("/res/sprite/icons/AmmoIcon.png");
-
-
         tankLeftSheet = new SpriteSheet("/res/sprite/tank-left.png", 32, 32);
         tankRightSheet = new SpriteSheet("/res/sprite/tank-right.png", 32, 32);
         tankLeftAnimation = new Animation(tankLeftSheet, 200);
@@ -166,9 +167,10 @@ public class Game extends BasicGameState implements KeyListener{
             //Draw background
             graphics.setColor(Color.white);
             graphics.fillRect(0, 0, Engine.GAME_WIDTH, Engine.GAME_HEIGHT);
-            graphics.scale(2,2);
-            testTM.render(0, -320);
-            graphics.scale(.5f,.5f);
+            level.render(graphics, 0, -108);
+            //graphics.scale(2,2);
+            //testTM.render(0, -320);
+            //graphics.scale(.5f,.5f);
             graphics.setColor(Color.gray);
             graphics.fillRoundRect(64, 28, 320, 32, 8, 100);
             graphics.fillRoundRect(64, 76, 240, 24, 8, 100);
@@ -206,9 +208,9 @@ public class Game extends BasicGameState implements KeyListener{
             //graphics.drawString("Time: " + timeElapsed / 1000, Engine.GAME_WIDTH / 2, Engine.GAME_HEIGHT / 2);
             //Render sprites
             if (enemyFacingLeft) {
-                tankLeftAnimation.draw(enemyPos, Engine.GAME_HEIGHT - 224, 192, 192);
+                tankLeftAnimation.draw(enemyPos, Engine.GAME_HEIGHT - 256, 192, 192);
             } else {
-                tankRightAnimation.draw(enemyPos, Engine.GAME_HEIGHT - 224, 192, 192);
+                tankRightAnimation.draw(enemyPos, Engine.GAME_HEIGHT - 256, 192, 192);
             }
             weaponLoader.getEquippedWeapon().render(graphics, player.getXPos(), player.getYPos(), player.isFacingLeft());
             player.render(graphics);

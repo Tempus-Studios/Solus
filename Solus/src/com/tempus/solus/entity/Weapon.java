@@ -1,18 +1,17 @@
 package com.tempus.solus.entity;
 
-import java.util.ArrayList;
+import com.tempus.solus.WeaponLoader;
+
 import java.util.LinkedList;
 import java.util.List;
 import java.util.logging.ConsoleHandler;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 
-import com.tempus.solus.WeaponLoader;
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
-
 
 
 public class Weapon extends Entity {
