@@ -88,10 +88,10 @@ public class Player extends Entity {
         if (xPos > Engine.GAME_WIDTH - 160) {
             xPos = Engine.GAME_WIDTH - 160;
         }
-        if (yPos > ((float) (Engine.GAME_HEIGHT - 160))) {
-            yPos = Engine.GAME_HEIGHT - 160;
+        if (yPos > Engine.GAME_HEIGHT - 192) {
+            yPos = Engine.GAME_HEIGHT - 192;
         }
-        if (yPos < ((float) (Engine.GAME_HEIGHT - 160))) {
+        if (yPos < Engine.GAME_HEIGHT - 192) {
             yVel += yAcc;
         }
         //Moving left
@@ -111,7 +111,11 @@ public class Player extends Entity {
         if (!isMovingLeft && !isMovingRight) {
             xVel = 0;
         }
+<<<<<<< HEAD
         /*if (xVel == 0 || yPos < Engine.GAME_HEIGHT - 160) {
+=======
+        if (xVel == 0 || yPos < Engine.GAME_HEIGHT - 192) {
+>>>>>>> bd8f79fcaa009714ab408e93c690919a48e823db
             playerLeftAnimation.setAutoUpdate(false);
             playerRightAnimation.setAutoUpdate(false);
             playerLeftAnimation.setCurrentFrame(0);
@@ -136,7 +140,7 @@ public class Player extends Entity {
         }*/
         //Jumping
         if (isJumping) {
-            if (yPos == Engine.GAME_HEIGHT - 160) {
+            if (yPos == Engine.GAME_HEIGHT - 192) {
                 yVel = -9;
                 sprintEnergy -= 15;
             }

@@ -59,10 +59,17 @@ public class Level {
         this.player = player;
     }
 
+<<<<<<< HEAD
     public void render(Graphics graphics) {
         graphics.scale(2,2);
         map.render(xPos,-320);
         graphics.scale(.5f,.5f);
+=======
+    public void render(Graphics graphics , int x, int y) {
+        graphics.scale(1, 1);
+        map.render(x,y);
+        //graphics.scale(.5f,.5f);
+>>>>>>> bd8f79fcaa009714ab408e93c690919a48e823db
     }
     public void update(int delta) {
         if(movingLeft) {
