@@ -36,6 +36,9 @@ public class Level {
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> parent of 6d70de5... Merge branch 'master' of https://github.com/Tempus-Studios/Solus
     public void render(Graphics graphics) {
 =======
     public void render(Graphics graphics , int x, int y) {
@@ -43,12 +46,6 @@ public class Level {
         graphics.scale(2,2);
         map.render(x,y);
         graphics.scale(.5f,.5f);
-=======
-    public void render(Graphics graphics , int x, int y) {
-        graphics.scale(1, 1);
-        map.render(x,y);
-        //graphics.scale(.5f,.5f);
->>>>>>> bd8f79fcaa009714ab408e93c690919a48e823db
     }
 
 }

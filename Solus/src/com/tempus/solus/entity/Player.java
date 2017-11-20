@@ -80,10 +80,10 @@ public class Player extends Entity {
         if (xPos > Engine.GAME_WIDTH - 160) {
             xPos = Engine.GAME_WIDTH - 160;
         }
-        if (yPos > Engine.GAME_HEIGHT - 192) {
-            yPos = Engine.GAME_HEIGHT - 192;
+        if (yPos > ((float) (Engine.GAME_HEIGHT - 160))) {
+            yPos = Engine.GAME_HEIGHT - 160;
         }
-        if (yPos < Engine.GAME_HEIGHT - 192) {
+        if (yPos < ((float) (Engine.GAME_HEIGHT - 160))) {
             yVel += yAcc;
         }
         //Moving left
@@ -105,6 +105,7 @@ public class Player extends Entity {
         }
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
         /*if (xVel == 0 || yPos < Engine.GAME_HEIGHT - 160) {
 =======
         if (xVel == 0 || yPos < Engine.GAME_HEIGHT - 192) {
@@ -112,6 +113,9 @@ public class Player extends Entity {
 =======
         if (xVel == 0 || yPos < Engine.GAME_HEIGHT - 160) {
 >>>>>>> parent of 0d60b46... Implemented Sidescrolling
+=======
+        /*if (xVel == 0 || yPos < Engine.GAME_HEIGHT - 160) {
+>>>>>>> parent of 6d70de5... Merge branch 'master' of https://github.com/Tempus-Studios/Solus
             playerLeftAnimation.setAutoUpdate(false);
             playerRightAnimation.setAutoUpdate(false);
             playerLeftAnimation.setCurrentFrame(0);
@@ -136,7 +140,7 @@ public class Player extends Entity {
         }
         //Jumping
         if (isJumping) {
-            if (yPos == Engine.GAME_HEIGHT - 192) {
+            if (yPos == Engine.GAME_HEIGHT - 160) {
                 yVel = -9;
                 sprintEnergy -= 15;
             }

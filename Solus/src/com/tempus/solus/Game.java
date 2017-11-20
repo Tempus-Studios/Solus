@@ -1,7 +1,6 @@
 package com.tempus.solus;
 
 
-import com.tempus.solus.map.Level;
 import com.tempus.solus.entity.Entity;
 import com.tempus.solus.entity.Player;
 
@@ -31,15 +30,15 @@ public class Game extends BasicGameState implements KeyListener{
     private static final Logger logger = Logger.getLogger(Solus.class.getName());
 <<<<<<< HEAD
 <<<<<<< HEAD
-    private Level currentLevel;
+<<<<<<< HEAD
 =======
->>>>>>> bd8f79fcaa009714ab408e93c690919a48e823db
+>>>>>>> parent of 6d70de5... Merge branch 'master' of https://github.com/Tempus-Studios/Solus
+    private Level currentLevel;
     //private TiledMap testTM;
 =======
     private TiledMap testTM;
 >>>>>>> parent of 0d60b46... Implemented Sidescrolling
     private Engine engine;
-    private Level level;
     private Player player;
     private Entity tank;
     private WeaponLoader weaponLoader;
@@ -80,8 +79,8 @@ public class Game extends BasicGameState implements KeyListener{
     @Override
     public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
         engine = new Engine();
-        level = new Level("LEVEL_TEST", "/res/level/test-level-map.tmx");
         player = new Player();
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
         currentLevel = new Level("Testing Level", "/res/level/test-level-map.tmx");
@@ -93,6 +92,11 @@ public class Game extends BasicGameState implements KeyListener{
 =======
         testTM = new TiledMap("/res/level/test-level-map.tmx");
 >>>>>>> parent of 0d60b46... Implemented Sidescrolling
+=======
+        currentLevel = new Level("Testing Level", "/res/level/test-level-map.tmx");
+        currentLevel.setPlayer(player);
+        //testTM = new TiledMap("");
+>>>>>>> parent of 6d70de5... Merge branch 'master' of https://github.com/Tempus-Studios/Solus
         loadingFont = null;
         loadingFont2 = null;
         isPaused = false;
@@ -130,6 +134,8 @@ public class Game extends BasicGameState implements KeyListener{
         healthIcon = new Image("/res/sprite/icons/HealthIcon.png");
         sprintIcon = new Image("/res/sprite/icons/SprintEnergyIcon.png");
         ammoIcon = new Image("/res/sprite/icons/AmmoIcon.png");
+
+
         tankLeftSheet = new SpriteSheet("/res/sprite/tank-left.png", 32, 32);
         tankRightSheet = new SpriteSheet("/res/sprite/tank-right.png", 32, 32);
         tankLeftAnimation = new Animation(tankLeftSheet, 200);
@@ -187,13 +193,11 @@ public class Game extends BasicGameState implements KeyListener{
             graphics.fillRect(0, 0, Engine.GAME_WIDTH, Engine.GAME_HEIGHT);
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> parent of 6d70de5... Merge branch 'master' of https://github.com/Tempus-Studios/Solus
             //graphics.scale(2,2);
             currentLevel.render(graphics);
-=======
-            level.render(graphics, 0, -108);
-            //graphics.scale(2,2);
-            //testTM.render(0, -320);
->>>>>>> bd8f79fcaa009714ab408e93c690919a48e823db
             //graphics.scale(.5f,.5f);
 =======
             graphics.scale(2,2);
@@ -237,9 +241,9 @@ public class Game extends BasicGameState implements KeyListener{
             //graphics.drawString("Time: " + timeElapsed / 1000, Engine.GAME_WIDTH / 2, Engine.GAME_HEIGHT / 2);
             //Render sprites
             if (enemyFacingLeft) {
-                tankLeftAnimation.draw(enemyPos, Engine.GAME_HEIGHT - 256, 192, 192);
+                tankLeftAnimation.draw(enemyPos, Engine.GAME_HEIGHT - 224, 192, 192);
             } else {
-                tankRightAnimation.draw(enemyPos, Engine.GAME_HEIGHT - 256, 192, 192);
+                tankRightAnimation.draw(enemyPos, Engine.GAME_HEIGHT - 224, 192, 192);
             }
             weaponLoader.getEquippedWeapon().render(graphics, player.getXPos(), player.getYPos(), player.isFacingLeft());
             player.render(graphics);
