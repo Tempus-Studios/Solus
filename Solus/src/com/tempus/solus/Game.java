@@ -6,10 +6,13 @@ import com.tempus.solus.entity.Player;
 
 import java.awt.Font;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.ConsoleHandler;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 
+import com.tempus.solus.map.Level;
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
@@ -28,7 +31,8 @@ import org.newdawn.slick.util.ResourceLoader;
 
 public class Game extends BasicGameState implements KeyListener{
     private static final Logger logger = Logger.getLogger(Solus.class.getName());
-    private TiledMap testTM;
+    private Level currentLevel;
+    //private TiledMap testTM;
     private Engine engine;
     private Player player;
     private Entity tank;
@@ -50,6 +54,7 @@ public class Game extends BasicGameState implements KeyListener{
     public UnicodeFont font;
     public UnicodeFont fpsFont;
     private float enemyPos;
+    private float mapXPos;
     private int timeElapsed;
     private int fps;
     private int delta;
@@ -71,7 +76,9 @@ public class Game extends BasicGameState implements KeyListener{
     public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
         engine = new Engine();
         player = new Player();
-        testTM = new TiledMap("/res/level/test-level-map.tmx");
+        currentLevel = new Level("Testing Level", "/res/level/test-level-map.tmx");
+        currentLevel.setPlayer(player);
+        //testTM = new TiledMap("");
         loadingFont = null;
         loadingFont2 = null;
         isPaused = false;
@@ -124,6 +131,7 @@ public class Game extends BasicGameState implements KeyListener{
         this.delta = delta;
         if (player.isAlive() && !isPaused) {
             player.update(delta);
+            currentLevel.update(delta);
             //bullet movement
             weaponLoader.getEquippedWeapon().magazine.get(0).update(delta);
 
@@ -166,9 +174,9 @@ public class Game extends BasicGameState implements KeyListener{
             //Draw background
             graphics.setColor(Color.white);
             graphics.fillRect(0, 0, Engine.GAME_WIDTH, Engine.GAME_HEIGHT);
-            graphics.scale(2,2);
-            testTM.render(0, -320);
-            graphics.scale(.5f,.5f);
+            //graphics.scale(2,2);
+            currentLevel.render(graphics);
+            //graphics.scale(.5f,.5f);
             graphics.setColor(Color.gray);
             graphics.fillRoundRect(64, 28, 320, 32, 8, 100);
             graphics.fillRoundRect(64, 76, 240, 24, 8, 100);
@@ -238,6 +246,7 @@ public class Game extends BasicGameState implements KeyListener{
                 player.setFacingLeft(true);
                 player.setMovingLeft(true);
                 player.setMovingRight(false);
+                currentLevel.setMovingLeft(true);
                 break;
             }
             case Input.KEY_RIGHT: {
@@ -245,6 +254,7 @@ public class Game extends BasicGameState implements KeyListener{
                 player.setFacingLeft(false);
                 player.setMovingLeft(false);
                 player.setMovingRight(true);
+                currentLevel.setMovingRight(true);
                 break;
             }
             case Input.KEY_UP: {
@@ -305,10 +315,12 @@ public class Game extends BasicGameState implements KeyListener{
         switch (code) {
             case Input.KEY_LEFT: {
                 player.setMovingLeft(false);
+                currentLevel.setMovingLeft(false);
                 break;
             }
             case Input.KEY_RIGHT: {
                 player.setMovingRight(false);
+                currentLevel.setMovingRight(false);
                 break;
             }
             case Input.KEY_SPACE: {
