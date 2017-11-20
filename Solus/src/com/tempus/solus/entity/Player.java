@@ -48,14 +48,6 @@ public class Player extends Entity {
         isSprintRequested = sprintRequested;
     }
 
-    public void setAnimations(boolean isAutoUpdate) {
-        playerLeftAnimation.setAutoUpdate(isAutoUpdate);
-        playerRightAnimation.setAutoUpdate(isAutoUpdate);
-    }
-    public void resetAnimation() {
-        playerRightAnimation.setCurrentFrame(0);
-        playerLeftAnimation.setCurrentFrame(0);
-    }
 
     public void init() throws SlickException {
         isAlive = true;
@@ -65,7 +57,7 @@ public class Player extends Entity {
         isSprinting = false;
         isJumping = false;
         isSprintRequested = false;
-        xPos = 128;
+        xPos = 32;
         yPos = Engine.GAME_HEIGHT - 160;
         xVel = 0;
         yVel = 0;
@@ -82,8 +74,8 @@ public class Player extends Entity {
     }
 
     public void update(int delta) throws SlickException {
-        if (xPos < 128) {
-            xPos = 128;
+        if (xPos < 32) {
+            xPos = 32;
         }
         if (xPos > Engine.GAME_WIDTH - 160) {
             xPos = Engine.GAME_WIDTH - 160;
@@ -97,12 +89,12 @@ public class Player extends Entity {
         //Moving left
         if (isMovingLeft) {
             isFacingLeft = true;
-           // xVel = -3;
+            xVel = -3;
         }
         //Moving right
         if (isMovingRight) {
             isFacingLeft = false;
-            //xVel = 3;
+            xVel = 3;
         }
         //Standing still
         if (isMovingLeft && isMovingRight) {
@@ -112,10 +104,14 @@ public class Player extends Entity {
             xVel = 0;
         }
 <<<<<<< HEAD
+<<<<<<< HEAD
         /*if (xVel == 0 || yPos < Engine.GAME_HEIGHT - 160) {
 =======
         if (xVel == 0 || yPos < Engine.GAME_HEIGHT - 192) {
 >>>>>>> bd8f79fcaa009714ab408e93c690919a48e823db
+=======
+        if (xVel == 0 || yPos < Engine.GAME_HEIGHT - 160) {
+>>>>>>> parent of 0d60b46... Implemented Sidescrolling
             playerLeftAnimation.setAutoUpdate(false);
             playerRightAnimation.setAutoUpdate(false);
             playerLeftAnimation.setCurrentFrame(0);
@@ -123,8 +119,8 @@ public class Player extends Entity {
         } else {
             playerLeftAnimation.setAutoUpdate(true);
             playerRightAnimation.setAutoUpdate(true);
-        }*/
-        /*if (isFacingLeft) {
+        }
+        if (isFacingLeft) {
             if (!isMovingLeft) {
                 if (xVel < 0) {
                     xVel += 0.01;
@@ -137,7 +133,7 @@ public class Player extends Entity {
                     xVel -= 0.01;
                 }
             }
-        }*/
+        }
         //Jumping
         if (isJumping) {
             if (yPos == Engine.GAME_HEIGHT - 192) {

@@ -20,6 +20,7 @@
         <entry file="file://$PROJECT_DIR$/src/com/tempus/solus/Game.java">
           <provider selected="true" editor-type-id="text-editor">
 <<<<<<< HEAD
+<<<<<<< HEAD
             <state relative-caret-position="1000">
               <caret line="78" column="81" lean-forward="false" selection-start-line="78" selection-start-column="81" selection-end-line="78" selection-end-column="81" />
               <folding>
@@ -31,11 +32,22 @@
               <folding>
                 <element signature="imports" expanded="true" />
 >>>>>>> bd8f79fcaa009714ab408e93c690919a48e823db
+=======
+            <state relative-caret-position="5360">
+              <caret line="298" column="13" lean-forward="false" selection-start-line="298" selection-start-column="13" selection-end-line="298" selection-end-column="13" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <marker date="1510073292962" expanded="true" signature="7353:8848" ph="{...}" />
+                <marker date="1510073292962" expanded="true" signature="7547:7676" ph="//..." />
+                <marker date="1510073292962" expanded="true" signature="8909:11123" ph="{...}" />
+                <marker date="1510073292962" expanded="true" signature="11185:11810" ph="{...}" />
+>>>>>>> parent of 0d60b46... Implemented Sidescrolling
               </folding>
             </state>
           </provider>
         </entry>
       </file>
+<<<<<<< HEAD
       <file leaf-file-name="Player.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/tempus/solus/entity/Player.java">
           <provider selected="true" editor-type-id="text-editor">
@@ -79,6 +91,13 @@
             <state relative-caret-position="1008">
               <caret line="63" column="10" lean-forward="false" selection-start-line="63" selection-start-column="10" selection-end-line="63" selection-end-column="10" />
 >>>>>>> bd8f79fcaa009714ab408e93c690919a48e823db
+=======
+      <file leaf-file-name="Engine.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/com/tempus/solus/Engine.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="960">
+              <caret line="63" column="8" lean-forward="false" selection-start-line="63" selection-start-column="8" selection-end-line="63" selection-end-column="8" />
+>>>>>>> parent of 0d60b46... Implemented Sidescrolling
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -86,11 +105,15 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Menu.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="Menu.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/com/tempus/solus/Menu.java">
           <provider selected="true" editor-type-id="text-editor">
 <<<<<<< HEAD
+<<<<<<< HEAD
             <state relative-caret-position="4740">
+=======
+            <state relative-caret-position="5140">
+>>>>>>> parent of 0d60b46... Implemented Sidescrolling
               <caret line="259" column="0" lean-forward="false" selection-start-line="259" selection-start-column="0" selection-end-line="259" selection-end-column="0" />
 =======
             <state relative-caret-position="3507">
@@ -182,12 +205,20 @@
         <option value="$PROJECT_DIR$/src/com/tempus/solus/entity/Bullet.java" />
         <option value="$PROJECT_DIR$/res/level/lvl-test-sheet.tsx" />
         <option value="$PROJECT_DIR$/res/level/lvl-test-map.tmx" />
+        <option value="$PROJECT_DIR$/src/com/tempus/solus/entity/Player.java" />
         <option value="$PROJECT_DIR$/res/level/test-level-map.tmx" />
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+        <option value="$PROJECT_DIR$/src/com/tempus/solus/Game.java" />
+        <option value="$PROJECT_DIR$/src/com/tempus/solus/map/Level.java" />
+>>>>>>> parent of 0d60b46... Implemented Sidescrolling
         <option value="$PROJECT_DIR$/src/com/tempus/solus/entity/Weapon.java" />
+        <option value="$PROJECT_DIR$/src/com/tempus/solus/Engine.java" />
         <option value="$PROJECT_DIR$/src/com/tempus/solus/Settings.java" />
         <option value="$PROJECT_DIR$/src/com/tempus/solus/util/AudioPlayer.java" />
         <option value="$PROJECT_DIR$/src/com/tempus/solus/Menu.java" />
+<<<<<<< HEAD
         <option value="$PROJECT_DIR$/src/com/tempus/solus/Engine.java" />
         <option value="$PROJECT_DIR$/src/com/tempus/solus/Game.java" />
         <option value="$PROJECT_DIR$/src/com/tempus/solus/entity/Player.java" />
@@ -202,6 +233,8 @@
         <option value="$PROJECT_DIR$/src/com/tempus/solus/Game.java" />
         <option value="$PROJECT_DIR$/src/com/tempus/solus/entity/Weapon.java" />
 >>>>>>> bd8f79fcaa009714ab408e93c690919a48e823db
+=======
+>>>>>>> parent of 0d60b46... Implemented Sidescrolling
       </list>
     </option>
   </component>
@@ -243,11 +276,18 @@
     </navigator>
     <panes>
 <<<<<<< HEAD
+<<<<<<< HEAD
       <pane id="Scope" />
       <pane id="AndroidView" />
       <pane id="Scratches" />
 =======
 >>>>>>> bd8f79fcaa009714ab408e93c690919a48e823db
+=======
+      <pane id="AndroidView" />
+      <pane id="Scratches" />
+      <pane id="PackagesPane" />
+      <pane id="Scope" />
+>>>>>>> parent of 0d60b46... Implemented Sidescrolling
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -339,6 +379,7 @@
         </subPane>
       </pane>
 <<<<<<< HEAD
+<<<<<<< HEAD
       <pane id="PackagesPane" />
 =======
       <pane id="Scope" />
@@ -346,6 +387,8 @@
       <pane id="Scratches" />
       <pane id="AndroidView" />
 >>>>>>> bd8f79fcaa009714ab408e93c690919a48e823db
+=======
+>>>>>>> parent of 0d60b46... Implemented Sidescrolling
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -595,7 +638,6 @@
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25376594" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -615,11 +657,15 @@
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25356752" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
 >>>>>>> bd8f79fcaa009714ab408e93c690919a48e823db
+=======
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25376594" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+>>>>>>> parent of 0d60b46... Implemented Sidescrolling
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Coverage" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32967606" sideWeight="0.5" order="6" side_tool="true" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32908458" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -640,6 +686,18 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/src/com/tempus/solus/Solus.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="840">
+          <caret line="49" column="23" lean-forward="false" selection-start-line="49" selection-start-column="23" selection-end-line="49" selection-end-column="23" />
+          <folding>
+            <element signature="imports" expanded="false" />
+            <element signature="e#2392#2531#0" expanded="false" />
+            <element signature="e#2530#2531#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/tempus/solus/Settings.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="420">
@@ -675,9 +733,16 @@
           <folding>
             <element signature="imports" expanded="true" />
 <<<<<<< HEAD
+<<<<<<< HEAD
             <marker date="1510946265216" expanded="true" signature="7648:9143" ph="{...}" />
 =======
 >>>>>>> bd8f79fcaa009714ab408e93c690919a48e823db
+=======
+            <marker date="1510073292962" expanded="true" signature="7353:8848" ph="{...}" />
+            <marker date="1510073292962" expanded="true" signature="7547:7676" ph="//..." />
+            <marker date="1510073292962" expanded="true" signature="8909:11123" ph="{...}" />
+            <marker date="1510073292962" expanded="true" signature="11185:11810" ph="{...}" />
+>>>>>>> parent of 0d60b46... Implemented Sidescrolling
           </folding>
         </state>
       </provider>
@@ -809,13 +874,53 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/tempus/solus/entity/Entity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="120">
+          <caret line="8" column="40" lean-forward="false" selection-start-line="8" selection-start-column="40" selection-end-line="8" selection-end-column="40" />
+          <folding>
+            <element signature="imports" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/res/level/tile-sheet-lvl-1.png" />
     <entry file="file://$PROJECT_DIR$/res/level/lvl-test-map.tmx" />
     <entry file="file://$PROJECT_DIR$/res/level/lvl-test-sheet.tsx" />
     <entry file="file://$USER_HOME$/Desktop/Solus/src/com/tempus/solus/entity/Player.java" />
+<<<<<<< HEAD
     <entry file="file://$PROJECT_DIR$/res/level/test-level-map.tmx" />
     <entry file="file://$PROJECT_DIR$/src/com/tempus/solus/WeaponLoader.java">
 <<<<<<< HEAD
+=======
+    <entry file="file://$PROJECT_DIR$/src/com/tempus/solus/entity/Player.java">
+>>>>>>> parent of 0d60b46... Implemented Sidescrolling
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3320">
+          <caret line="183" column="16" lean-forward="false" selection-start-line="183" selection-start-column="16" selection-end-line="183" selection-end-column="16" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/res/level/test-level-map.tmx" />
+    <entry file="file://$PROJECT_DIR$/src/com/tempus/solus/map/Level.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="462">
+          <caret line="35" column="0" lean-forward="true" selection-start-line="35" selection-start-column="0" selection-end-line="35" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+<<<<<<< HEAD
+    <entry file="file://$PROJECT_DIR$/src/com/tempus/solus/util/AudioPlayer.java" />
+    <entry file="file://$PROJECT_DIR$/src/com/tempus/solus/entity/Weapon.java">
+=======
+>>>>>>> bd8f79fcaa009714ab408e93c690919a48e823db
+=======
+    <entry file="file://$PROJECT_DIR$/src/com/tempus/solus/WeaponLoader.java">
+>>>>>>> parent of 0d60b46... Implemented Sidescrolling
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="820">
           <caret line="59" column="0" lean-forward="false" selection-start-line="59" selection-start-column="0" selection-end-line="59" selection-end-column="0" />
@@ -823,32 +928,21 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/tempus/solus/Settings.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="142">
-          <caret line="19" column="20" lean-forward="true" selection-start-line="19" selection-start-column="20" selection-end-line="19" selection-end-column="20" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/tempus/solus/util/AudioPlayer.java" />
-    <entry file="file://$PROJECT_DIR$/src/com/tempus/solus/entity/Weapon.java">
-=======
->>>>>>> bd8f79fcaa009714ab408e93c690919a48e823db
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="580">
-          <caret line="40" column="51" lean-forward="false" selection-start-line="40" selection-start-column="51" selection-end-line="40" selection-end-column="51" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
+<<<<<<< HEAD
 <<<<<<< HEAD
     <entry file="file://$PROJECT_DIR$/src/com/tempus/solus/Menu.java">
+=======
+    <entry file="file://$PROJECT_DIR$/src/com/tempus/solus/Game.java">
+>>>>>>> parent of 0d60b46... Implemented Sidescrolling
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="4740">
-          <caret line="259" column="0" lean-forward="false" selection-start-line="259" selection-start-column="0" selection-end-line="259" selection-end-column="0" />
+        <state relative-caret-position="5360">
+          <caret line="298" column="13" lean-forward="false" selection-start-line="298" selection-start-column="13" selection-end-line="298" selection-end-column="13" />
           <folding>
             <element signature="imports" expanded="true" />
+            <marker date="1510073292962" expanded="true" signature="7353:8848" ph="{...}" />
+            <marker date="1510073292962" expanded="true" signature="7547:7676" ph="//..." />
+            <marker date="1510073292962" expanded="true" signature="8909:11123" ph="{...}" />
+            <marker date="1510073292962" expanded="true" signature="11185:11810" ph="{...}" />
           </folding>
 =======
     <entry file="file://$PROJECT_DIR$/src/com/tempus/solus/Settings.java">
@@ -864,18 +958,24 @@
     <entry file="file://$PROJECT_DIR$/src/com/tempus/solus/Engine.java">
       <provider selected="true" editor-type-id="text-editor">
 <<<<<<< HEAD
+<<<<<<< HEAD
         <state relative-caret-position="980">
           <caret line="64" column="8" lean-forward="false" selection-start-line="64" selection-start-column="8" selection-end-line="64" selection-end-column="8" />
 =======
         <state relative-caret-position="1008">
           <caret line="63" column="10" lean-forward="false" selection-start-line="63" selection-start-column="10" selection-end-line="63" selection-end-column="10" />
 >>>>>>> bd8f79fcaa009714ab408e93c690919a48e823db
+=======
+        <state relative-caret-position="960">
+          <caret line="63" column="8" lean-forward="false" selection-start-line="63" selection-start-column="8" selection-end-line="63" selection-end-column="8" />
+>>>>>>> parent of 0d60b46... Implemented Sidescrolling
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
+<<<<<<< HEAD
 <<<<<<< HEAD
     <entry file="file://$PROJECT_DIR$/src/com/tempus/solus/entity/Enemy.java">
       <provider selected="true" editor-type-id="text-editor">
@@ -887,10 +987,17 @@
         <state relative-caret-position="3276">
           <caret line="173" column="21" lean-forward="false" selection-start-line="173" selection-start-column="20" selection-end-line="173" selection-end-column="21" />
 >>>>>>> bd8f79fcaa009714ab408e93c690919a48e823db
+=======
+    <entry file="file://$PROJECT_DIR$/src/com/tempus/solus/Settings.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="142">
+          <caret line="19" column="20" lean-forward="true" selection-start-line="19" selection-start-column="20" selection-end-line="19" selection-end-column="20" />
+>>>>>>> parent of 0d60b46... Implemented Sidescrolling
           <folding />
         </state>
       </provider>
     </entry>
+<<<<<<< HEAD
 <<<<<<< HEAD
     <entry file="file://$PROJECT_DIR$/src/com/tempus/solus/entity/Entity.java">
       <provider selected="true" editor-type-id="text-editor">
@@ -902,10 +1009,18 @@
         <state relative-caret-position="315">
           <caret line="22" column="43" lean-forward="false" selection-start-line="22" selection-start-column="43" selection-end-line="22" selection-end-column="43" />
 >>>>>>> bd8f79fcaa009714ab408e93c690919a48e823db
+=======
+    <entry file="file://$PROJECT_DIR$/src/com/tempus/solus/util/AudioPlayer.java" />
+    <entry file="file://$PROJECT_DIR$/src/com/tempus/solus/entity/Weapon.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="580">
+          <caret line="40" column="51" lean-forward="false" selection-start-line="40" selection-start-column="51" selection-end-line="40" selection-end-column="51" />
+>>>>>>> parent of 0d60b46... Implemented Sidescrolling
           <folding />
         </state>
       </provider>
     </entry>
+<<<<<<< HEAD
 <<<<<<< HEAD
     <entry file="file://$PROJECT_DIR$/src/com/tempus/solus/Game.java">
       <provider selected="true" editor-type-id="text-editor">
@@ -937,26 +1052,15 @@
         <state relative-caret-position="21">
           <caret line="171" column="37" lean-forward="false" selection-start-line="171" selection-start-column="37" selection-end-line="171" selection-end-column="37" />
 >>>>>>> bd8f79fcaa009714ab408e93c690919a48e823db
+=======
+    <entry file="file://$PROJECT_DIR$/src/com/tempus/solus/Menu.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="5140">
+          <caret line="259" column="0" lean-forward="false" selection-start-line="259" selection-start-column="0" selection-end-line="259" selection-end-column="0" />
+>>>>>>> parent of 0d60b46... Implemented Sidescrolling
           <folding>
             <element signature="imports" expanded="true" />
-            <marker date="1510946265216" expanded="true" signature="7648:9143" ph="{...}" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/tempus/solus/entity/Player.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="560">
-          <caret line="58" column="0" lean-forward="true" selection-start-line="58" selection-start-column="0" selection-end-line="58" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/tempus/solus/map/Level.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="597">
-          <caret line="83" column="36" lean-forward="true" selection-start-line="83" selection-start-column="36" selection-end-line="83" selection-end-column="36" />
-          <folding />
         </state>
       </provider>
     </entry>
