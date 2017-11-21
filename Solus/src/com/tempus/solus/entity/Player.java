@@ -26,7 +26,7 @@ public class Player extends Entity {
     private boolean isSprinting;
     private boolean isSprintRequested;
     private float sprintEnergy;
-    private float sprintMultiplier;
+    //private float sprintMultiplier;
 
     public Player() {
         logger.setUseParentHandlers(false);
@@ -47,7 +47,28 @@ public class Player extends Entity {
     public void setSprintRequested(boolean sprintRequested) {
         isSprintRequested = sprintRequested;
     }
+    public boolean getSprintRequested() {
+        return isSprintRequested;
+    }
+    public boolean isSprinting() {
+        return isSprinting;
+    }
+    public void setDuration(int index, int duration) {
+        playerLeftAnimation.setDuration(index, duration);
+        playerRightAnimation.setDuration(index, duration);
+    }
 
+    public void setAnimations(boolean isAutoUpdate) {
+        playerLeftAnimation.setAutoUpdate(isAutoUpdate);
+        playerRightAnimation.setAutoUpdate(isAutoUpdate);
+    }
+    public void resetAnimation() {
+        playerRightAnimation.setCurrentFrame(0);
+        playerLeftAnimation.setCurrentFrame(0);
+    }
+    public void decrementSprintEnergy(float decrement) {
+        sprintEnergy -= decrement;
+    }
 
     public void init() throws SlickException {
         isAlive = true;
@@ -57,14 +78,14 @@ public class Player extends Entity {
         isSprinting = false;
         isJumping = false;
         isSprintRequested = false;
-        xPos = 32;
+        xPos = 128;
         yPos = Engine.GAME_HEIGHT - 160;
         xVel = 0;
         yVel = 0;
         yAcc = 0.4f;
         health = 100;
         sprintEnergy = 100;
-        sprintMultiplier = 1;
+        //sprintMultiplier = 1;
         playerLeftSheet = new SpriteSheet("/res/sprite/player-left.png", 32, 32);
         playerRightSheet = new SpriteSheet("/res/sprite/player-right.png", 32, 32);
         playerLeftAnimation = new Animation(playerLeftSheet, 150);
@@ -74,14 +95,14 @@ public class Player extends Entity {
     }
 
     public void update(int delta) throws SlickException {
-        if (xPos < 32) {
-            xPos = 32;
+        if (xPos < 128 || xPos > 128) {
+            xPos = 128;
         }
         if (xPos > Engine.GAME_WIDTH - 160) {
             xPos = Engine.GAME_WIDTH - 160;
         }
         if (yPos > ((float) (Engine.GAME_HEIGHT - 160))) {
-            yPos = Engine.GAME_HEIGHT - 160;
+            yPos =(float) (Engine.GAME_HEIGHT - 160);
         }
         if (yPos < ((float) (Engine.GAME_HEIGHT - 160))) {
             yVel += yAcc;
@@ -89,12 +110,12 @@ public class Player extends Entity {
         //Moving left
         if (isMovingLeft) {
             isFacingLeft = true;
-            xVel = -3;
+           // xVel = -3;
         }
         //Moving right
         if (isMovingRight) {
             isFacingLeft = false;
-            xVel = 3;
+            //xVel = 3;
         }
         //Standing still
         if (isMovingLeft && isMovingRight) {
@@ -103,19 +124,7 @@ public class Player extends Entity {
         if (!isMovingLeft && !isMovingRight) {
             xVel = 0;
         }
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
         /*if (xVel == 0 || yPos < Engine.GAME_HEIGHT - 160) {
-=======
-        if (xVel == 0 || yPos < Engine.GAME_HEIGHT - 192) {
->>>>>>> bd8f79fcaa009714ab408e93c690919a48e823db
-=======
-        if (xVel == 0 || yPos < Engine.GAME_HEIGHT - 160) {
->>>>>>> parent of 0d60b46... Implemented Sidescrolling
-=======
-        /*if (xVel == 0 || yPos < Engine.GAME_HEIGHT - 160) {
->>>>>>> parent of 6d70de5... Merge branch 'master' of https://github.com/Tempus-Studios/Solus
             playerLeftAnimation.setAutoUpdate(false);
             playerRightAnimation.setAutoUpdate(false);
             playerLeftAnimation.setCurrentFrame(0);
@@ -123,8 +132,8 @@ public class Player extends Entity {
         } else {
             playerLeftAnimation.setAutoUpdate(true);
             playerRightAnimation.setAutoUpdate(true);
-        }
-        if (isFacingLeft) {
+        }*/
+        /*if (isFacingLeft) {
             if (!isMovingLeft) {
                 if (xVel < 0) {
                     xVel += 0.01;
@@ -137,7 +146,7 @@ public class Player extends Entity {
                     xVel -= 0.01;
                 }
             }
-        }
+        }*/
         //Jumping
         if (isJumping) {
             if (yPos == Engine.GAME_HEIGHT - 160) {
@@ -154,7 +163,7 @@ public class Player extends Entity {
             sprintEnergy = 0;
         }
         if (sprintEnergy > 2) {
-            if (!(!isMovingLeft && !isMovingRight)) {
+            if (isMovingLeft || isMovingRight) {
                 if (isSprintRequested) {
                     isSprinting = true;
                 } else {
@@ -166,27 +175,30 @@ public class Player extends Entity {
         } else {
             isSprinting = false;
         }
-        if (isSprinting) {
+        /*if (isSprinting) {
             sprintEnergy -= 0.3f;
             if (yPos == Engine.GAME_HEIGHT - 160) {
                 playerLeftAnimation.setDuration(1, 125);
                 playerRightAnimation.setDuration(1, 125);
-                sprintMultiplier = 2;
+               // sprintMultiplier = 2;
             }
         } else {
             playerLeftAnimation.setDuration(1, 175);
             playerRightAnimation.setDuration(1, 175);
-            sprintMultiplier = 1;
-        }
+           // sprintMultiplier = 1;
+        }*/
         //Player motion
-        xVel *= sprintMultiplier;
-        xPos += xVel;
+       // xVel *= sprintMultiplier;
+        //xPos += xVel;
         yPos += yVel;
         if (!isSprinting) {
             sprintEnergy += 0.2f;
         }
         if (health < 0) {
             health = 0;
+        }
+        if(yVel!=0) {
+            isSprintRequested = false;
         }
         if (health > 100) {
             health = 100;

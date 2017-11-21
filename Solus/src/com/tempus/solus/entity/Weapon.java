@@ -160,7 +160,6 @@ public class Weapon extends Entity {
                     logger.info("Fired semi-automatically: " + shotsFired);
                 }
                 leftWeaponAnimation.stopAt(2);
-                //return;
             } else {
                 rightWeaponAnimation.restart();
                 rightWeaponAnimation.setAutoUpdate(true);
@@ -170,20 +169,15 @@ public class Weapon extends Entity {
                     logger.info("Fired semi-automatically: " + shotsFired);
                 }
                 rightWeaponAnimation.stopAt(2);
-                //return;
             }
             //automatic
         } else {
-            if (isFacingLeft) {
-                leftWeaponAnimation.setAutoUpdate(true);
-                if (leftWeaponAnimation.getFrame() == 1) {
-                    shotsFired += 1;
-                }
-            } else {
-                rightWeaponAnimation.setAutoUpdate(true);
-                if (rightWeaponAnimation.getFrame() == 1) {
-                    shotsFired += 1;
-                }
+            leftWeaponAnimation.setAutoUpdate(true);
+            rightWeaponAnimation.setAutoUpdate(true);
+            if (leftWeaponAnimation.getFrame() == 1) {
+                shotsFired += 1;
+            } else if (rightWeaponAnimation.getFrame() == 1) {
+                shotsFired += 1;
             }
         }
         //update bullets
