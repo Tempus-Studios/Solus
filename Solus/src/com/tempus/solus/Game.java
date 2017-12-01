@@ -6,8 +6,6 @@ import com.tempus.solus.entity.Player;
 
 import java.awt.Font;
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.logging.ConsoleHandler;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
@@ -26,13 +24,11 @@ import org.newdawn.slick.UnicodeFont;
 import org.newdawn.slick.font.effects.ColorEffect;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
-import org.newdawn.slick.tiled.TiledMap;
 import org.newdawn.slick.util.ResourceLoader;
 
 public class Game extends BasicGameState implements KeyListener{
     private static final Logger logger = Logger.getLogger(Solus.class.getName());
     private Level currentLevel;
-    //private TiledMap testTM;
     private Engine engine;
     private Player player;
     private Entity tank;
@@ -116,8 +112,6 @@ public class Game extends BasicGameState implements KeyListener{
         healthIcon = new Image("/res/sprite/icons/HealthIcon.png");
         sprintIcon = new Image("/res/sprite/icons/SprintEnergyIcon.png");
         ammoIcon = new Image("/res/sprite/icons/AmmoIcon.png");
-
-
         tankLeftSheet = new SpriteSheet("/res/sprite/tank-left.png", 32, 32);
         tankRightSheet = new SpriteSheet("/res/sprite/tank-right.png", 32, 32);
         tankLeftAnimation = new Animation(tankLeftSheet, 200);
@@ -133,8 +127,7 @@ public class Game extends BasicGameState implements KeyListener{
             player.update(delta);
             currentLevel.update(delta);
             //bullet movement
-            weaponLoader.getEquippedWeapon().magazine.get(0).update(delta);
-
+            //weaponLoader.getEquippedWeapon().magazine.get(0).update(delta);
             if (enemyPos <= 32) {
                 enemyFacingLeft = false;
             }
@@ -218,7 +211,7 @@ public class Game extends BasicGameState implements KeyListener{
             } else {
                 tankRightAnimation.draw(enemyPos, Engine.GAME_HEIGHT - 224, 192, 192);
             }
-            weaponLoader.getEquippedWeapon().render(graphics, player.getXPos(), player.getYPos(), player.isFacingLeft());
+            weaponLoader.getEquippedWeapon().render(graphics, player.getXPos(), player.getYPos(), player.getDirection());
             player.render(graphics);
         } else {
             if (isPaused) {
@@ -242,19 +235,17 @@ public class Game extends BasicGameState implements KeyListener{
     public void keyPressed(int code, char c) {
         switch (code) {
             case Input.KEY_LEFT: {
-                weaponLoader.getEquippedWeapon().isFacingLeft = true;
-                player.setFacingLeft(true);
-                player.setMovingLeft(true);
-                player.setMovingRight(false);
-                currentLevel.setMovingLeft(true);
+                weaponLoader.getEquippedWeapon().setDirection(-1);
+                player.setMoving(true);
+                player.setDirection(-1);
+                currentLevel.setMoving(true);
                 break;
             }
             case Input.KEY_RIGHT: {
-                weaponLoader.getEquippedWeapon().isFacingLeft = false;
-                player.setFacingLeft(false);
-                player.setMovingLeft(false);
-                player.setMovingRight(true);
-                currentLevel.setMovingRight(true);
+                weaponLoader.getEquippedWeapon().setDirection(1);
+                //player.setMoving(true);
+                player.setDirection(1);
+                currentLevel.setMoving(true);
                 break;
             }
             case Input.KEY_UP: {
@@ -314,13 +305,15 @@ public class Game extends BasicGameState implements KeyListener{
     public void keyReleased(int code, char c) {
         switch (code) {
             case Input.KEY_LEFT: {
-                player.setMovingLeft(false);
-                currentLevel.setMovingLeft(false);
+                //player.setMoving(false);
+                currentLevel.setMoving(false);
+                //TODO add friction
                 break;
             }
             case Input.KEY_RIGHT: {
-                player.setMovingRight(false);
-                currentLevel.setMovingRight(false);
+                //player.setMoving(false);
+                currentLevel.setMoving(false);
+                //TODO: add friction
                 break;
             }
             case Input.KEY_SPACE: {

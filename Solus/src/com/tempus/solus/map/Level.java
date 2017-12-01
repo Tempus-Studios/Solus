@@ -13,21 +13,19 @@ import java.util.logging.SimpleFormatter;
 
 public class Level {
     private static final Logger logger = Logger.getLogger(Engine.class.getName());
+    private Player player;
     private BufferedWriter writer;
     private BufferedReader reader;
-    private boolean movingLeft;
-    private boolean movingRight;
-    private int xPos;
-    private int xVel;
+    private boolean isMoving;
+    //private boolean movingLeft;
+    //private boolean movingRight;
+    private int direction;
+    private float xPos;
+    private float xVel;
     private float sprintMultiplier;
     private TiledMap map;
     private String levelID;
     private String levelPath;
-    Player player;
-
-
-
-
 
     public Level() {
         logger.setUseParentHandlers(false);
@@ -35,13 +33,13 @@ public class Level {
         consoleHandler.setFormatter(new SimpleFormatter());
         logger.addHandler(consoleHandler);
         this.init();
-
     }
 
     private void init() {
         player = null;
-        movingLeft = false;
-        movingRight = false;
+        isMoving = false;
+        //movingLeft = false;
+        //movingRight = false;
         sprintMultiplier = 1;
 
         try {
@@ -82,43 +80,53 @@ public class Level {
             logger.severe("Failed to load map\n" + ex.getMessage());
         }
     }
-    public void setMovingLeft(boolean isLeft) {
+
+    /*public void setMovingLeft(boolean isLeft) {
         movingLeft = isLeft;
     }
     public void setMovingRight(boolean isRight) {
         movingRight = isRight;
+    }*/
+
+    public void setMoving(boolean moving) {
+        this.isMoving = moving;
     }
+
     public void setPlayer(Player player) {
         this.player = player;
     }
 
-    public void render(Graphics graphics) {
-        graphics.scale(2,2);
-        map.render(xPos,-320);
-        graphics.scale(.5f,.5f);
-    }
-    public void update(int delta) {
-        if(movingLeft) {
+    public void update (int delta) {
+        /*if (movingLeft) {
             xVel = 3;
-        } else if(movingRight) {
+        } else if (movingRight) {
             xVel = -3;
+        } else {
+            xVel = 0;
+        }*/
+
+        if (isMoving) {
+            if (direction == 1) {
+                xVel = 3;
+            } else if (direction == -1) {
+                xVel = -3;
+            }
         } else {
             xVel = 0;
         }
 
-        if (xVel < 0 && !movingRight) {
+        /*if (xVel < 0 && !movingRight) {
             xVel += 0.01;
         }
         if (xVel > 0 && !movingLeft) {
             xVel -= 0.01;
-        }
+        }*/
         if (xVel == 0 || player.getYPos() < Engine.GAME_HEIGHT - 160) {
             player.setAnimations(false);
             player.resetAnimation();
         } else {
             player.setAnimations(true);
         }
-
         if (player.isSprinting()) {
             player.decrementSprintEnergy(0.3f);
             if (player.getYPos() >= Engine.GAME_HEIGHT - 160) {
@@ -129,11 +137,16 @@ public class Level {
             player.setDuration(1, 175);
             sprintMultiplier = 1;
         }
-
         xVel *= sprintMultiplier;
         xPos += xVel;
-
     }
+
+    public void render(Graphics graphics) {
+        graphics.scale(2,2);
+        map.render(((int) xPos),-320);
+        graphics.scale(.5f,.5f);
+    }
+
     public void setCurrentLevel(String nextLevelID, boolean doLoadNextMap) {
         if (nextLevelID != null) {
             this.levelID = nextLevelID;

@@ -20,7 +20,6 @@ public class Bullet extends Entity {
         ConsoleHandler consoleHandler = new ConsoleHandler();
         consoleHandler.setFormatter(new SimpleFormatter());
         logger.addHandler(consoleHandler);
-
         isRendered = false;
         range = rng;
         bullet = new Image(path);
@@ -29,7 +28,7 @@ public class Bullet extends Entity {
         xPos = 0;
         xVel = velocity;
         isHit = false;
-        isFacingLeft = false;
+        direction = 1;
     }
 
     public int getDamage() {
@@ -37,14 +36,14 @@ public class Bullet extends Entity {
     }
 
     //@Override
-    public void render(float playerX, float playerY, boolean isFacingLeft) {
+    public void render(float playerX, float playerY, int direction) {
         isRendered = true;
-        if (isFacingLeft) {
-            xVel = -xVel;
+        if (direction == -1) {
+            this.xVel = -xVel;
         }
         if (!isHit && isRendered) {
-            xPos = playerX;
-            initialXPos = playerX;
+            this.xPos = playerX;
+            this.initialXPos = playerX;
             bullet.draw(xPos, playerY + 30, 4);
         }
     }

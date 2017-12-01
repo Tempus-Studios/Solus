@@ -7,18 +7,29 @@ import java.util.logging.Logger;
 
 public abstract class Entity {
     private static final Logger logger = Logger.getLogger(Solus.class.getName());
-    public boolean isFacingLeft;
-    public boolean isMovingLeft;
-    public boolean isMovingRight;
-    public boolean isJumping;
     protected boolean isAlive;
     protected boolean isRendered = false;
+    protected boolean isMoving;
+    protected boolean isJumping;
+    protected int direction;
     protected float xPos;
     protected float yPos;
     protected float xVel;
     protected float yVel;
-    protected float health;
     protected float yAcc;
+    protected float health;
+
+    public boolean isAlive() {
+        return isAlive;
+    }
+
+    public boolean isMoving() {
+        return isMoving;
+    }
+
+    public int getDirection() {
+        return direction;
+    }
 
     public float getXPos() {
         return xPos;
@@ -39,45 +50,34 @@ public abstract class Entity {
     public float getYAcc() {
         return yAcc;
     }
+
     public float getHealth() {
         return health;
     }
-    public boolean isAlive() {
-        return isAlive;
+
+    public void setMoving(boolean moving) {
+        isMoving = moving;
     }
 
-    public boolean isMovingLeft() {
-        return isMovingLeft;
-    }
-
-    public boolean isMovingRight() {
-        return isMovingRight;
-    }
-
-    public boolean isFacingLeft() {
-        return isFacingLeft;
-    }
-
-    public void heal(float heal) {
-        health += heal;
-    }
-    public void damage(float damage) {
-        health -= damage;
-    }
-
-    public void setMovingLeft(boolean movingLeft) {
-        isMovingLeft = movingLeft;
-    }
-
-    public void setMovingRight(boolean movingRight) {
-        isMovingRight = movingRight;
-    }
-
-    public void setFacingLeft(boolean facingLeft) {
-        isFacingLeft = facingLeft;
+    public void setDirection(int dir) {
+        if (!(dir > 1) || dir < -1) {
+            this.direction = dir;
+        } else {
+            this.direction = 1;
+        }
     }
 
     public void setJumping(boolean jumping) {
         isJumping = jumping;
     }
+
+    public void heal(float heal) {
+        health += heal;
+    }
+
+    public void damage(float damage) {
+        health -= damage;
+    }
+
+
 }

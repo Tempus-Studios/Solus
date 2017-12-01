@@ -32,6 +32,7 @@ public class Weapon extends Entity {
     private int ammo;
     private int totalAmmo;
     private int maxAmmo;
+    private int direction;
     private boolean automatic;
     private boolean releaseBullet;
     private float playerXPos;
@@ -125,9 +126,9 @@ public class Weapon extends Entity {
     }
 
     private void shoot() {
-        magazine.get(0).render(playerXPos, playerYPos, playerFacingLeft);
+        magazine.get(0).render(playerXPos, playerYPos, getDirection());
         for (Bullet bullet : magazine) {
-            bullet.render(playerXPos, playerYPos, isFacingLeft);
+            bullet.render(playerXPos, playerYPos, direction);
         }
     }
 
@@ -150,8 +151,8 @@ public class Weapon extends Entity {
 
     public void update(int delta) {
         //semi-auto
-        if (!this.isAutomatic()) {
-            if (this.isFacingLeft) {
+        if (!isAutomatic()) {
+            if (getDirection() == -1) {
                 leftWeaponAnimation.restart();
                 leftWeaponAnimation.setAutoUpdate(true);
                 if (leftWeaponAnimation.getFrame() == 1) {
@@ -160,7 +161,7 @@ public class Weapon extends Entity {
                     logger.info("Fired semi-automatically: " + shotsFired);
                 }
                 leftWeaponAnimation.stopAt(2);
-            } else {
+            } else if (getDirection() == 1) {
                 rightWeaponAnimation.restart();
                 rightWeaponAnimation.setAutoUpdate(true);
                 if (rightWeaponAnimation.getFrame() == 1) {
@@ -169,6 +170,8 @@ public class Weapon extends Entity {
                     logger.info("Fired semi-automatically: " + shotsFired);
                 }
                 rightWeaponAnimation.stopAt(2);
+            } else {
+                logger.info("ya done fucked up");
             }
             //automatic
         } else {
@@ -186,14 +189,25 @@ public class Weapon extends Entity {
         }
     }
 
-    public void render(Graphics graphics, float playerX, float playerY, boolean isFacingLeft) {
-        playerFacingLeft = isFacingLeft;
-        isRendered = true;
-        if (isFacingLeft) {
+    public void render(Graphics graphics, float playerX, float playerY, int direction) {
+        //playerFacingLeft = isFacingLeft;
+        /*if (isFacingLeft) {
             leftWeaponAnimation.draw(playerX - 40, playerY - 35, 128, 128);
         } else {
             rightWeaponAnimation.draw(playerX + 40, playerY - 35, 128, 128);
+        }*/
+        this.isRendered = true;
+        this.direction = direction;
+        if (direction == -1) {
+            leftWeaponAnimation.draw(playerX - 40, playerY - 35, 128, 128);
+        } else {
+            if (direction == 1) {
+                rightWeaponAnimation.draw(playerX + 40, playerY - 35, 128, 128);
+            } else {
+                logger.severe("ya done fucked up");
+            }
         }
+
         //render bullets
     }
 }
