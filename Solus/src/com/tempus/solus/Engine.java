@@ -45,7 +45,7 @@ public class Engine extends StateBasedGame implements KeyListener, Runnable {
         try {
             container = new AppGameContainer(new Engine());
             container.setDisplayMode(GAME_WIDTH, GAME_HEIGHT,false);
-            //TODO
+            //TODO: nothing
             //container.setIcon();
             //container.setMouseCursor();
             container.setShowFPS(false);

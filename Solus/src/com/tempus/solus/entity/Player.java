@@ -62,7 +62,7 @@ public class Player extends Entity {
         playerLeftAnimation.setAutoUpdate(isAutoUpdate);
         playerRightAnimation.setAutoUpdate(isAutoUpdate);
     }
-    public void resetAnimation() {
+    public void resetAnimations() {
         playerRightAnimation.setCurrentFrame(0);
         playerLeftAnimation.setCurrentFrame(0);
     }
@@ -108,7 +108,7 @@ public class Player extends Entity {
         if (yPos < ((float) (Engine.GAME_HEIGHT - 160))) {
             yVel += yAcc;
         }
-        /*if (isMoving) {
+        if (isMoving) {
             logger.info("this is being called.");
             logger.info("x vel: " + getXVel());
             if (direction == 1) {
@@ -118,50 +118,14 @@ public class Player extends Entity {
             }
         } else {
             xVel = 0;
-        }*/
-
-        /*
-        //Moving left
-        if (isMovingLeft) {
-            isFacingLeft = true;
-           // xVel = -3;
         }
-        //Moving right
-        if (isMovingRight) {
-            isFacingLeft = false;
-            //xVel = 3;
-        }
-        //Standing still
-        if (isMovingLeft && isMovingRight) {
-            xVel = 0;
-        }
-        if (!isMovingLeft && !isMovingRight) {
-            xVel = 0;
-        }
-        */
-        /*if (xVel == 0 || yPos < Engine.GAME_HEIGHT - 160) {
-            playerLeftAnimation.setAutoUpdate(false);
-            playerRightAnimation.setAutoUpdate(false);
-            playerLeftAnimation.setCurrentFrame(0);
-            playerRightAnimation.setCurrentFrame(0);
+        if (xVel == 0 || yPos < Engine.GAME_HEIGHT - 160) {
+            this.setAnimations(false);
+            this.resetAnimations();
         } else {
-            playerLeftAnimation.setAutoUpdate(true);
-            playerRightAnimation.setAutoUpdate(true);
-        }*/
-        /*if (isFacingLeft) {
-            if (!isMovingLeft) {
-                if (xVel < 0) {
-                    xVel += 0.01;
-                }
-            }
+            this.setAnimations(true);
         }
-        if (!isFacingLeft) {
-            if (!isMovingRight) {
-                if (xVel > 0) {
-                    xVel -= 0.01;
-                }
-            }
-        }*/
+
         //Jumping
         if (isJumping) {
             if (yPos == Engine.GAME_HEIGHT - 160) {
@@ -177,33 +141,8 @@ public class Player extends Entity {
         if (sprintEnergy < 0) {
             sprintEnergy = 0;
         }
-        /*if (sprintEnergy > 2) {
-            if (isMoving) {
-                if (isSprintRequested) {
-                    isSprinting = true;
-                } else {
-                    isSprinting = false;
-                }
-            } else {
-                isSprinting = false;
-            }
-        } else {
-            isSprinting = false;
-        }
-        if (isSprinting) {
-            sprintEnergy -= 0.3f;
-            if (yPos == Engine.GAME_HEIGHT - 160) {
-                playerLeftAnimation.setDuration(1, 125);
-                playerRightAnimation.setDuration(1, 125);
-                sprintMultiplier = 2;
-            }
-        } else {
-            playerLeftAnimation.setDuration(1, 175);
-            playerRightAnimation.setDuration(1, 175);
-            sprintMultiplier = 1;
-        }*/
         //Player motion
-        xVel *= sprintMultiplier;
+       // xVel *= sprintMultiplier;
         xPos += xVel;
         yPos += yVel;
         if (!isSprinting) {
@@ -224,7 +163,7 @@ public class Player extends Entity {
             isAlive = true;
         }
     }
-    public void render(Graphics graphics) throws SlickException {
+    public void render(float offsetX, float offsetY, Graphics graphics) throws SlickException {
         if (direction == -1) {
             playerLeftAnimation.draw(xPos, yPos, 128, 128);
         } else if (direction == 1) {

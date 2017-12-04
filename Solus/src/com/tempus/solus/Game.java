@@ -72,8 +72,7 @@ public class Game extends BasicGameState implements KeyListener{
     public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
         engine = new Engine();
         player = new Player();
-        currentLevel = new Level();
-        currentLevel.setPlayer(player);
+        currentLevel = new Level(player);
         currentLevel.loadMap();
         loadingFont = null;
         loadingFont2 = null;
@@ -212,7 +211,7 @@ public class Game extends BasicGameState implements KeyListener{
                 tankRightAnimation.draw(enemyPos, Engine.GAME_HEIGHT - 224, 192, 192);
             }
             weaponLoader.getEquippedWeapon().render(graphics, player.getXPos(), player.getYPos(), player.getDirection());
-            player.render(graphics);
+            player.render(currentLevel.getOffsetX(),currentLevel.getOffsetY(),graphics);
         } else {
             if (isPaused) {
                 graphics.setColor(Color.black);
@@ -238,14 +237,12 @@ public class Game extends BasicGameState implements KeyListener{
                 weaponLoader.getEquippedWeapon().setDirection(-1);
                 player.setMoving(true);
                 player.setDirection(-1);
-                currentLevel.setMoving(true);
                 break;
             }
             case Input.KEY_RIGHT: {
                 weaponLoader.getEquippedWeapon().setDirection(1);
-                //player.setMoving(true);
+                player.setMoving(true);
                 player.setDirection(1);
-                currentLevel.setMoving(true);
                 break;
             }
             case Input.KEY_UP: {
@@ -305,14 +302,12 @@ public class Game extends BasicGameState implements KeyListener{
     public void keyReleased(int code, char c) {
         switch (code) {
             case Input.KEY_LEFT: {
-                //player.setMoving(false);
-                currentLevel.setMoving(false);
+                player.setMoving(false);
                 //TODO add friction
                 break;
             }
             case Input.KEY_RIGHT: {
-                //player.setMoving(false);
-                currentLevel.setMoving(false);
+                player.setMoving(false);
                 //TODO: add friction
                 break;
             }
