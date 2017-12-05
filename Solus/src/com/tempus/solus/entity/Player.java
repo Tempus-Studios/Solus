@@ -96,12 +96,12 @@ public class Player extends Entity {
     }
 
     public void update(int delta) throws SlickException {
-        /*if (xPos < 128 || xPos > 128) {
+        if (xPos < 128) {
             xPos = 128;
-        }*/
-        if (xPos > Engine.GAME_WIDTH - 160) {
-            xPos = Engine.GAME_WIDTH - 160;
         }
+        /*if (xPos > Engine.GAME_WIDTH - 160) {
+            xPos = Engine.GAME_WIDTH - 160;
+        }*/
         if (yPos > ((float) (Engine.GAME_HEIGHT - 160))) {
             yPos =(float) (Engine.GAME_HEIGHT - 160);
         }
@@ -109,23 +109,21 @@ public class Player extends Entity {
             yVel += yAcc;
         }
         if (isMoving) {
-            logger.info("this is being called.");
-            logger.info("x vel: " + getXVel());
             if (direction == 1) {
                 xVel = 3;
             } else if (direction == -1) {
                 xVel = -3;
             }
         } else {
-            xVel = 0;
+             xVel = 0;
         }
         if (xVel == 0 || yPos < Engine.GAME_HEIGHT - 160) {
-            this.setAnimations(false);
-            this.resetAnimations();
+           this.setAnimations(false);
+           this.resetAnimations();
         } else {
-            this.setAnimations(true);
+            playerLeftAnimation.setAutoUpdate(true);
+            playerRightAnimation.setAutoUpdate(true);
         }
-
         //Jumping
         if (isJumping) {
             if (yPos == Engine.GAME_HEIGHT - 160) {
@@ -141,8 +139,33 @@ public class Player extends Entity {
         if (sprintEnergy < 0) {
             sprintEnergy = 0;
         }
+        if (sprintEnergy > 2) {
+            if (isMoving) {
+                if (isSprintRequested) {
+                    isSprinting = true;
+                } else {
+                    isSprinting = false;
+                }
+            } else {
+                isSprinting = false;
+            }
+        } else {
+            isSprinting = false;
+        }
+        if (isSprinting) {
+            sprintEnergy -= 0.3f;
+            if (yPos == Engine.GAME_HEIGHT - 160) {
+                playerLeftAnimation.setDuration(1, 125);
+                playerRightAnimation.setDuration(1, 125);
+                sprintMultiplier = 2;
+            }
+        } else {
+            playerLeftAnimation.setDuration(1, 175);
+            playerRightAnimation.setDuration(1, 175);
+            sprintMultiplier = 1;
+        }
         //Player motion
-       // xVel *= sprintMultiplier;
+        xVel *= sprintMultiplier;
         xPos += xVel;
         yPos += yVel;
         if (!isSprinting) {
@@ -163,13 +186,11 @@ public class Player extends Entity {
             isAlive = true;
         }
     }
-    public void render(float offsetX, float offsetY, Graphics graphics) throws SlickException {
+    public void render(Graphics graphics) throws SlickException {
         if (direction == -1) {
-            playerLeftAnimation.draw(xPos, yPos, 128, 128);
+            playerLeftAnimation.draw(128, yPos, 128, 128);
         } else if (direction == 1) {
-            playerRightAnimation.draw(xPos, yPos, 128, 128);
-        } else {
-            logger.severe("RIP");
+            playerRightAnimation.draw(128, yPos, 128, 128);
         }
     }
 }

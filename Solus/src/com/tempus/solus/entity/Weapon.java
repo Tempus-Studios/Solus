@@ -170,8 +170,6 @@ public class Weapon extends Entity {
                     logger.info("Fired semi-automatically: " + shotsFired);
                 }
                 rightWeaponAnimation.stopAt(2);
-            } else {
-                logger.info("ya done fucked up");
             }
             //automatic
         } else {
@@ -190,24 +188,16 @@ public class Weapon extends Entity {
     }
 
     public void render(Graphics graphics, float playerX, float playerY, int direction) {
-        //playerFacingLeft = isFacingLeft;
-        /*if (isFacingLeft) {
-            leftWeaponAnimation.draw(playerX - 40, playerY - 35, 128, 128);
-        } else {
-            rightWeaponAnimation.draw(playerX + 40, playerY - 35, 128, 128);
-        }*/
+
         this.isRendered = true;
         this.direction = direction;
         if (direction == -1) {
-            leftWeaponAnimation.draw(playerX - 40, playerY - 35, 128, 128);
+            leftWeaponAnimation.draw(128 - 40, playerY - 35, 128, 128);
         } else {
             if (direction == 1) {
-                rightWeaponAnimation.draw(playerX + 40, playerY - 35, 128, 128);
-            } else {
-                logger.severe("ya done fucked up");
+                rightWeaponAnimation.draw(128 + 40, playerY - 35, 128, 128);
             }
         }
-
-        //render bullets
+        //TODO: add bullet rendering
     }
 }

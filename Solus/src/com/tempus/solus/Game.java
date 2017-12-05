@@ -45,6 +45,7 @@ public class Game extends BasicGameState implements KeyListener{
     private boolean isFired;
     private boolean isEnemyAggro;
     private boolean enemyFacingLeft;
+
     public Font loadingFont;
     public Font loadingFont2;
     public UnicodeFont font;
@@ -81,6 +82,7 @@ public class Game extends BasicGameState implements KeyListener{
         isFired = false;
         isEnemyAggro = false;
         enemyFacingLeft = true;
+
         enemyPos = Engine.GAME_WIDTH - 192;
         weaponLoader = new WeaponLoader();
         try {
@@ -124,7 +126,7 @@ public class Game extends BasicGameState implements KeyListener{
         this.delta = delta;
         if (player.isAlive() && !isPaused) {
             player.update(delta);
-            currentLevel.update(delta);
+            //currentLevel.update(delta);
             //bullet movement
             //weaponLoader.getEquippedWeapon().magazine.get(0).update(delta);
             if (enemyPos <= 32) {
@@ -211,7 +213,7 @@ public class Game extends BasicGameState implements KeyListener{
                 tankRightAnimation.draw(enemyPos, Engine.GAME_HEIGHT - 224, 192, 192);
             }
             weaponLoader.getEquippedWeapon().render(graphics, player.getXPos(), player.getYPos(), player.getDirection());
-            player.render(currentLevel.getOffsetX(),currentLevel.getOffsetY(),graphics);
+            player.render(graphics);
         } else {
             if (isPaused) {
                 graphics.setColor(Color.black);
@@ -234,12 +236,14 @@ public class Game extends BasicGameState implements KeyListener{
     public void keyPressed(int code, char c) {
         switch (code) {
             case Input.KEY_LEFT: {
+
                 weaponLoader.getEquippedWeapon().setDirection(-1);
                 player.setMoving(true);
                 player.setDirection(-1);
                 break;
             }
             case Input.KEY_RIGHT: {
+
                 weaponLoader.getEquippedWeapon().setDirection(1);
                 player.setMoving(true);
                 player.setDirection(1);
@@ -303,11 +307,14 @@ public class Game extends BasicGameState implements KeyListener{
         switch (code) {
             case Input.KEY_LEFT: {
                 player.setMoving(false);
+
                 //TODO add friction
+
                 break;
             }
             case Input.KEY_RIGHT: {
                 player.setMoving(false);
+
                 //TODO: add friction
                 break;
             }
