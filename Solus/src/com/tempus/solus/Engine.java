@@ -61,6 +61,7 @@ public class Engine extends StateBasedGame implements KeyListener, Runnable {
 
     @Override
     public void initStatesList(GameContainer gameContainer) throws SlickException {
+        logger.info("Resolution: " + GAME_WIDTH + " x " + GAME_HEIGHT);
         //addState(new Menu());
         addState(new Game());
         //addState(new DeathScreen());

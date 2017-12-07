@@ -2,11 +2,14 @@ package com.tempus.solus.entity;
 
 
 import com.tempus.solus.Solus;
+import org.newdawn.slick.geom.Rectangle;
 
 import java.util.logging.Logger;
 
 public abstract class Entity {
     private static final Logger logger = Logger.getLogger(Solus.class.getName());
+    protected Rectangle collisionLayer;
+    protected int scaleFactor = 1;
     protected boolean isAlive;
     protected boolean isRendered = false;
     protected boolean isMoving;
@@ -46,9 +49,8 @@ public abstract class Entity {
     public float getYVel() {
         return yVel;
     }
-
-    public float getYAcc() {
-        return yAcc;
+    public Rectangle getCollisionLayer() {
+        return collisionLayer;
     }
 
     public float getHealth() {
@@ -77,6 +79,13 @@ public abstract class Entity {
 
     public void damage(float damage) {
         health -= damage;
+    }
+
+    public float getWidth() {
+        return collisionLayer.getWidth();
+    }
+    public float getHeight() {
+        return collisionLayer.getHeight();
     }
 
 

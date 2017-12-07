@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="300" height="20" tilewidth="32" tileheight="32" nextobjectid="1">
+ <tileset firstgid="1" name="Solus-Tileset" tilewidth="32" tileheight="32">
+  <image source="tile-sheet-lvl-1.png" width="320" height="32"/>
+  <tile id="8">
+   <properties>
+    <property name="type" value="water"/>
+   </properties>
+  </tile>
+  <tile id="9">
+   <properties>
+    <property name="type" value="water"/>
+   </properties>
+  </tile>
+ </tileset>
+ <layer name="CollisionLayer" width="300" height="20">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC+3YWw/CIAyG4Xk+/P8frDckpFlHXVtReJ+kF2TLZFo+2ZYFAAAAAAAAAAAAAAAAAAAg33FnnXpMFsDUDo4iswBkKvujwpNXZBaATCVn5JjMAtCbtp+S4xkyS34X+J7rsv9dKe9U56HlkxyPnFmln+W9I56WS5F99o89iHXW/ZQcj9gv2loZkZYTGb/H1l7pW7n0Lz2IbdZ8kuOR+qW1djwszzXW+498Ftr6PaKfu3rnkaWynz1lXd71dNTd+fm11nHtHOu1IuZW/EJe9cos63qSvZKxVkdZ95S9zu96fFC3Ja4Xaq3j2jnWa0XMzTvOqMzMWtvnWOcl+6Z3n1Pj1FZm1fkU/X9Vax3XzrFeK2Ju3nFWZe2/PXMir6jM6rGfrrWOa+dYrxUxN+94pvqVvHoBVfJptMBdAAA=
+  </data>
+ </layer>
+</map>

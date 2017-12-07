@@ -74,7 +74,6 @@ public class Game extends BasicGameState implements KeyListener{
         engine = new Engine();
         player = new Player();
         currentLevel = new Level(player);
-        currentLevel.loadMap();
         loadingFont = null;
         loadingFont2 = null;
         isPaused = false;
@@ -126,7 +125,7 @@ public class Game extends BasicGameState implements KeyListener{
         this.delta = delta;
         if (player.isAlive() && !isPaused) {
             player.update(delta);
-            //currentLevel.update(delta);
+            currentLevel.update(player.getCollisionLayer(), delta);
             //bullet movement
             //weaponLoader.getEquippedWeapon().magazine.get(0).update(delta);
             if (enemyPos <= 32) {
