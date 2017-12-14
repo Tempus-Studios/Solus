@@ -1,4 +1,4 @@
-package com.tempus.solus.util;
+package com.tempus.solus.util.audio;
 
 import com.tempus.solus.Engine;
 import com.tempus.solus.Solus;

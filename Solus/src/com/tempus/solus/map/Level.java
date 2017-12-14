@@ -72,7 +72,10 @@ public class Level {
             tiles = new Tile[map.getWidth()][map.getHeight()];
             for (int row = 0; row < tiles.length; row++) {
                 for (int col = 0; col < tiles[row].length; col++) {
-                    tiles[row][col] = new Tile(row * (Tile.SCALE * Tile.TILE_WIDTH), col * (Tile.SCALE * Tile.TILE_HEIGHT));
+                    tiles[row][col] = new Tile(row * (Tile.SCALE * Tile.TILE_WIDTH), col * (Tile.SCALE * Tile.TILE_HEIGHT), true);
+                    if(map.getTileProperty(8, "type", "solid").equalsIgnoreCase("water")) {
+                        tiles[row][col].setBlockSolid(false);
+                    }
                 }
             }
         } catch (SlickException ex) {
@@ -89,6 +92,10 @@ public class Level {
             for(int col = 0; col < tiles[row].length; col++) {
                 if (tiles[row][col].intersects(foo)) {
                     logger.info("collision is a thing");
+                    //TODO: do stuff with collsiion
+                    if(tiles[row][col].getBlockSolid()) {
+                        logger.info("on a solid tile");
+                    }
                 }
             }
         }

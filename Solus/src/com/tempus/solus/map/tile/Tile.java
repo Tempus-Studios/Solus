@@ -12,13 +12,15 @@ public class Tile extends Rectangle {
     public static final float TILE_WIDTH = 32;
     public static final float TILE_HEIGHT = 32;
     public static final float SCALE = 2;
+    private boolean isBlockSolid;
 
-    public Tile(float x, float y) {
+    public Tile(float x, float y, boolean isSolid) {
         super(x, y, TILE_WIDTH * SCALE, TILE_HEIGHT * SCALE);
         logger.setUseParentHandlers(false);
         ConsoleHandler consoleHandler = new ConsoleHandler();
         consoleHandler.setFormatter(new SimpleFormatter());
         logger.addHandler(consoleHandler);
+        isBlockSolid = isSolid;
     }
 
     public float getX() {
@@ -36,6 +38,15 @@ public class Tile extends Rectangle {
     public void setY(float y) {
         super.setY(y);
     }
+
+    public boolean getBlockSolid() {
+        return isBlockSolid;
+    }
+
+    public void setBlockSolid(boolean isSolid) {
+        isBlockSolid = isSolid;
+    }
+
 
 
 }

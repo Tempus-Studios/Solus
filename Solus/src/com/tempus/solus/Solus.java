@@ -14,7 +14,7 @@ import java.util.logging.SimpleFormatter;
 /*
  * Locus is a 2D side-scroller game, similar to Super Mario Bros, but with greatly
  * enhanced combat, weapons systems, and several other features. The entire project was created by
- * Luke Bodwell and Shubhankar Naru, including all programming, art, music, sound effects, animation,
+ * Luke Bodwell and Shubhankar Naru, including all programming, art, music, audio effects, animation,
  * level design, etc. Locus is also Luke and Shubhankar's Senior Project at Falmuoth High School.
  *
  * Copyright 2017 Luke Bodwell and Shubhankar Naru
