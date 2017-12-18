@@ -1,7 +1,6 @@
 package com.tempus.solus.entity;
 
 import com.tempus.solus.Engine;
-import com.tempus.solus.map.tile.Tile;
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;

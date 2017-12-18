@@ -3,7 +3,6 @@ package com.tempus.solus.map;
 
 import com.tempus.solus.Engine;
 import com.tempus.solus.entity.Player;
-import com.tempus.solus.map.tile.Tile;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
@@ -20,7 +19,6 @@ import java.util.logging.SimpleFormatter;
 public class Level {
     private static final Logger logger = Logger.getLogger(Engine.class.getName());
     private Image[] background;
-    private Tile[][] tiles;
     private Player player;
     private BufferedWriter writer;
     private BufferedReader reader;
@@ -69,15 +67,6 @@ public class Level {
         this.levelPath = "res/level/level-" + levelID + ".tmx";
         try {
             this.map = new TiledMap(levelPath);
-            tiles = new Tile[map.getWidth()][map.getHeight()];
-            for (int row = 0; row < tiles.length; row++) {
-                for (int col = 0; col < tiles[row].length; col++) {
-                    tiles[row][col] = new Tile(row * (Tile.SCALE * Tile.TILE_WIDTH), col * (Tile.SCALE * Tile.TILE_HEIGHT), true);
-                    if(map.getTileProperty(8, "type", "solid").equalsIgnoreCase("water")) {
-                        tiles[row][col].setBlockSolid(false);
-                    }
-                }
-            }
         } catch (SlickException ex) {
             logger.severe("Failed to load map\n" + ex.getMessage());
         }
@@ -87,18 +76,8 @@ public class Level {
         //checkCollision(collisionLayer);
     }
     public void checkCollision(Rectangle foo) {
-        //3 x 4 tile - yellowred rectangle
-        for(int row = 0; row < tiles.length; row++) {
-            for(int col = 0; col < tiles[row].length; col++) {
-                if (tiles[row][col].intersects(foo)) {
-                    logger.info("collision is a thing");
-                    //TODO: do stuff with collsiion
-                    if(tiles[row][col].getBlockSolid()) {
-                        logger.info("on a solid tile");
-                    }
-                }
-            }
-        }
+        //3 x 4 tile - player occupancy rectangles
+
     }
     public void render(Graphics graphics) {
         //parallax scrolling background
