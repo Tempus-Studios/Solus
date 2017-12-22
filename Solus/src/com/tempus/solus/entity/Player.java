@@ -29,6 +29,7 @@ public class Player extends Entity {
     private boolean isSprinting;
     private boolean isSprintRequested;
     private float sprintEnergy;
+    private float sprintEnergyVel;
     private float sprintMultiplier;
 
     public Player() {
@@ -79,9 +80,10 @@ public class Player extends Entity {
         direction = 1;
         scaleFactor = 4;
         isSprinting = false;
-        isJumping = false;
         isSprintRequested = false;
+        onGround = false;
         xPos = 128;
+        sprintEnergyVel = 0;
         yPos = Engine.GAME_HEIGHT - 320;
         xVel = 0;
         yVel = 0;
@@ -102,7 +104,7 @@ public class Player extends Entity {
         //collision debugging
         collisionLayer.setX(128 + (14 * scaleFactor));
         collisionLayer.setY(yPos);
-
+        onGround = ((int) yPos >= (int)(Engine.GAME_HEIGHT - 160f));
         //left side bound
         if (xPos < 128) {
             xPos = 128;
@@ -111,19 +113,29 @@ public class Player extends Entity {
             xPos = Engine.GAME_WIDTH - 160;
         }*/
         if (yPos > ((float) (Engine.GAME_HEIGHT - 160))) {
-            yPos =(float) (Engine.GAME_HEIGHT - 160);
+            yPos = (int)(Engine.GAME_HEIGHT - 160f);
         }
-        if (yPos < ((float) (Engine.GAME_HEIGHT - 160))) {
+        if (yPos < ((Engine.GAME_HEIGHT - 160f))) {
             yVel += yAcc;
         }
         if (isMoving) {
-            if (direction == 1) {
-                xVel = 3;
-            } else if (direction == -1) {
-                xVel = -3;
+            if (direction == 1 && xVel < 3) {
+                xVel+= 0.1f;
+            } else if (direction == -1 && xVel > -3) {
+                xVel -= 0.1f;
             }
         } else {
-             xVel = 0;
+            if(xVel > 0f) {
+                xVel -= 0.1f;
+                if(xVel < 0f) {
+                    xVel = 0;
+                }
+            } else if(xVel < 0f) {
+                xVel += 0.1f;
+                if(xVel > 0f) {
+                    xVel = 0;
+                }
+            }
         }
         if (xVel == 0 || yPos < Engine.GAME_HEIGHT - 160) {
            this.setAnimations(false);
@@ -132,50 +144,30 @@ public class Player extends Entity {
             playerLeftAnimation.setAutoUpdate(true);
             playerRightAnimation.setAutoUpdate(true);
         }
-        //Jumping
-        if (isJumping) {
-            if (yPos == Engine.GAME_HEIGHT - 160) {
-                yVel = -9;
-                sprintEnergy -= 15;
-            }
-            isJumping = false;
-        }
         //Sprinting
         if (sprintEnergy > 100) {
-            sprintEnergy = 100;
+            sprintEnergy = 100f;
         }
         if (sprintEnergy < 0) {
             sprintEnergy = 0;
         }
         if (sprintEnergy > 2) {
-            if (isMoving) {
-                if (isSprintRequested) {
-                    isSprinting = true;
-                } else {
-                    isSprinting = false;
-                }
+            if(isMoving && isSprintRequested) {
+                sprintEnergy -= 0.3f;
+
+                    sprintMultiplier = 2;
+
+                logger.info(sprintMultiplier + "shift pressed");
+                logger.info(isMoving + "" + isSprintRequested + sprintMultiplier + "spr");
             } else {
-                isSprinting = false;
+
+                //logger.info(sprintMultiplier + "shift not pressed");
             }
-        } else {
-            isSprinting = false;
-        }
-        if (isSprinting) {
-            sprintEnergy -= 0.3f;
-            if (yPos == Engine.GAME_HEIGHT - 160) {
-                playerLeftAnimation.setDuration(1, 125);
-                playerRightAnimation.setDuration(1, 125);
-                sprintMultiplier = 2;
-            }
-        } else {
-            playerLeftAnimation.setDuration(1, 175);
-            playerRightAnimation.setDuration(1, 175);
-            sprintMultiplier = 1;
         }
         //Player motion
-        xVel *= sprintMultiplier;
-        xPos += xVel;
+        xPos += (xVel * sprintMultiplier);
         yPos += yVel;
+        sprintEnergy += sprintEnergyVel;
         if (!isSprinting) {
             sprintEnergy += 0.2f;
         }
@@ -212,6 +204,27 @@ public class Player extends Entity {
     public float getHeight() {
         return playerLeftAnimation.getHeight() * scaleFactor;
     }
+    public void sprint() {
+        if (yPos == Engine.GAME_HEIGHT - 160) {
+            playerLeftAnimation.setDuration(1, 125);
+            playerRightAnimation.setDuration(1, 125);
+        }
+        sprintMultiplier = 2;
+        sprintEnergyVel = -0.5f;
 
+    }
+    public void stopSprint() {
+        playerLeftAnimation.setDuration(1, 175);
+        playerRightAnimation.setDuration(1, 175);
+        sprintMultiplier = 1;
+        sprintEnergyVel = 0.05f;
+    }
+    public void jump() {
+        logger.info("y: " + yPos +" onground level: " + (Engine.GAME_HEIGHT - 160));
+        super.jump();
+        if(onGround) {
+            sprintEnergy -= 15;
+        }
+    }
 
 }

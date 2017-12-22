@@ -13,7 +13,7 @@ public abstract class Entity {
     protected boolean isAlive;
     protected boolean isRendered = false;
     protected boolean isMoving;
-    protected boolean isJumping;
+    protected boolean onGround;
     protected int direction;
     protected float xPos;
     protected float yPos;
@@ -69,9 +69,6 @@ public abstract class Entity {
         }
     }
 
-    public void setJumping(boolean jumping) {
-        isJumping = jumping;
-    }
 
     public void heal(float heal) {
         health += heal;
@@ -80,12 +77,21 @@ public abstract class Entity {
     public void damage(float damage) {
         health -= damage;
     }
+    public boolean isOnGround() {
+        return onGround;
+    }
 
     public float getWidth() {
         return collisionLayer.getWidth();
     }
     public float getHeight() {
         return collisionLayer.getHeight();
+    }
+    public void jump() {
+        if (onGround) {
+            logger.info("jumping is a thing");
+            yVel = -9;
+        }
     }
 
 

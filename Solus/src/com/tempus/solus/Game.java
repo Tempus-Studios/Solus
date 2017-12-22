@@ -194,7 +194,7 @@ public class Game extends BasicGameState implements KeyListener{
             }
             if (player.getSprintEnergy() > 1.5) {
                 for (int i = 0; i < 5; i++) {
-                    graphics.fillRoundRect(64, 76, (float) (player.getSprintEnergy() * 2.4), 24, 8, 100);
+                    graphics.fillRoundRect(64f, 76f, (player.getSprintEnergy() * 2.4f), 24, 8, 100);
                 }
             }
             graphics.setColor(Color.red);
@@ -249,14 +249,12 @@ public class Game extends BasicGameState implements KeyListener{
                 break;
             }
             case Input.KEY_UP: {
-                if (player.getSprintEnergy() >= 15) {
-                    player.setJumping(true);
-                }
-                break;
+                player.jump();
             }
+            break;
             case Input.KEY_LSHIFT: {
-                if (player.getSprintEnergy() >= 15) {
-                    player.setSprintRequested(true);
+                if (player.getSprintEnergy() >= 15 && player.isOnGround()) {
+                    player.sprint();
                 }
                 break;
             }
@@ -309,26 +307,29 @@ public class Game extends BasicGameState implements KeyListener{
 
                 //TODO add friction
 
-                break;
+
             }
+            break;
             case Input.KEY_RIGHT: {
                 player.setMoving(false);
 
                 //TODO: add friction
-                break;
+
             }
+            break;
             case Input.KEY_SPACE: {
                 isFired = false;
                 weaponLoader.getEquippedWeapon().reset();
-                break;
+
             }
+            break;
             case Input.KEY_LSHIFT: {
-                player.setSprintRequested(false);
-                break;
+                player.stopSprint();
+
+
             }
-            default: {
-                break;
-            }
+            break;
+        default: break;
         }
     }
 }
