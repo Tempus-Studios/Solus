@@ -127,7 +127,7 @@ public class MainMenu extends MenuPage {
             break;
             case Input.KEY_ENTER: {
                 if ((int) menuBarY == (int) PLAY) {
-                    stateBasedGame.enterState(Game.STATE_ID,new FadeOutTransition(), new FadeInTransition());
+                    stateBasedGame.enterState(Game.STATE_ID, new FadeOutTransition(), new FadeInTransition());
                 } else if ((int) menuBarY == (int) SETTINGS) {
                     state = MenuState.SETTINGS;
                 } else if ((int) menuBarY == (int) QUIT) {

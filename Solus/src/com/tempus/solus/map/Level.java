@@ -18,13 +18,13 @@ import java.util.logging.SimpleFormatter;
 
 public class Level {
     private static final Logger logger = Logger.getLogger(Engine.class.getName());
-    private Image[] background;
+    private static Image[] background;
     private Player player;
     private BufferedWriter writer;
-    private BufferedReader reader;
-    private TiledMap map;
-    private String levelID;
-    private String levelPath;
+    private static BufferedReader reader;
+    private static TiledMap map;
+    private static String levelID;
+    private static String levelPath;
     private float yAcc;
 
     public Level(Player player) {
@@ -72,8 +72,7 @@ public class Level {
         }
     }
 
-    public void update(Rectangle collisionLayer, int delta) {
-        //checkCollision(collisionLayer);
+    public void update(int delta) {
     }
     public void checkCollision(Rectangle foo) {
         //3 x 4 tile - player occupancy rectangles
@@ -93,6 +92,9 @@ public class Level {
         if (nextLevelID != null) {
             this.levelID = nextLevelID;
         }
+    }
+    public float getYAcc() {
+        return yAcc;
     }
 
 }

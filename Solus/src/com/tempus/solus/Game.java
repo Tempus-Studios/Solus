@@ -11,6 +11,7 @@ import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 
 import com.tempus.solus.map.Level;
+import com.tempus.solus.map.Tile;
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
@@ -32,7 +33,7 @@ public class Game extends BasicGameState implements KeyListener{
     private Engine engine;
     private Player player;
     private Entity tank;
-    private WeaponLoader weaponLoader;
+    private WeaponHandler weaponHandler;
     private Image healthIcon;
     private Image sprintIcon;
     private Image ammoIcon;
@@ -74,6 +75,7 @@ public class Game extends BasicGameState implements KeyListener{
         engine = new Engine();
         player = new Player();
         currentLevel = new Level(player);
+        player.setYAcc(currentLevel.getYAcc());
         loadingFont = null;
         loadingFont2 = null;
         isPaused = false;
@@ -83,7 +85,7 @@ public class Game extends BasicGameState implements KeyListener{
         enemyFacingLeft = true;
 
         enemyPos = Engine.GAME_WIDTH - 192;
-        weaponLoader = new WeaponLoader();
+        weaponHandler = new WeaponHandler();
         try {
             InputStream inputStream = ResourceLoader.getResourceAsStream("/res/PressStart2P.ttf");
             loadingFont = Font.createFont(Font.TRUETYPE_FONT, inputStream);
@@ -112,8 +114,8 @@ public class Game extends BasicGameState implements KeyListener{
         healthIcon = new Image("/res/sprite/icons/HealthIcon.png");
         sprintIcon = new Image("/res/sprite/icons/SprintEnergyIcon.png");
         ammoIcon = new Image("/res/sprite/icons/AmmoIcon.png");
-        tankLeftSheet = new SpriteSheet("/res/sprite/tank-left.png", 32, 32);
-        tankRightSheet = new SpriteSheet("/res/sprite/tank-right.png", 32, 32);
+        tankLeftSheet = new SpriteSheet("/res/sprite/enemies/tank-left.png", 32, 32);
+        tankRightSheet = new SpriteSheet("/res/sprite/enemies/tank-right.png", 32, 32);
         tankLeftAnimation = new Animation(tankLeftSheet, 200);
         tankRightAnimation = new Animation(tankRightSheet, 200);
         tankLeftAnimation.setAutoUpdate(true);
@@ -125,9 +127,8 @@ public class Game extends BasicGameState implements KeyListener{
         this.delta = delta;
         if (player.isAlive() && !isPaused) {
             player.update(delta);
-            currentLevel.update(player.getCollisionLayer(), delta);
             //bullet movement
-            //weaponLoader.getEquippedWeapon().magazine.get(0).update(delta);
+            //weaponHandler.getEquippedWeapon().magazine.get(0).update(delta);
             if (enemyPos <= 32) {
                 enemyFacingLeft = false;
             }
@@ -211,7 +212,7 @@ public class Game extends BasicGameState implements KeyListener{
             } else {
                 tankRightAnimation.draw(enemyPos, Engine.GAME_HEIGHT - 224, 192, 192);
             }
-            weaponLoader.getEquippedWeapon().render(graphics, player.getXPos(), player.getYPos(), player.getDirection());
+            weaponHandler.getEquippedWeapon().render(graphics, player.getXPos(), player.getYPos(), player.getDirection());
             player.render(graphics);
         } else {
             if (isPaused) {
@@ -236,14 +237,14 @@ public class Game extends BasicGameState implements KeyListener{
         switch (code) {
             case Input.KEY_LEFT: {
 
-                weaponLoader.getEquippedWeapon().setDirection(-1);
+                weaponHandler.getEquippedWeapon().setDirection(-1);
                 player.setMoving(true);
                 player.setDirection(-1);
                 break;
             }
             case Input.KEY_RIGHT: {
 
-                weaponLoader.getEquippedWeapon().setDirection(1);
+                weaponHandler.getEquippedWeapon().setDirection(1);
                 player.setMoving(true);
                 player.setDirection(1);
                 break;
@@ -260,7 +261,7 @@ public class Game extends BasicGameState implements KeyListener{
             }
             case Input.KEY_SPACE: {
                 player.setSprintRequested(false);
-                weaponLoader.getEquippedWeapon().update(delta);
+                weaponHandler.getEquippedWeapon().update(delta);
                 break;
             }
             case Input.KEY_ESCAPE: {
@@ -278,19 +279,19 @@ public class Game extends BasicGameState implements KeyListener{
                 break;
             }
             case Input.KEY_1: {
-                weaponLoader.setWeapon(weaponLoader.getWeaponAt(0));
+                weaponHandler.setWeapon(weaponHandler.getWeaponAt(0));
                 break;
             }
             case Input.KEY_2: {
-                weaponLoader.setWeapon(weaponLoader.getWeaponAt(1));
+                weaponHandler.setWeapon(weaponHandler.getWeaponAt(1));
                 break;
             }
             case Input.KEY_Q: {
-                weaponLoader.cycleWeapon(-1, weaponLoader.getCurrentWeaponIndex());
+                weaponHandler.cycleWeapon(-1, weaponHandler.getCurrentWeaponIndex());
                 break;
             }
             case Input.KEY_E: {
-                weaponLoader.cycleWeapon(1, weaponLoader.getCurrentWeaponIndex());
+                weaponHandler.cycleWeapon(1, weaponHandler.getCurrentWeaponIndex());
                 break;
             }
             default: {
@@ -319,7 +320,7 @@ public class Game extends BasicGameState implements KeyListener{
             break;
             case Input.KEY_SPACE: {
                 isFired = false;
-                weaponLoader.getEquippedWeapon().reset();
+                weaponHandler.getEquippedWeapon().reset();
 
             }
             break;

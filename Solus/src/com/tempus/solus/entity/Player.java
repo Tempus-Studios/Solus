@@ -3,17 +3,12 @@ package com.tempus.solus.entity;
 import com.tempus.solus.Engine;
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.Color;
-import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
-import org.newdawn.slick.Input;
-import org.newdawn.slick.KeyListener;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
-import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.geom.Rectangle;
 
 
-import java.nio.file.WatchEvent;
 import java.util.logging.ConsoleHandler;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
@@ -24,8 +19,6 @@ public class Player extends Entity {
     private SpriteSheet playerRightSheet;
     private Animation playerLeftAnimation;
     private Animation playerRightAnimation;
-    private Weapon weapon1;
-    private Weapon weapon2;
     private boolean isSprinting;
     private boolean isSprintRequested;
     private float sprintEnergy;
@@ -83,6 +76,7 @@ public class Player extends Entity {
         isSprintRequested = false;
         onGround = false;
         xPos = 128;
+        groundLevel = 256;//(int)(Engine.GAME_HEIGHT - 160f);
         sprintEnergyVel = 0;
         yPos = Engine.GAME_HEIGHT - 320;
         xVel = 0;
@@ -104,7 +98,7 @@ public class Player extends Entity {
         //collision debugging
         collisionLayer.setX(128 + (14 * scaleFactor));
         collisionLayer.setY(yPos);
-        onGround = ((int) yPos >= (int)(Engine.GAME_HEIGHT - 160f));
+        onGround = ((int) yPos >= groundLevel);
         //left side bound
         if (xPos < 128) {
             xPos = 128;
@@ -112,10 +106,10 @@ public class Player extends Entity {
         /*if (xPos > Engine.GAME_WIDTH - 160) {
             xPos = Engine.GAME_WIDTH - 160;
         }*/
-        if (yPos > ((float) (Engine.GAME_HEIGHT - 160))) {
-            yPos = (int)(Engine.GAME_HEIGHT - 160f);
+        if (yPos > groundLevel) {
+            yPos = groundLevel;
         }
-        if (yPos < ((Engine.GAME_HEIGHT - 160f))) {
+        if (yPos < groundLevel) {
             yVel += yAcc;
         }
         if (isMoving) {
@@ -137,7 +131,7 @@ public class Player extends Entity {
                 }
             }
         }
-        if (xVel == 0 || yPos < Engine.GAME_HEIGHT - 160) {
+        if (xVel == 0 || yPos < groundLevel) {
            this.setAnimations(false);
            this.resetAnimations();
         } else {
@@ -150,6 +144,7 @@ public class Player extends Entity {
         }
         if (sprintEnergy < 0) {
             sprintEnergy = 0;
+            this.stopSprint();
         }
         if (sprintEnergy > 2) {
             if(isMoving && isSprintRequested) {

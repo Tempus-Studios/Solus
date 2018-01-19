@@ -21,6 +21,7 @@ public abstract class Entity {
     protected float yVel;
     protected float yAcc;
     protected float health;
+    protected int groundLevel;
 
     public boolean isAlive() {
         return isAlive;
@@ -48,6 +49,10 @@ public abstract class Entity {
 
     public float getYVel() {
         return yVel;
+    }
+
+    public void setYAcc(float value) {
+        yAcc = value;
     }
     public Rectangle getCollisionLayer() {
         return collisionLayer;
@@ -93,6 +98,12 @@ public abstract class Entity {
             yVel = -9;
         }
     }
+    public void setGroundLevel(int groundLevel) {
+        this.groundLevel = groundLevel;
+    }
 
+    public int getGroundLevel() {
+        return groundLevel;
+    }
 
 }
