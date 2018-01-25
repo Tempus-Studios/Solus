@@ -46,6 +46,8 @@ public class Game extends BasicGameState implements KeyListener{
     private boolean isFired;
     private boolean isEnemyAggro;
     private boolean enemyFacingLeft;
+    private boolean kLeft;
+    private boolean kRight;
 
     public Font loadingFont;
     public Font loadingFont2;
@@ -83,6 +85,8 @@ public class Game extends BasicGameState implements KeyListener{
         isFired = false;
         isEnemyAggro = false;
         enemyFacingLeft = true;
+        kLeft = false;
+        kRight = false;
 
         enemyPos = Engine.GAME_WIDTH - 192;
         weaponHandler = new WeaponHandler();
@@ -237,16 +241,20 @@ public class Game extends BasicGameState implements KeyListener{
         switch (code) {
             case Input.KEY_LEFT: {
 
-                weaponHandler.getEquippedWeapon().setDirection(-1);
-                player.setMoving(true);
-                player.setDirection(-1);
+                    weaponHandler.getEquippedWeapon().setDirection(-1);
+                    player.setMoving(true);
+                    kLeft = true;
+                    player.setDirection(-1);
+
                 break;
             }
             case Input.KEY_RIGHT: {
 
-                weaponHandler.getEquippedWeapon().setDirection(1);
-                player.setMoving(true);
-                player.setDirection(1);
+                    weaponHandler.getEquippedWeapon().setDirection(1);
+                    player.setMoving(true);
+                    kRight = true;
+                    player.setDirection(1);
+
                 break;
             }
             case Input.KEY_UP: {
@@ -304,18 +312,21 @@ public class Game extends BasicGameState implements KeyListener{
     public void keyReleased(int code, char c) {
         switch (code) {
             case Input.KEY_LEFT: {
-                player.setMoving(false);
-
-                //TODO add friction
-
-
+                if(!kRight) {
+                    player.setMoving(false);
+                } else {
+                    player.setDirection(1);
+                }
+                kLeft = false;
             }
             break;
             case Input.KEY_RIGHT: {
-                player.setMoving(false);
-
-                //TODO: add friction
-
+                if(!kLeft) {
+                    player.setMoving(false);
+                } else {
+                    player.setDirection(-1);
+                }
+                kRight = false;
             }
             break;
             case Input.KEY_SPACE: {

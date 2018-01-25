@@ -23,13 +23,14 @@ public class WeaponHandler {
     public WeaponHandler() throws SlickException {
         this.initWeaponsList();
         loadout = new Weapon[3];
-        equippedWeapon = weaponsList.get(0);
+        equippedWeapon = weaponsList.get(3);
     }
 
     public static void initWeaponsList() throws SlickException {
         weaponsList.add(new Weapon("infio-left.png", "infio-right.png", "Infio", 20, PISTOL_RANGE, 100, 12, false, WeaponType.PISTOL));
         weaponsList.add(new Weapon("asr15-left.png", "asr15-right.png", "ASR-15", 15, RIFLE_RANGE, 100, 30, true, WeaponType.RIFLE));
         weaponsList.add(new Weapon("tank-gun-left.png", "tank-gun-right.png", "Plasma Cannon", 50, PISTOL_RANGE, 150, 7, false, WeaponType.LAUNCHER));
+        weaponsList.add(new Weapon("bolt-rifle-left.png", "bolt-rifle-right.png", "Bolt Rifle", 25, RIFLE_RANGE, 100, 15, false, WeaponType.BOLT_RIFLE));
     }
 
     public Weapon getWeaponAt(int index) {
