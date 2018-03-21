@@ -84,7 +84,7 @@ public class Level {
         background[1].draw((-(int) player.getXPos() / 8) + (background[0].getWidth() * 2), -(background[1].getHeight() / 5),2);
         //scrolling map
         graphics.scale(2,2);
-        map.render(-(int) player.getXPos() + 128,-320);
+        map.render((int) -player.getXPos(),-32);
         graphics.scale(.5f,.5f);
     }
 
@@ -96,5 +96,10 @@ public class Level {
     public float getYAcc() {
         return yAcc;
     }
+
+    public int getID() {
+        return Integer.valueOf(levelID);
+    }
+
 
 }

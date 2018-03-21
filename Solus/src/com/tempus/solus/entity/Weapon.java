@@ -190,10 +190,10 @@ public class Weapon extends Entity {
         this.isRendered = true;
         this.direction = direction;
         if (direction == -1) {
-            leftWeaponAnimation.draw(128 - 40, playerY - 35, 128, 128);
+            leftWeaponAnimation.draw(playerX - 40, playerY - 35, 128, 128);
         } else {
             if (direction == 1) {
-                rightWeaponAnimation.draw(128 + 40, playerY - 35, 128, 128);
+                rightWeaponAnimation.draw(playerX + 40, playerY - 35, 128, 128);
             }
         }
         //TODO: add bullet rendering

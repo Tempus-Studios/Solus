@@ -48,7 +48,7 @@ public class Game extends BasicGameState implements KeyListener{
     private boolean enemyFacingLeft;
     private boolean kLeft;
     private boolean kRight;
-
+    private float xDisplacement;
     public Font loadingFont;
     public Font loadingFont2;
     public UnicodeFont font;
@@ -78,6 +78,7 @@ public class Game extends BasicGameState implements KeyListener{
         player = new Player();
         currentLevel = new Level(player);
         player.setYAcc(currentLevel.getYAcc());
+        xDisplacement = Engine.GAME_WIDTH / 2 - player.getWidth() + (14 * 4);
         loadingFont = null;
         loadingFont2 = null;
         isPaused = false;
@@ -216,7 +217,7 @@ public class Game extends BasicGameState implements KeyListener{
             } else {
                 tankRightAnimation.draw(enemyPos, Engine.GAME_HEIGHT - 224, 192, 192);
             }
-            weaponHandler.getEquippedWeapon().render(graphics, player.getXPos(), player.getYPos(), player.getDirection());
+            weaponHandler.getEquippedWeapon().render(graphics, (Engine.GAME_WIDTH / 2 - player.getWidth() + (14 * 4)), player.getYPos(), player.getDirection());
             player.render(graphics);
         } else {
             if (isPaused) {
@@ -342,6 +343,19 @@ public class Game extends BasicGameState implements KeyListener{
             }
             break;
         default: break;
+        }
+    }
+
+    public void DONTPASSTHROUGHTHEFUCKINGMAP(int FUCKINGLEVELID) {
+        switch(FUCKINGLEVELID) {
+            case 1:
+                //level 1 collision - hardcoded at this point
+                if(player.getXPos() + xDisplacement > (19 * 32 * 2) && player.getYPos() > player.getGroundLevel() + 64) {
+                    player.setXPos(xDisplacement + (19 * 32 * 2));
+                }
+                break;
+            default:
+                break;
         }
     }
 }

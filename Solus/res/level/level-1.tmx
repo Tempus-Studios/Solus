@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="300" height="20" tilewidth="32" tileheight="32" nextobjectid="1">
- <tileset firstgid="1" name="Solus-Tileset" tilewidth="32" tileheight="32">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="96" height="10" tilewidth="32" tileheight="32" nextobjectid="1">
+ <tileset firstgid="1" name="tile-sheet-lvl-1" tilewidth="32" tileheight="32">
   <image source="tile-sheet-lvl-1.png" width="32" height="352"/>
   <tile id="0">
    <properties>
@@ -12,55 +12,10 @@
     <property name="blocked" value="true"/>
    </properties>
   </tile>
-  <tile id="2">
-   <properties>
-    <property name="blocked" value="true"/>
-   </properties>
-  </tile>
-  <tile id="3">
-   <properties>
-    <property name="blocked" value="true"/>
-   </properties>
-  </tile>
-  <tile id="4">
-   <properties>
-    <property name="blocked" value="true"/>
-   </properties>
-  </tile>
-  <tile id="5">
-   <properties>
-    <property name="blocked" value="true"/>
-   </properties>
-  </tile>
-  <tile id="6">
-   <properties>
-    <property name="blocked" value="true"/>
-   </properties>
-  </tile>
-  <tile id="7">
-   <properties>
-    <property name="blocked" value="true"/>
-   </properties>
-  </tile>
-  <tile id="8">
-   <properties>
-    <property name="blocked" value="false"/>
-   </properties>
-  </tile>
-  <tile id="9">
-   <properties>
-    <property name="blocked" value="false"/>
-   </properties>
-  </tile>
-  <tile id="10">
-   <properties>
-    <property name="blocked" value="false"/>
-   </properties>
-  </tile>
  </tileset>
- <layer name="CollisionLayer" width="300" height="20">
+ <layer name="Tile Layer 1" width="96" height="10">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAC+3YyxLCIAyFYbxf+v7vqy6YcTJA05IUSv/Ft8joVGrDMTiFECYAAAAAAAAAAAAAAAAAAABn55UuHawdwLGcKpBZADzF+SjWNXlFZgHwFHNG1mQWgNZy85Ssj5BZ8rvAdu5h/X+l/Kd6HLl8kvXImRX7Wd477OVyybLP9tiDSNPOU7IesV9ye6X1ujzkcsLjeZRmpa1yaS89iDJtPsl6pH6Z2zs119aca7T3b3kWKj0P63NX6zzS8D57Srevd4Vn5efP9dWS3rPu0dT1esqrVpml3U+yVzz26ij7HnrXr9cCj2DXC6mZJff63L7Xvq9mbb3l1Y9nZqXmHO26ZN+07nOMo5RZ//lk/XtFXtnwmr9r1kRewVOLeZq8GlcvefUBI8hfZ8BdAAA=
+   H4sIAAAAAAAAC+2TWwrAIAwE097/0P4oLGLMg9hSugMLQa3GkYoQQv7O3UOeA51fPTjON6lHc76qcYzkiTjH+mv+5/9WS8UZkXUR51hH/Gfv53Xmydy3lt3ZVl9jj903InnnWGv+rbufcFaZQXTOu19Vrfl/wxn953qz0gDV5BFPAA8AAA==
   </data>
  </layer>
 </map>
