@@ -18,7 +18,7 @@ import java.util.logging.SimpleFormatter;
 
 public class Level {
     private static final Logger logger = Logger.getLogger(Engine.class.getName());
-    private static Image[] background;
+    private static List<Image> background = new ArrayList<>();
     private Player player;
     private BufferedWriter writer;
     private static BufferedReader reader;
@@ -39,9 +39,12 @@ public class Level {
     private void init() {
         yAcc = 0.4f;
         try {
-            background = new Image[2];
-            background[0] = new Image("/res/level/earth-background.png");
-            background[1] = new Image("/res/level/earth-background.png");
+            int backgroundSpace = 0;
+
+            while (backgroundSpace < 96 * 32 * 2) {
+                background.add(new Image("/res/level/earth-background.png"));
+                backgroundSpace += background.get(0).getWidth();
+            }
         } catch(SlickException ex) {
             logger.severe(ex.getMessage());
         }
@@ -80,11 +83,12 @@ public class Level {
     }
     public void render(Graphics graphics) {
         //parallax scrolling background
-        background[0].draw(-(int) player.getXPos() / 8,-(background[0].getHeight() / 5),2);
-        background[1].draw((-(int) player.getXPos() / 8) + (background[0].getWidth() * 2), -(background[1].getHeight() / 5),2);
+        for(int i = 0; i < background.size(); i ++) {
+            background.get(i).draw(i * background.get(i).getWidth(), -(background.get(i).getHeight() / 5), 2);
+        }
         //scrolling map
         graphics.scale(2,2);
-        map.render((int) -player.getXPos(),-32);
+        map.render(0,-32);
         graphics.scale(.5f,.5f);
     }
 

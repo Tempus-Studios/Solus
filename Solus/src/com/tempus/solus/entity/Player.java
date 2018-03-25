@@ -75,7 +75,7 @@ public class Player extends Entity {
         isSprinting = false;
         isSprintRequested = false;
         onGround = false;
-        xPos = 0;
+        xPos = 128;
         groundLevel = 256;//(int)(Engine.GAME_HEIGHT - 160f);
         sprintEnergyVel = 0;
         yPos = Engine.GAME_HEIGHT - 320;
@@ -91,7 +91,7 @@ public class Player extends Entity {
         playerRightAnimation = new Animation(playerRightSheet, 150);
         playerLeftAnimation.setAutoUpdate(false);
         playerRightAnimation.setAutoUpdate(false);
-        collisionLayer = new Rectangle(128 + (10 * scaleFactor), yPos, 16 * scaleFactor, this.getHeight());
+        collisionLayer = new Rectangle(xPos + (10 * scaleFactor), yPos, 16 * scaleFactor, this.getHeight());
         rightBounds = new Rectangle(collisionLayer.getX() + collisionLayer.getWidth() - 5, yPos + 5, 5, this.getHeight() - 10);
         leftBounds = new Rectangle(collisionLayer.getX(), yPos + 5, 5, this.getHeight() - 10);
         topBounds = new Rectangle(collisionLayer.getX() + 5, yPos, 8 * scaleFactor, 5);
@@ -100,7 +100,7 @@ public class Player extends Entity {
 
     public void update(int delta) throws SlickException {
         //collision debugging
-        collisionLayer.setX(Engine.GAME_WIDTH / 2 - this.getWidth() + (24 * scaleFactor));
+        collisionLayer.setX(xPos - this.getWidth() + (24 * scaleFactor));
         collisionLayer.setY(yPos);
 
         leftBounds.setX(collisionLayer.getX());
@@ -120,6 +120,9 @@ public class Player extends Entity {
 
         if(xPos < 0) {
             xPos = 0;
+        }
+        if(xPos > 96 * 32 * 2) {
+            xPos = 96 * 32 * 2;
         }
 
         if (yPos > groundLevel) {
@@ -199,9 +202,9 @@ public class Player extends Entity {
     }
     public void render(Graphics graphics) throws SlickException {
         if (direction == -1) {
-            playerLeftAnimation.draw(Engine.GAME_WIDTH / 2 - this.getWidth() + (14* scaleFactor), yPos, 128, 128);
+            playerLeftAnimation.draw(xPos - this.getWidth() + (14* scaleFactor), yPos, 128, 128);
         } else if (direction == 1) {
-            playerRightAnimation.draw(Engine.GAME_WIDTH / 2 - this.getWidth() + (14 * scaleFactor), yPos, 128, 128);
+            playerRightAnimation.draw(xPos - this.getWidth() + (14 * scaleFactor), yPos, 128, 128);
         }
         //collision debug
         graphics.setColor(Color.red);

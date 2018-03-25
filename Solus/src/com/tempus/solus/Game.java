@@ -30,6 +30,7 @@ import org.newdawn.slick.util.ResourceLoader;
 public class Game extends BasicGameState implements KeyListener{
     private static final Logger logger = Logger.getLogger(Solus.class.getName());
     private Level currentLevel;
+    private Camera camera;
     private Engine engine;
     private Player player;
     private Entity tank;
@@ -78,6 +79,7 @@ public class Game extends BasicGameState implements KeyListener{
         player = new Player();
         currentLevel = new Level(player);
         player.setYAcc(currentLevel.getYAcc());
+        camera = new Camera(96 * 32 * 2, 10 * 32 * 2);
         xDisplacement = Engine.GAME_WIDTH / 2 - player.getWidth() + (14 * 4);
         loadingFont = null;
         loadingFont2 = null;
@@ -132,6 +134,21 @@ public class Game extends BasicGameState implements KeyListener{
         this.delta = delta;
         if (player.isAlive() && !isPaused) {
             player.update(delta);
+            //camera
+            camera.setX(player.getXPos() - (Engine.GAME_WIDTH / 2));
+            camera.setY(player.getYPos() - (Engine.GAME_HEIGHT / 2));
+            if(camera.getX() > camera.getMaxOffsetX()) {
+                camera.setX(camera.getMaxOffsetX());
+            }
+            if(camera.getX() < camera.getMinOffsetX()) {
+                camera.setX(camera.getMinOffsetX());
+            }
+            if(camera.getY() > camera.getMaxOffsetY()) {
+                camera.setY(camera.getMaxOffsetY());
+            }
+            if(camera.getY() < camera.getMinOffsetY()) {
+                camera.setY(camera.getMinOffsetY());
+            }
             //bullet movement
             //weaponHandler.getEquippedWeapon().magazine.get(0).update(delta);
             if (enemyPos <= 32) {
@@ -170,6 +187,7 @@ public class Game extends BasicGameState implements KeyListener{
     public void render(GameContainer gameContainer, StateBasedGame stateBasedGame, Graphics graphics) throws SlickException {
         //Set font
         if (player.isAlive() && !isPaused) {
+            graphics.translate(-camera.getX(), -camera.getY());
             //Draw background
             graphics.setColor(Color.white);
             graphics.fillRect(0, 0, Engine.GAME_WIDTH, Engine.GAME_HEIGHT);
@@ -177,8 +195,8 @@ public class Game extends BasicGameState implements KeyListener{
             currentLevel.render(graphics);
             //graphics.scale(.5f,.5f);
             graphics.setColor(Color.gray);
-            graphics.fillRoundRect(64, 28, 320, 32, 8, 100);
-            graphics.fillRoundRect(64, 76, 240, 24, 8, 100);
+            graphics.fillRoundRect(camera.getX() + 64f, 28, 320, 32, 8, 100);
+            graphics.fillRoundRect(camera.getX() + 64f, 76, 240, 24, 8, 100);
             if (player.getHealth() >= 50) {
                 graphics.setColor(Color.green);
             } else {
@@ -190,7 +208,7 @@ public class Game extends BasicGameState implements KeyListener{
             }
             if (player.getHealth() > 1.5) {
                 for (int i = 0; i < 5; i++) {
-                    graphics.fillRoundRect(64, 28, (float) ((player.getHealth() * 3.2)), 32, 8, 100);
+                    graphics.fillRoundRect(camera.getX() + 64f, 28, (float) ((player.getHealth() * 3.2)), 32, 8, 100);
                 }
             }
             if (player.getSprintEnergy() >= 15) {
@@ -200,16 +218,16 @@ public class Game extends BasicGameState implements KeyListener{
             }
             if (player.getSprintEnergy() > 1.5) {
                 for (int i = 0; i < 5; i++) {
-                    graphics.fillRoundRect(64f, 76f, (player.getSprintEnergy() * 2.4f), 24, 8, 100);
+                    graphics.fillRoundRect(camera.getX() + 64f, 76f, (player.getSprintEnergy() * 2.4f), 24, 8, 100);
                 }
             }
             graphics.setColor(Color.red);
             graphics.setFont(font);
-            healthIcon.draw(16,28);
-            sprintIcon.draw(16,76, .8f);
+            healthIcon.draw(camera.getX() + 16f,28);
+            sprintIcon.draw(camera.getX() + 16f,76, .8f);
             graphics.setColor(Color.black);
             graphics.setFont(fpsFont);
-            graphics.drawString("FPS:" + fps, Engine.GAME_WIDTH - 80, Engine.GAME_HEIGHT - 16);
+            graphics.drawString("FPS:" + fps, camera.getX() + Engine.GAME_WIDTH - 80, Engine.GAME_HEIGHT - 16);
             //graphics.drawString("Time: " + timeElapsed / 1000, Engine.GAME_WIDTH / 2, Engine.GAME_HEIGHT / 2);
             //Render sprites
             if (enemyFacingLeft) {
@@ -217,7 +235,7 @@ public class Game extends BasicGameState implements KeyListener{
             } else {
                 tankRightAnimation.draw(enemyPos, Engine.GAME_HEIGHT - 224, 192, 192);
             }
-            weaponHandler.getEquippedWeapon().render(graphics, (Engine.GAME_WIDTH / 2 - player.getWidth() + (14 * 4)), player.getYPos(), player.getDirection());
+            weaponHandler.getEquippedWeapon().render(graphics, (player.getXPos() - player.getWidth() + (14 * 4)), player.getYPos(), player.getDirection());
             player.render(graphics);
         } else {
             if (isPaused) {
@@ -346,16 +364,4 @@ public class Game extends BasicGameState implements KeyListener{
         }
     }
 
-    public void DONTPASSTHROUGHTHEFUCKINGMAP(int FUCKINGLEVELID) {
-        switch(FUCKINGLEVELID) {
-            case 1:
-                //level 1 collision - hardcoded at this point
-                if(player.getXPos() + xDisplacement > (19 * 32 * 2) && player.getYPos() > player.getGroundLevel() + 64) {
-                    player.setXPos(xDisplacement + (19 * 32 * 2));
-                }
-                break;
-            default:
-                break;
-        }
-    }
 }
