@@ -19,20 +19,19 @@ import java.util.logging.SimpleFormatter;
 public class Level {
     private static final Logger logger = Logger.getLogger(Engine.class.getName());
     private static List<Image> background = new ArrayList<>();
-    private Player player;
     private BufferedWriter writer;
     private static BufferedReader reader;
     private static TiledMap map;
     private static String levelID;
     private static String levelPath;
     private float yAcc;
+    public Tile[][] tiles;
 
-    public Level(Player player) {
+    public Level() {
         logger.setUseParentHandlers(false);
         ConsoleHandler consoleHandler = new ConsoleHandler();
         consoleHandler.setFormatter(new SimpleFormatter());
         logger.addHandler(consoleHandler);
-        this.player = player;
         this.init();
     }
 
@@ -70,6 +69,19 @@ public class Level {
         this.levelPath = "res/level/level-" + levelID + ".tmx";
         try {
             this.map = new TiledMap(levelPath);
+            tiles = new Tile[96][10];
+            int tileId;
+            for(int x = 0; x < tiles.length; x++) {
+                for(int y = 0; y < tiles[x].length; y++) {
+                    tiles[x][y] = new Tile(x * Tile.WIDTH, y * Tile.HEIGHT);
+                    tileId = map.getTileId(x, y, 0);
+                    if(map.getTileProperty(tileId, "blocked", "false").equalsIgnoreCase("true")) {
+                        tiles[x][y].setSolid(true);
+                    } else {
+                        tiles[x][y].setSolid(false);
+                    }
+                }
+            }
         } catch (SlickException ex) {
             logger.severe("Failed to load map\n" + ex.getMessage());
         }

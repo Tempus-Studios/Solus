@@ -77,7 +77,7 @@ public class Game extends BasicGameState implements KeyListener{
     public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
         engine = new Engine();
         player = new Player();
-        currentLevel = new Level(player);
+        currentLevel = new Level();
         player.setYAcc(currentLevel.getYAcc());
         camera = new Camera(96 * 32 * 2, 10 * 32 * 2);
         xDisplacement = Engine.GAME_WIDTH / 2 - player.getWidth() + (14 * 4);
@@ -149,6 +149,8 @@ public class Game extends BasicGameState implements KeyListener{
             if(camera.getY() < camera.getMinOffsetY()) {
                 camera.setY(camera.getMinOffsetY());
             }
+            //collision
+            //checkCollision();
             //bullet movement
             //weaponHandler.getEquippedWeapon().magazine.get(0).update(delta);
             if (enemyPos <= 32) {
@@ -363,5 +365,6 @@ public class Game extends BasicGameState implements KeyListener{
         default: break;
         }
     }
+
 
 }

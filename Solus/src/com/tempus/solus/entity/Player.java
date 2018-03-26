@@ -1,6 +1,7 @@
 package com.tempus.solus.entity;
 
 import com.tempus.solus.Engine;
+import com.tempus.solus.map.Level;
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
@@ -92,28 +93,13 @@ public class Player extends Entity {
         playerLeftAnimation.setAutoUpdate(false);
         playerRightAnimation.setAutoUpdate(false);
         collisionLayer = new Rectangle(xPos + (10 * scaleFactor), yPos, 16 * scaleFactor, this.getHeight());
-        rightBounds = new Rectangle(collisionLayer.getX() + collisionLayer.getWidth() - 5, yPos + 5, 5, this.getHeight() - 10);
-        leftBounds = new Rectangle(collisionLayer.getX(), yPos + 5, 5, this.getHeight() - 10);
-        topBounds = new Rectangle(collisionLayer.getX() + 5, yPos, 8 * scaleFactor, 5);
-        bottomBounds = new Rectangle(collisionLayer.getX() + 5, collisionLayer.getY() + collisionLayer.getHeight() - 5, 8 * scaleFactor, 5);
+
     }
 
     public void update(int delta) throws SlickException {
         //collision debugging
         collisionLayer.setX(xPos - this.getWidth() + (24 * scaleFactor));
         collisionLayer.setY(yPos);
-
-        leftBounds.setX(collisionLayer.getX());
-        leftBounds.setY(yPos + 5);
-
-        rightBounds.setX(collisionLayer.getX() + collisionLayer.getWidth() - 5);
-        rightBounds.setY(yPos + 5);
-
-        topBounds.setX(collisionLayer.getX() + 5);
-        topBounds.setY(yPos);
-
-        bottomBounds.setX(collisionLayer.getX() + 5);
-        bottomBounds.setY(collisionLayer.getY() + collisionLayer.getHeight() - 5);
 
 
         onGround = ((int) yPos >= groundLevel);
@@ -208,11 +194,8 @@ public class Player extends Entity {
         }
         //collision debug
         graphics.setColor(Color.red);
-        //graphics.fill(collisionLayer);
-        graphics.fill(leftBounds);
-        graphics.fill(rightBounds);
-        graphics.fill(topBounds);
-        graphics.fill(bottomBounds);
+        graphics.setLineWidth(4);
+        graphics.draw(collisionLayer);
     }
     public float getWidth() {
         return playerLeftAnimation.getWidth() * scaleFactor;
