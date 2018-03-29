@@ -70,8 +70,8 @@
       <file leaf-file-name="Game.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/com/tempus/solus/Game.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="580">
-              <caret line="197" column="42" lean-forward="true" selection-start-line="197" selection-start-column="42" selection-end-line="197" selection-end-column="42" />
+            <state relative-caret-position="419">
+              <caret line="225" column="67" lean-forward="false" selection-start-line="225" selection-start-column="67" selection-end-line="225" selection-end-column="67" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -952,8 +952,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/tempus/solus/Game.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="580">
-          <caret line="197" column="42" lean-forward="true" selection-start-line="197" selection-start-column="42" selection-end-line="197" selection-end-column="42" />
+        <state relative-caret-position="419">
+          <caret line="225" column="67" lean-forward="false" selection-start-line="225" selection-start-column="67" selection-end-line="225" selection-end-column="67" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
