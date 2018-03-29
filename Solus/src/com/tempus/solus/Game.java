@@ -11,7 +11,6 @@ import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 
 import com.tempus.solus.map.Level;
-import com.tempus.solus.map.Tile;
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
@@ -197,8 +196,8 @@ public class Game extends BasicGameState implements KeyListener{
             currentLevel.render(graphics);
             //graphics.scale(.5f,.5f);
             graphics.setColor(Color.gray);
-            graphics.fillRoundRect(camera.getX() + 64f, 28, 320, 32, 8, 100);
-            graphics.fillRoundRect(camera.getX() + 64f, 76, 240, 24, 8, 100);
+            graphics.fillRoundRect(camera.getX() + 64f, 92, 320, 32, 8, 100);
+            graphics.fillRoundRect(camera.getX() + 64f, 140, 240, 24, 8, 100);
             if (player.getHealth() >= 50) {
                 graphics.setColor(Color.green);
             } else {
@@ -210,7 +209,7 @@ public class Game extends BasicGameState implements KeyListener{
             }
             if (player.getHealth() > 1.5) {
                 for (int i = 0; i < 5; i++) {
-                    graphics.fillRoundRect(camera.getX() + 64f, 28, (float) ((player.getHealth() * 3.2)), 32, 8, 100);
+                    graphics.fillRoundRect(camera.getX() + 64f, 92, (float) ((player.getHealth() * 3.2)), 32, 8, 100);
                 }
             }
             if (player.getSprintEnergy() >= 15) {
@@ -220,16 +219,16 @@ public class Game extends BasicGameState implements KeyListener{
             }
             if (player.getSprintEnergy() > 1.5) {
                 for (int i = 0; i < 5; i++) {
-                    graphics.fillRoundRect(camera.getX() + 64f, 76f, (player.getSprintEnergy() * 2.4f), 24, 8, 100);
+                    graphics.fillRoundRect(camera.getX() + 64f, 140, (player.getSprintEnergy() * 2.4f), 24, 8, 100);
                 }
             }
             graphics.setColor(Color.red);
             graphics.setFont(font);
-            healthIcon.draw(camera.getX() + 16f,28);
-            sprintIcon.draw(camera.getX() + 16f,76, .8f);
+            healthIcon.draw(camera.getX() + 16f,92);
+            sprintIcon.draw(camera.getX() + 16f,140, .8f);
             graphics.setColor(Color.black);
             graphics.setFont(fpsFont);
-            graphics.drawString("FPS:" + fps, camera.getX() + Engine.GAME_WIDTH - 80, Engine.GAME_HEIGHT - 16);
+            graphics.drawString("FPS:" + fps, camera.getX() + Engine.GAME_WIDTH - 80, Engine.GAME_HEIGHT + 16);
             //graphics.drawString("Time: " + timeElapsed / 1000, Engine.GAME_WIDTH / 2, Engine.GAME_HEIGHT / 2);
             //Render sprites
             if (enemyFacingLeft) {
@@ -366,5 +365,16 @@ public class Game extends BasicGameState implements KeyListener{
         }
     }
 
+    public void checkCollision() {
+        for(int x = 0; x < 96; x++) {
+            for(int y = 0; y < 10; y++) {
+                if(player.getCollisionLayer().intersects(currentLevel.tiles[x][y])) {
+                    if(currentLevel.blocked[x][y]) {
+                        player.setGroundLevel((int) currentLevel.tiles[x][y].getY());
+                    }
+                }
+            }
+        }
+    }
 
 }

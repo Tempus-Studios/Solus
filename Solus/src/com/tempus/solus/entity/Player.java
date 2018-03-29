@@ -77,7 +77,7 @@ public class Player extends Entity {
         isSprintRequested = false;
         onGround = false;
         xPos = 128;
-        groundLevel = 256;//(int)(Engine.GAME_HEIGHT - 160f);
+        groundLevel = 448;//(int)(Engine.GAME_HEIGHT - 160f);
         sprintEnergyVel = 0;
         yPos = Engine.GAME_HEIGHT - 320;
         xVel = 0;
@@ -111,10 +111,10 @@ public class Player extends Entity {
             xPos = 96 * 32 * 2;
         }
 
-        if (yPos > groundLevel) {
-            yPos = groundLevel;
+        if ((yPos) > (groundLevel - collisionLayer.getHeight())) {
+            yPos = (int) (groundLevel - collisionLayer.getHeight());
         }
-        if (yPos < groundLevel) {
+        if ((int) (yPos + collisionLayer.getHeight()) < groundLevel) {
             yVel += yAcc;
         }
         if (isMoving) {
@@ -136,7 +136,7 @@ public class Player extends Entity {
                 }
             }
         }
-        if (xVel == 0 || yPos < groundLevel) {
+        if (xVel == 0 || (int) (yPos) < (int) (groundLevel - collisionLayer.getHeight())) {
            this.setAnimations(false);
            this.resetAnimations();
         } else {
@@ -206,7 +206,7 @@ public class Player extends Entity {
         return playerLeftAnimation.getHeight() * scaleFactor;
     }
     public void sprint() {
-        if (yPos == Engine.GAME_HEIGHT - 160) {
+        if (yPos  == Engine.GAME_HEIGHT - 160 + 64) {
             playerLeftAnimation.setDuration(1, 125);
             playerRightAnimation.setDuration(1, 125);
         }
@@ -221,7 +221,7 @@ public class Player extends Entity {
         sprintEnergyVel = 0.05f;
     }
     public void jump() {
-        logger.info("y: " + yPos +" onground level: " + (Engine.GAME_HEIGHT - 160));
+        logger.info("y: " + (yPos) +" onground level: " + (int)(groundLevel - collisionLayer.getHeight()));
         super.jump();
         if(onGround) {
             sprintEnergy -= 15;

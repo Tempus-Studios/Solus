@@ -3,6 +3,7 @@ package com.tempus.solus.map;
 
 import com.tempus.solus.Engine;
 import com.tempus.solus.entity.Player;
+import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
@@ -25,7 +26,8 @@ public class Level {
     private static String levelID;
     private static String levelPath;
     private float yAcc;
-    public Tile[][] tiles;
+    public Rectangle[][] tiles;
+    public boolean[][] blocked;
 
     public Level() {
         logger.setUseParentHandlers(false);
@@ -69,19 +71,21 @@ public class Level {
         this.levelPath = "res/level/level-" + levelID + ".tmx";
         try {
             this.map = new TiledMap(levelPath);
-            tiles = new Tile[96][10];
+            tiles = new Rectangle[96][10];
+            blocked = new boolean[96][10];
             int tileId;
             for(int x = 0; x < tiles.length; x++) {
                 for(int y = 0; y < tiles[x].length; y++) {
-                    tiles[x][y] = new Tile(x * Tile.WIDTH, y * Tile.HEIGHT);
+                    tiles[x][y] = new Rectangle(x * 32, y * 32, 32, 32);
                     tileId = map.getTileId(x, y, 0);
                     if(map.getTileProperty(tileId, "blocked", "false").equalsIgnoreCase("true")) {
-                        tiles[x][y].setSolid(true);
+                        blocked[x][y] = true;
                     } else {
-                        tiles[x][y].setSolid(false);
+                        blocked[x][y] = false;
                     }
                 }
             }
+
         } catch (SlickException ex) {
             logger.severe("Failed to load map\n" + ex.getMessage());
         }
@@ -100,8 +104,18 @@ public class Level {
         }
         //scrolling map
         graphics.scale(2,2);
-        map.render(0,-32);
+        map.render(0,0);
+        for(int x = 0; x < 96; x++) {
+            for(int y = 0; y < 10; y++) {
+                if(blocked[x][y])
+                    graphics.setColor(Color.red);
+                else
+                    graphics.setColor(Color.white);
+                graphics.draw(tiles[x][y]);
+            }
+        }
         graphics.scale(.5f,.5f);
+        //graphics.draw(tiles[x][y]);
     }
 
     public void setCurrentLevel(String nextLevelID, boolean doLoadNextMap) {
