@@ -1,7 +1,6 @@
 package com.tempus.solus.entity;
 
 import com.tempus.solus.Engine;
-import com.tempus.solus.map.Level;
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
@@ -92,17 +91,15 @@ public class Player extends Entity {
         playerRightAnimation = new Animation(playerRightSheet, 150);
         playerLeftAnimation.setAutoUpdate(false);
         playerRightAnimation.setAutoUpdate(false);
-        collisionLayer = new Rectangle(xPos + (10 * scaleFactor), yPos, 16 * scaleFactor, this.getHeight());
+        hitbox = new Rectangle(xPos + (10 * scaleFactor), yPos, 16 * scaleFactor, this.getHeight());
 
     }
 
     public void update(int delta) throws SlickException {
         //collision debugging
-        collisionLayer.setX(xPos - this.getWidth() + (24 * scaleFactor));
-        collisionLayer.setY(yPos);
-
-
-        onGround = ((int) (yPos + collisionLayer.getHeight()) >= groundLevel);
+        hitbox.setX(xPos - this.getWidth() + (24 * scaleFactor));
+        hitbox.setY(yPos);
+        onGround = ((int) (yPos + hitbox.getHeight()) >= groundLevel);
 
         if(xPos < 0) {
             xPos = 0;
@@ -111,10 +108,10 @@ public class Player extends Entity {
             xPos = 96 * 32 * 2;
         }
 
-        if ((yPos) > (groundLevel - collisionLayer.getHeight())) {
-            yPos = (int) (groundLevel - collisionLayer.getHeight());
+        if ((yPos) > (groundLevel - hitbox.getHeight())) {
+            yPos = (int) (groundLevel - hitbox.getHeight());
         }
-        if ((int) (yPos + collisionLayer.getHeight()) < groundLevel) {
+        if ((int) (yPos + hitbox.getHeight()) < groundLevel) {
             yVel += yAcc;
         }
         if (isMoving) {
@@ -136,7 +133,7 @@ public class Player extends Entity {
                 }
             }
         }
-        if (xVel == 0 || (int) (yPos) < (int) (groundLevel - collisionLayer.getHeight())) {
+        if (xVel == 0 || (int) (yPos) < (int) (groundLevel - hitbox.getHeight())) {
            this.setAnimations(false);
            this.resetAnimations();
         } else {
@@ -195,7 +192,7 @@ public class Player extends Entity {
         //collision debug
         graphics.setColor(Color.red);
         graphics.setLineWidth(4);
-        graphics.draw(collisionLayer);
+        graphics.draw(hitbox);
     }
     public float getWidth() {
         return playerLeftAnimation.getWidth() * scaleFactor;
@@ -221,7 +218,7 @@ public class Player extends Entity {
         sprintEnergyVel = 0.05f;
     }
     public void jump() {
-        logger.info("y: " + (yPos) +" onground level: " + (int)(groundLevel - collisionLayer.getHeight()));
+        logger.info("y: " + (yPos) +" onground level: " + (int)(groundLevel - hitbox.getHeight()));
         super.jump();
         if(onGround) {
             sprintEnergy -= 15;

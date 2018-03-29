@@ -8,7 +8,7 @@ import java.util.logging.Logger;
 
 public abstract class Entity {
     private static final Logger logger = Logger.getLogger(Solus.class.getName());
-    protected Rectangle collisionLayer;
+    protected Rectangle hitbox;
     protected int scaleFactor = 1;
     protected boolean isAlive;
     protected boolean isRendered = false;
@@ -70,8 +70,8 @@ public abstract class Entity {
         yAcc = value;
     }
 
-    public Rectangle getCollisionLayer() {
-        return collisionLayer;
+    public Rectangle getHitbox() {
+        return hitbox;
     }
 
     public float getHealth() {
@@ -90,7 +90,6 @@ public abstract class Entity {
         }
     }
 
-
     public void heal(float heal) {
         health += heal;
     }
@@ -103,10 +102,10 @@ public abstract class Entity {
     }
 
     public float getWidth() {
-        return collisionLayer.getWidth();
+        return hitbox.getWidth();
     }
     public float getHeight() {
-        return collisionLayer.getHeight();
+        return hitbox.getHeight();
     }
     public void jump() {
         if (onGround) {
@@ -120,7 +119,4 @@ public abstract class Entity {
     public int getGroundLevel() {
         return groundLevel;
     }
-
-
-
 }
