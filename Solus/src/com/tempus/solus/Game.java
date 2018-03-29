@@ -135,23 +135,23 @@ public class Game extends BasicGameState implements KeyListener{
             //camera
             camera.setX(player.getXPos() - (Engine.GAME_WIDTH / 2));
             camera.setY(player.getYPos() - (Engine.GAME_HEIGHT / 2));
-            if(camera.getX() > camera.getMaxOffsetX()) {
+            if (camera.getX() > camera.getMaxOffsetX()) {
                 camera.setX(camera.getMaxOffsetX());
             }
-            if(camera.getX() < camera.getMinOffsetX()) {
+            if (camera.getX() < camera.getMinOffsetX()) {
                 camera.setX(camera.getMinOffsetX());
             }
-            if(camera.getY() > camera.getMaxOffsetY()) {
+            if (camera.getY() > camera.getMaxOffsetY()) {
                 camera.setY(camera.getMaxOffsetY());
             }
-            if(camera.getY() < camera.getMinOffsetY()) {
+            if (camera.getY() < camera.getMinOffsetY()) {
                 camera.setY(camera.getMinOffsetY());
             }
             //collision
             //checkCollision();
             //bullet movement
             //weaponHandler.getEquippedWeapon().magazine.get(0).update(delta);
-            if (enemyPos <= 32) {
+            /*if (enemyPos <= 32) {
                 enemyFacingLeft = false;
             }
             if (enemyPos >= Engine.GAME_WIDTH - 192) {
@@ -167,12 +167,12 @@ public class Game extends BasicGameState implements KeyListener{
             } else {
                 isEnemyAggro = false;
             }
-            player.heal(0.025f);
             if (isEnemyAggro) {
                 if (timeElapsed >= 1000) {
                     player.damage(0.2f);
                 }
-            }
+            }*/
+            player.heal(0.025f);
             timeElapsed += delta;
             fps = engine.getFPS();
         } else if (!player.isAlive()) {
@@ -188,10 +188,7 @@ public class Game extends BasicGameState implements KeyListener{
         //Set font
         if (player.isAlive() && !isPaused) {
             graphics.translate(-camera.getX(), -camera.getY());
-            //Draw background
-            //graphics.scale(2,2);
             currentLevel.render(graphics);
-            //graphics.scale(.5f,.5f);
             graphics.setColor(Color.gray);
             graphics.fillRoundRect(camera.getX() + 64f, camera.getY() + 28, 320, 32, 8, 100);
             graphics.fillRoundRect(camera.getX() + 64f, camera.getY() + 76, 240, 24, 8, 100);
@@ -251,23 +248,19 @@ public class Game extends BasicGameState implements KeyListener{
     public void keyPressed(int code, char c) {
         switch (code) {
             case Input.KEY_LEFT: {
-
-                    weaponHandler.getEquippedWeapon().setDirection(-1);
-                    player.setMoving(true);
-                    kLeft = true;
-                    player.setDirection(-1);
-
-                break;
+                weaponHandler.getEquippedWeapon().setDirection(-1);
+                player.setMoving(true);
+                kLeft = true;
+                player.setDirection(-1);
             }
+            break;
             case Input.KEY_RIGHT: {
-
-                    weaponHandler.getEquippedWeapon().setDirection(1);
-                    player.setMoving(true);
-                    kRight = true;
-                    player.setDirection(1);
-
-                break;
+                weaponHandler.getEquippedWeapon().setDirection(1);
+                player.setMoving(true);
+                kRight = true;
+                player.setDirection(1);
             }
+            break;
             case Input.KEY_UP: {
                 player.jump();
             }
@@ -276,46 +269,39 @@ public class Game extends BasicGameState implements KeyListener{
                 if (player.getSprintEnergy() >= 15 && player.isOnGround()) {
                     player.sprint();
                 }
-                break;
             }
+            break;
             case Input.KEY_SPACE: {
                 player.setSprintRequested(false);
                 weaponHandler.getEquippedWeapon().update(delta);
-                break;
             }
+            break;
             case Input.KEY_ESCAPE: {
-                if (!isPaused) {
-                    isPaused = true;
-                } else {
-                    isPaused = false;
-                }
-                break;
+                isPaused = !isPaused;
             }
+            break;
             case Input.KEY_ENTER: {
                 if (!player.isAlive()) {
                     isRestartRequested = true;
                 }
-                break;
             }
+            break;
             case Input.KEY_1: {
                 weaponHandler.setWeapon(weaponHandler.getWeaponAt(0));
-                break;
             }
+            break;
             case Input.KEY_2: {
                 weaponHandler.setWeapon(weaponHandler.getWeaponAt(1));
-                break;
             }
+            break;
             case Input.KEY_Q: {
                 weaponHandler.cycleWeapon(-1, weaponHandler.getCurrentWeaponIndex());
-                break;
             }
+            break;
             case Input.KEY_E: {
                 weaponHandler.cycleWeapon(1, weaponHandler.getCurrentWeaponIndex());
-                break;
             }
-            default: {
-                break;
-            }
+            break;
         }
     }
 
@@ -357,13 +343,23 @@ public class Game extends BasicGameState implements KeyListener{
     }
 
     public void checkCollision() {
+<<<<<<< HEAD
         if(player.getLtBounds() < 19 * 64) {
             player.setGroundLevel(448);
         }
         if(player.getRtBounds() > 19 * 64) {
             //if()
             player.setGroundLevel(384);
+=======
+        for(int x = 0; x < 96; x++) {
+            for(int y = 0; y < 10; y++) {
+                if(player.getHitbox().intersects(currentLevel.tiles[x][y])) {
+                    if(currentLevel.blocked[x][y]) {
+                        player.setGroundLevel((int) currentLevel.tiles[x][y].getY());
+                    }
+                }
+            }
+>>>>>>> 74989b8e7495f6159ffe7784236bf009cce1efff
         }
     }
-
 }

@@ -8,8 +8,12 @@ import java.util.logging.Logger;
 
 public abstract class Entity {
     private static final Logger logger = Logger.getLogger(Solus.class.getName());
+<<<<<<< HEAD
     protected Rectangle collisionLayer;
     protected Rectangle leftBounds, rightBounds, topBounds, bottomBounds;
+=======
+    protected Rectangle hitbox;
+>>>>>>> 74989b8e7495f6159ffe7784236bf009cce1efff
     protected int scaleFactor = 1;
     protected boolean isAlive;
     protected boolean isRendered = false;
@@ -71,8 +75,8 @@ public abstract class Entity {
         yAcc = value;
     }
 
-    public Rectangle getCollisionLayer() {
-        return collisionLayer;
+    public Rectangle getHitbox() {
+        return hitbox;
     }
 
     public float getHealth() {
@@ -91,7 +95,6 @@ public abstract class Entity {
         }
     }
 
-
     public void heal(float heal) {
         health += heal;
     }
@@ -103,6 +106,7 @@ public abstract class Entity {
         return onGround;
     }
 
+<<<<<<< HEAD
     public int getLtBounds() {
         return (int) collisionLayer.getX();
     }
@@ -111,6 +115,13 @@ public abstract class Entity {
     }
     public int getBtBounds() {
         return (int) (collisionLayer.getY() + collisionLayer.getHeight());
+=======
+    public float getWidth() {
+        return hitbox.getWidth();
+    }
+    public float getHeight() {
+        return hitbox.getHeight();
+>>>>>>> 74989b8e7495f6159ffe7784236bf009cce1efff
     }
     public void jump() {
         if (onGround) {
@@ -124,6 +135,7 @@ public abstract class Entity {
     public int getGroundLevel() {
         return groundLevel;
     }
+<<<<<<< HEAD
 
     public Rectangle getTopBounds() {
         return topBounds;
@@ -137,4 +149,6 @@ public abstract class Entity {
     public Rectangle getRightBounds() {
         return rightBounds;
     }
+=======
+>>>>>>> 74989b8e7495f6159ffe7784236bf009cce1efff
 }
