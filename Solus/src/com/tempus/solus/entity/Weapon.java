@@ -123,10 +123,16 @@ public class Weapon extends Entity {
         return shotsFired;
     }
 
-    private void shoot() {
-        magazine.get(0).render(playerXPos, playerYPos, getDirection());
-        for (Bullet bullet : magazine) {
-            bullet.render(playerXPos, playerYPos, direction);
+    private void shoot(int delta) {
+        shotsFired += 1;
+        logger.info("Fired semi-automatically: " + shotsFired);
+        magazine.get(magazine.size() - 1).render(player.getXPos(), player.getYPos(), player.getDirection());
+        try {
+            Bullet bullet = new Bullet("/res/sprite/bullets/pistol-bullet.png", damage, range, 10);
+            bullet.render(player.getXPos(), player.getYPos(), player.getDirection());
+            bullet.update(delta);
+        } catch (SlickException ex) {
+            ex.printStackTrace();
         }
     }
 
@@ -150,23 +156,21 @@ public class Weapon extends Entity {
     public void update(int delta) {
         //semi-auto
         if (!isAutomatic()) {
-            if (getDirection() == -1) {
+            if (player.getDirection() == -1) {
                 leftWeaponAnimation.restart();
                 leftWeaponAnimation.setAutoUpdate(true);
-                if (leftWeaponAnimation.getFrame() == 1) {
-                    shoot();
-                    shotsFired += 1;
-                    logger.info("Fired semi-automatically: " + shotsFired);
-                }
+                //if (leftWeaponAnimation.getFrame() == 1) {
+                    shoot(delta);
+                //}
                 leftWeaponAnimation.stopAt(2);
-            } else if (getDirection() == 1) {
+            } else if (player.getDirection() == 1) {
                 rightWeaponAnimation.restart();
                 rightWeaponAnimation.setAutoUpdate(true);
-                if (rightWeaponAnimation.getFrame() == 1) {
-                    shoot();
-                    shotsFired += 1;
-                    logger.info("Fired semi-automatically: " + shotsFired);
-                }
+                //if (rightWeaponAnimation.getFrame() == 1) {
+                    shoot(delta);
+                    //shotsFired += 1;
+                    //logger.info("Fired semi-automatically: " + shotsFired);
+                //}
                 rightWeaponAnimation.stopAt(2);
             }
             //automatic
@@ -186,7 +190,6 @@ public class Weapon extends Entity {
     }
 
     public void render(Graphics graphics, float playerX, float playerY, int direction) {
-
         this.isRendered = true;
         this.direction = direction;
         if (direction == -1) {

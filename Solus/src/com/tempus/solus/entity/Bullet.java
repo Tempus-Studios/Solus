@@ -1,11 +1,11 @@
 package com.tempus.solus.entity;
 
-import org.newdawn.slick.Image;
-import org.newdawn.slick.SlickException;
-
 import java.util.logging.ConsoleHandler;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
+
+import org.newdawn.slick.Image;
+import org.newdawn.slick.SlickException;
 
 public class Bullet extends Entity {
     private static final Logger logger = Logger.getLogger(Bullet.class.getName());
@@ -35,8 +35,19 @@ public class Bullet extends Entity {
         return damage;
     }
 
-    //@Override
+    public void update(int delta) {
+        if (isRendered) {
+            xPos += xVel;
+        }
+        if ((xPos > (initialXPos + range)) || (xPos < (initialXPos - range)) || isHit) {
+            isRendered = false;
+        }
+        //add collision here
+        // ...
+    }
+
     public void render(float playerX, float playerY, int direction) {
+        logger.info("made it to bullet render");
         isRendered = true;
         if (direction == -1) {
             this.xVel = -xVel;
@@ -47,18 +58,4 @@ public class Bullet extends Entity {
             bullet.draw(xPos, playerY + 30, 4);
         }
     }
-
-    //@Override
-    public void update(int delta) {
-        if (isRendered) {
-            xPos += xVel;
-        }
-        if((xPos > (initialXPos + range)) || (xPos < (initialXPos - range)) || isHit) {
-            isRendered = false;
-        }
-        //add collision here
-        // ...
-    }
-
-
 }

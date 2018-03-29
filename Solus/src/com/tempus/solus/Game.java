@@ -1,6 +1,7 @@
 package com.tempus.solus;
 
 
+import com.tempus.solus.entity.Bullet;
 import com.tempus.solus.entity.Entity;
 import com.tempus.solus.entity.Player;
 
@@ -59,6 +60,7 @@ public class Game extends BasicGameState implements KeyListener{
     private int fps;
     private int delta;
     public static final int STATE_ID = 1;
+    public Bullet bullet;
 
     public Game() {
         logger.setUseParentHandlers(false);
@@ -74,6 +76,7 @@ public class Game extends BasicGameState implements KeyListener{
 
     @Override
     public void init(GameContainer gameContainer, StateBasedGame stateBasedGame) throws SlickException {
+        bullet = new Bullet("/res/sprite/bullets/pistol-bullet.png", 20, 320, 10);
         engine = new Engine();
         player = new Player();
         currentLevel = new Level();
@@ -88,7 +91,6 @@ public class Game extends BasicGameState implements KeyListener{
         enemyFacingLeft = true;
         kLeft = false;
         kRight = false;
-
         enemyPos = Engine.GAME_WIDTH - 192;
         weaponHandler = new WeaponHandler();
         try {
@@ -132,19 +134,20 @@ public class Game extends BasicGameState implements KeyListener{
         this.delta = delta;
         if (player.isAlive() && !isPaused) {
             player.update(delta);
+            bullet.update(delta);
             //camera
             camera.setX(player.getXPos() - (Engine.GAME_WIDTH / 2));
             camera.setY(player.getYPos() - (Engine.GAME_HEIGHT / 2));
-            if(camera.getX() > camera.getMaxOffsetX()) {
+            if (camera.getX() > camera.getMaxOffsetX()) {
                 camera.setX(camera.getMaxOffsetX());
             }
-            if(camera.getX() < camera.getMinOffsetX()) {
+            if (camera.getX() < camera.getMinOffsetX()) {
                 camera.setX(camera.getMinOffsetX());
             }
-            if(camera.getY() > camera.getMaxOffsetY()) {
+            if (camera.getY() > camera.getMaxOffsetY()) {
                 camera.setY(camera.getMaxOffsetY());
             }
-            if(camera.getY() < camera.getMinOffsetY()) {
+            if (camera.getY() < camera.getMinOffsetY()) {
                 camera.setY(camera.getMinOffsetY());
             }
             //collision
@@ -229,6 +232,8 @@ public class Game extends BasicGameState implements KeyListener{
             //graphics.drawString("Time: " + timeElapsed / 1000, Engine.GAME_WIDTH / 2, Engine.GAME_HEIGHT / 2);
             weaponHandler.getEquippedWeapon().render(graphics, (player.getXPos() - 128 + (14 * 4)), player.getYPos(), player.getDirection());
             player.render(graphics);
+
+            bullet.render(player.getXPos(), player.getYPos(), player.getDirection());
         } else {
             if (isPaused) {
                 graphics.setColor(Color.black);
