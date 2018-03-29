@@ -102,7 +102,7 @@ public class Player extends Entity {
         collisionLayer.setY(yPos);
 
 
-        onGround = ((int) yPos >= groundLevel);
+        onGround = ((int) (yPos + collisionLayer.getHeight()) >= groundLevel);
 
         if(xPos < 0) {
             xPos = 0;

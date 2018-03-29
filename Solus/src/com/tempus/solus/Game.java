@@ -230,12 +230,6 @@ public class Game extends BasicGameState implements KeyListener{
             graphics.setFont(fpsFont);
             graphics.drawString("FPS:" + fps, camera.getX() + Engine.GAME_WIDTH - 80, Engine.GAME_HEIGHT + 16);
             //graphics.drawString("Time: " + timeElapsed / 1000, Engine.GAME_WIDTH / 2, Engine.GAME_HEIGHT / 2);
-            //Render sprites
-            if (enemyFacingLeft) {
-                tankLeftAnimation.draw(enemyPos, Engine.GAME_HEIGHT - 224, 192, 192);
-            } else {
-                tankRightAnimation.draw(enemyPos, Engine.GAME_HEIGHT - 224, 192, 192);
-            }
             weaponHandler.getEquippedWeapon().render(graphics, (player.getXPos() - player.getWidth() + (14 * 4)), player.getYPos(), player.getDirection());
             player.render(graphics);
         } else {

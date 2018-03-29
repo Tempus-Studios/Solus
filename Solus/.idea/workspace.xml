@@ -35,7 +35,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Level.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="Level.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/tempus/solus/map/Level.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="253">
@@ -60,18 +60,18 @@
       <file leaf-file-name="Player.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/tempus/solus/entity/Player.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="253">
-              <caret line="113" column="21" lean-forward="false" selection-start-line="113" selection-start-column="21" selection-end-line="113" selection-end-column="21" />
+            <state relative-caret-position="460">
+              <caret line="104" column="61" lean-forward="false" selection-start-line="104" selection-start-column="61" selection-end-line="104" selection-end-column="61" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Game.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="Game.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/com/tempus/solus/Game.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-961">
-              <caret line="151" column="31" lean-forward="false" selection-start-line="151" selection-start-column="31" selection-end-line="151" selection-end-column="31" />
+            <state relative-caret-position="580">
+              <caret line="197" column="42" lean-forward="true" selection-start-line="197" selection-start-column="42" selection-end-line="197" selection-end-column="42" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -176,9 +176,9 @@
         <option value="$PROJECT_DIR$/src/com/tempus/solus/Camera.java" />
         <option value="$PROJECT_DIR$/src/com/tempus/solus/map/Tile.java" />
         <option value="$PROJECT_DIR$/src/com/tempus/solus/entity/Entity.java" />
-        <option value="$PROJECT_DIR$/src/com/tempus/solus/Game.java" />
-        <option value="$PROJECT_DIR$/src/com/tempus/solus/entity/Player.java" />
         <option value="$PROJECT_DIR$/src/com/tempus/solus/map/Level.java" />
+        <option value="$PROJECT_DIR$/src/com/tempus/solus/entity/Player.java" />
+        <option value="$PROJECT_DIR$/src/com/tempus/solus/Game.java" />
       </list>
     </option>
   </component>
@@ -916,36 +916,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/tempus/solus/Camera.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="299">
-          <caret line="20" column="23" lean-forward="false" selection-start-line="20" selection-start-column="23" selection-end-line="20" selection-end-column="23" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/tempus/solus/Game.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-961">
-          <caret line="151" column="31" lean-forward="false" selection-start-line="151" selection-start-column="31" selection-end-line="151" selection-end-column="31" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/tempus/solus/entity/Entity.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-1150">
           <caret line="10" column="39" lean-forward="false" selection-start-line="10" selection-start-column="39" selection-end-line="10" selection-end-column="39" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/tempus/solus/entity/Player.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="253">
-          <caret line="113" column="21" lean-forward="false" selection-start-line="113" selection-start-column="21" selection-end-line="113" selection-end-column="21" />
           <folding />
         </state>
       </provider>
@@ -956,6 +930,32 @@
           <caret line="101" column="53" lean-forward="true" selection-start-line="101" selection-start-column="53" selection-end-line="101" selection-end-column="53" />
           <folding>
             <marker date="1522343900605" expanded="true" signature="3887:3931" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/tempus/solus/entity/Player.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="460">
+          <caret line="104" column="61" lean-forward="false" selection-start-line="104" selection-start-column="61" selection-end-line="104" selection-end-column="61" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/tempus/solus/Camera.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="299">
+          <caret line="20" column="23" lean-forward="false" selection-start-line="20" selection-start-column="23" selection-end-line="20" selection-end-column="23" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/tempus/solus/Game.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="580">
+          <caret line="197" column="42" lean-forward="true" selection-start-line="197" selection-start-column="42" selection-end-line="197" selection-end-column="42" />
+          <folding>
+            <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
