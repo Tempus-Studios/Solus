@@ -7,6 +7,7 @@ import java.util.logging.ConsoleHandler;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 
+import com.tempus.solus.menu.Menu;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.KeyListener;
 import org.newdawn.slick.SlickException;
@@ -21,7 +22,6 @@ public class Engine extends StateBasedGame implements KeyListener, Runnable {
     private static final int SCREEN_HEIGHT = (int) SCREEN_SIZE.getHeight();
     public static final int GAME_WIDTH = SCREEN_WIDTH / 2;
     public static final int GAME_HEIGHT = SCREEN_HEIGHT / 2 ;
-    public static final boolean DEBUG_MODE = true;
     public static float MUSIC_VOLUME = 50;
 
     public Engine() {
@@ -47,13 +47,13 @@ public class Engine extends StateBasedGame implements KeyListener, Runnable {
             container.setDisplayMode(GAME_WIDTH, GAME_HEIGHT,false);
             //TODO
             //container.setIcon();
+            //container.setMouseCursor();
             container.setShowFPS(false);
             container.setVSync(true);
             container.setUpdateOnlyWhenVisible(false);
             container.start();
         } catch (SlickException ex) {
             logger.severe(ex.getMessage());
-            container.destroy();
             container.exit();
             System.exit(0);
         }
@@ -62,7 +62,7 @@ public class Engine extends StateBasedGame implements KeyListener, Runnable {
     @Override
     public void initStatesList(GameContainer gameContainer) throws SlickException {
         logger.info("Resolution: " + GAME_WIDTH + " x " + GAME_HEIGHT);
-        //addState(new Menu());
+       // addState(new Menu());
         addState(new Game());
         //addState(new Potato());
     }

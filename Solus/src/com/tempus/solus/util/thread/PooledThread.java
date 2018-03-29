@@ -10,7 +10,7 @@ public class PooledThread extends Thread {
 
     @Override
     public void run() {
-        while (!isInterrupted()) {
+        while(!isInterrupted()) {
             Runnable task = null;
             try {
                  task = pool.getTask();

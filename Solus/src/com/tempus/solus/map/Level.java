@@ -93,32 +93,29 @@ public class Level {
 
     public void update(int delta) {
     }
-
     public void checkCollision(Rectangle foo) {
         //3 x 4 tile - player occupancy rectangles
-    }
 
+    }
     public void render(Graphics graphics) {
         //parallax scrolling background
-        for (int i = 0; i < background.size(); i++) {
+        for(int i = 0; i < background.size(); i ++) {
             background.get(i).draw(i * background.get(i).getWidth(), -(background.get(i).getHeight() / 5), 2);
         }
         //scrolling map
         graphics.scale(2,2);
         map.render(0,0);
-        if (Engine.DEBUG_MODE) {
-            for (int x = 0; x < 96; x++) {
-                for (int y = 0; y < 10; y++) {
-                    if (blocked[x][y]) {
-                        graphics.setColor(Color.red);
-                    } else {
-                        graphics.setColor(Color.white);
-                    }
-                    graphics.draw(tiles[x][y]);
-                }
+        for(int x = 0; x < 96; x++) {
+            for(int y = 0; y < 10; y++) {
+                if(blocked[x][y])
+                    graphics.setColor(Color.red);
+                else
+                    graphics.setColor(Color.white);
+                graphics.draw(tiles[x][y]);
             }
         }
         graphics.scale(.5f,.5f);
+        //graphics.draw(tiles[x][y]);
     }
 
     public void setCurrentLevel(String nextLevelID, boolean doLoadNextMap) {
@@ -133,4 +130,6 @@ public class Level {
     public int getID() {
         return Integer.valueOf(levelID);
     }
+
+
 }

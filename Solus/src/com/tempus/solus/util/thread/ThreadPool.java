@@ -1,5 +1,8 @@
 package com.tempus.solus.util.thread;
 
+import com.tempus.solus.util.thread.IDAssignment;
+import com.tempus.solus.util.thread.PooledThread;
+
 import java.util.List;
 import java.util.LinkedList;
 
@@ -32,7 +35,7 @@ public class ThreadPool extends ThreadGroup {
     }
 
     public synchronized void close() {
-        if (!threadPoolAlive) {
+        if(!threadPoolAlive) {
             return;
         }
         threadPoolAlive = false;
@@ -47,6 +50,7 @@ public class ThreadPool extends ThreadGroup {
         }
         Thread[] threads = new Thread[activeCount()];
         int threadCount = enumerate(threads);
+
         for (int i = 0; i < threadCount; i++) {
             try {
                 threads[i].join();
@@ -57,8 +61,8 @@ public class ThreadPool extends ThreadGroup {
     }
 
     protected synchronized Runnable getTask() throws InterruptedException {
-        while (taskQueue.size() == 0) {
-            if (!threadPoolAlive) {
+        while(taskQueue.size() == 0) {
+            if(!threadPoolAlive) {
                 return null;
             }
             wait();
