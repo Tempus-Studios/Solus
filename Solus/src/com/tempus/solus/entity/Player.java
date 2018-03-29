@@ -92,15 +92,30 @@ public class Player extends Entity {
         playerRightAnimation = new Animation(playerRightSheet, 150);
         playerLeftAnimation.setAutoUpdate(false);
         playerRightAnimation.setAutoUpdate(false);
-        collisionLayer = new Rectangle(xPos + (10 * scaleFactor), yPos, 16 * scaleFactor, this.getHeight());
+        collisionLayer = new Rectangle(xPos + (10 * scaleFactor), yPos, 16 * scaleFactor, 128);
+        rightBounds = new Rectangle(collisionLayer.getX() + collisionLayer.getWidth() - 5, yPos + 5, 5, 128 - 10);
+        leftBounds = new Rectangle(collisionLayer.getX(), yPos + 5, 5, 128 - 10);
+        topBounds = new Rectangle(collisionLayer.getX() + 5, yPos, 8 * scaleFactor, 5);
+        bottomBounds = new Rectangle(collisionLayer.getX() + 5, collisionLayer.getY() + collisionLayer.getHeight() - 5, 8 * scaleFactor, 5);
 
     }
 
     public void update(int delta) throws SlickException {
         //collision debugging
-        collisionLayer.setX(xPos - this.getWidth() + (24 * scaleFactor));
+        collisionLayer.setX(xPos - 128 + (24 * scaleFactor));
         collisionLayer.setY(yPos);
 
+        leftBounds.setX(collisionLayer.getX());
+        leftBounds.setY(yPos + 5);
+
+        rightBounds.setX(collisionLayer.getX() + collisionLayer.getWidth() - 5);
+        rightBounds.setY(yPos + 5);
+
+        topBounds.setX(collisionLayer.getX() + 5);
+        topBounds.setY(yPos);
+
+        bottomBounds.setX(collisionLayer.getX() + 5);
+        bottomBounds.setY(collisionLayer.getY() + collisionLayer.getHeight() - 5);
 
         onGround = ((int) (yPos + collisionLayer.getHeight()) >= groundLevel);
 
@@ -188,23 +203,20 @@ public class Player extends Entity {
     }
     public void render(Graphics graphics) throws SlickException {
         if (direction == -1) {
-            playerLeftAnimation.draw(xPos - this.getWidth() + (14* scaleFactor), yPos, 128, 128);
+            playerLeftAnimation.draw(xPos - 128 + (14* scaleFactor), yPos, 128, 128);
         } else if (direction == 1) {
-            playerRightAnimation.draw(xPos - this.getWidth() + (14 * scaleFactor), yPos, 128, 128);
+            playerRightAnimation.draw(xPos - 128 + (14 * scaleFactor), yPos, 128, 128);
         }
         //collision debug
         graphics.setColor(Color.red);
         graphics.setLineWidth(4);
-        graphics.draw(collisionLayer);
+       // graphics.draw(collisionLayer);
+        graphics.fill(leftBounds);
+        graphics.fill(rightBounds);
+        graphics.fill(topBounds);
+        graphics.fill(bottomBounds);
     }
-    public float getWidth() {
-        return playerLeftAnimation.getWidth() * scaleFactor;
 
-    }
-
-    public float getHeight() {
-        return playerLeftAnimation.getHeight() * scaleFactor;
-    }
     public void sprint() {
         if (yPos  == Engine.GAME_HEIGHT - 160 + 64) {
             playerLeftAnimation.setDuration(1, 125);

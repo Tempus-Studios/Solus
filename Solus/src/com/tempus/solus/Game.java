@@ -79,7 +79,6 @@ public class Game extends BasicGameState implements KeyListener{
         currentLevel = new Level();
         player.setYAcc(currentLevel.getYAcc());
         camera = new Camera(96 * 32 * 2, 10 * 32 * 2);
-        xDisplacement = Engine.GAME_WIDTH / 2 - player.getWidth() + (14 * 4);
         loadingFont = null;
         loadingFont2 = null;
         isPaused = false;
@@ -228,7 +227,7 @@ public class Game extends BasicGameState implements KeyListener{
             graphics.setFont(fpsFont);
             graphics.drawString("FPS:" + fps, camera.getX() + Engine.GAME_WIDTH - 80, camera.getY() + Engine.GAME_HEIGHT - 16);
             //graphics.drawString("Time: " + timeElapsed / 1000, Engine.GAME_WIDTH / 2, Engine.GAME_HEIGHT / 2);
-            weaponHandler.getEquippedWeapon().render(graphics, (player.getXPos() - player.getWidth() + (14 * 4)), player.getYPos(), player.getDirection());
+            weaponHandler.getEquippedWeapon().render(graphics, (player.getXPos() - 128 + (14 * 4)), player.getYPos(), player.getDirection());
             player.render(graphics);
         } else {
             if (isPaused) {
@@ -358,14 +357,12 @@ public class Game extends BasicGameState implements KeyListener{
     }
 
     public void checkCollision() {
-        for(int x = 0; x < 96; x++) {
-            for(int y = 0; y < 10; y++) {
-                if(player.getCollisionLayer().intersects(currentLevel.tiles[x][y])) {
-                    if(currentLevel.blocked[x][y]) {
-                        player.setGroundLevel((int) currentLevel.tiles[x][y].getY());
-                    }
-                }
-            }
+        if(player.getLtBounds() < 19 * 64) {
+            player.setGroundLevel(448);
+        }
+        if(player.getRtBounds() > 19 * 64) {
+            //if()
+            player.setGroundLevel(384);
         }
     }
 
