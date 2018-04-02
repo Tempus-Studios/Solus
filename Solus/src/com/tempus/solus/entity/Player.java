@@ -93,11 +93,11 @@ public class Player extends Entity {
         playerLeftAnimation.setAutoUpdate(false);
         playerRightAnimation.setAutoUpdate(false);
         collisionLayer = new Rectangle(xPos + (10 * scaleFactor), yPos, 16 * scaleFactor, 128);
-        rightBounds = new Rectangle(collisionLayer.getX() + collisionLayer.getWidth() - 5, yPos + 5, 5, 128 - 10);
-        leftBounds = new Rectangle(collisionLayer.getX(), yPos + 5, 5, 128 - 10);
+      /*  rightBounds = new Rectangle(collisionLayer.getX() + collisionLayer.getWidth() - 5, yPos + 5, 5, 128 - 20);
+        leftBounds = new Rectangle(collisionLayer.getX(), yPos + 5, 5, 128 - 20);
         topBounds = new Rectangle(collisionLayer.getX() + 5, yPos, 8 * scaleFactor, 5);
         bottomBounds = new Rectangle(collisionLayer.getX() + 5, collisionLayer.getY() + collisionLayer.getHeight() - 5, 8 * scaleFactor, 5);
-
+*/
     }
 
     public void update(int delta) throws SlickException {
@@ -105,17 +105,17 @@ public class Player extends Entity {
         collisionLayer.setX(xPos - 128 + (24 * scaleFactor));
         collisionLayer.setY(yPos);
 
-        leftBounds.setX(collisionLayer.getX());
-        leftBounds.setY(yPos + 5);
+      /*  leftBounds.setX(collisionLayer.getX());
+        leftBounds.setY(yPos + 10);
 
         rightBounds.setX(collisionLayer.getX() + collisionLayer.getWidth() - 5);
-        rightBounds.setY(yPos + 5);
+        rightBounds.setY(yPos + 10);
 
         topBounds.setX(collisionLayer.getX() + 5);
         topBounds.setY(yPos);
 
         bottomBounds.setX(collisionLayer.getX() + 5);
-        bottomBounds.setY(collisionLayer.getY() + collisionLayer.getHeight() - 5);
+        bottomBounds.setY(collisionLayer.getY() + collisionLayer.getHeight() - 5);*/
 
         onGround = ((int) (yPos + collisionLayer.getHeight()) >= groundLevel);
 
@@ -210,11 +210,12 @@ public class Player extends Entity {
         //collision debug
         graphics.setColor(Color.red);
         graphics.setLineWidth(4);
-       // graphics.draw(collisionLayer);
-        graphics.fill(leftBounds);
+        graphics.draw(collisionLayer);
+       /* graphics.fill(leftBounds);
         graphics.fill(rightBounds);
         graphics.fill(topBounds);
         graphics.fill(bottomBounds);
+        */
     }
 
     public void sprint() {
@@ -238,6 +239,9 @@ public class Player extends Entity {
         if(onGround) {
             sprintEnergy -= 15;
         }
+    }
+    public void setX(float x) {
+        xPos = x - (10* scaleFactor);
     }
 
 }

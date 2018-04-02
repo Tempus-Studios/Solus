@@ -9,7 +9,7 @@ import java.util.logging.Logger;
 public abstract class Entity {
     private static final Logger logger = Logger.getLogger(Solus.class.getName());
     protected Rectangle collisionLayer;
-    protected Rectangle leftBounds, rightBounds, topBounds, bottomBounds;
+    //protected Rectangle leftBounds, rightBounds, topBounds, bottomBounds;
     protected int scaleFactor = 1;
     protected boolean isAlive;
     protected boolean isRendered = false;
@@ -125,7 +125,7 @@ public abstract class Entity {
         return groundLevel;
     }
 
-    public Rectangle getTopBounds() {
+  /*  public Rectangle getTopBounds() {
         return topBounds;
     }
     public Rectangle getBottomBounds() {
@@ -136,5 +136,5 @@ public abstract class Entity {
     }
     public Rectangle getRightBounds() {
         return rightBounds;
-    }
+    }*/
 }

@@ -356,14 +356,4 @@ public class Game extends BasicGameState implements KeyListener{
         }
     }
 
-    public void checkCollision() {
-        if(player.getLtBounds() < 19 * 64) {
-            player.setGroundLevel(448);
-        }
-        if(player.getRtBounds() > 19 * 64) {
-            //if()
-            player.setGroundLevel(384);
-        }
-    }
-
 }
