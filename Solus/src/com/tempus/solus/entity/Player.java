@@ -16,6 +16,8 @@ import java.util.logging.SimpleFormatter;
 
 public class Player extends Entity {
     private static final Logger logger = Logger.getLogger(Player.class.getName());
+    public static final int LEFT = -1;
+    public static final int RIGHT = 1;
     private SpriteSheet playerLeftSheet;
     private SpriteSheet playerRightSheet;
     private Animation playerLeftAnimation;
@@ -25,6 +27,7 @@ public class Player extends Entity {
     private float sprintEnergy;
     private float sprintEnergyVel;
     private float sprintMultiplier;
+    private Weapon gun1, gun2;
 
     public Player() {
         logger.setUseParentHandlers(false);
@@ -93,6 +96,8 @@ public class Player extends Entity {
         playerLeftAnimation.setAutoUpdate(false);
         playerRightAnimation.setAutoUpdate(false);
         collisionLayer = new Rectangle(xPos + (10 * scaleFactor), yPos, 16 * scaleFactor, 128);
+        gun1 = new Weapon(Weapon.INFIO, 150, 15, false);
+        gun2 = new Weapon(Weapon.ASR15, 125, 20, true);
       /*  rightBounds = new Rectangle(collisionLayer.getX() + collisionLayer.getWidth() - 5, yPos + 5, 5, 128 - 20);
         leftBounds = new Rectangle(collisionLayer.getX(), yPos + 5, 5, 128 - 20);
         topBounds = new Rectangle(collisionLayer.getX() + 5, yPos, 8 * scaleFactor, 5);
@@ -104,6 +109,8 @@ public class Player extends Entity {
         //collision debugging
         collisionLayer.setX(xPos - 128 + (24 * scaleFactor));
         collisionLayer.setY(yPos);
+
+        gun1.update(delta);
 
       /*  leftBounds.setX(collisionLayer.getX());
         leftBounds.setY(yPos + 10);
@@ -207,6 +214,7 @@ public class Player extends Entity {
         } else if (direction == 1) {
             playerRightAnimation.draw(xPos - 128 + (14 * scaleFactor), yPos, 128, 128);
         }
+        gun1.render(graphics, (int) xPos, (int) yPos, direction);
         //collision debug
         graphics.setColor(Color.red);
         graphics.setLineWidth(4);

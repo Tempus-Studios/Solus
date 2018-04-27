@@ -33,7 +33,7 @@ public class Game extends BasicGameState implements KeyListener{
     private Engine engine;
     private Player player;
     private Entity tank;
-    private WeaponHandler weaponHandler;
+   // private WeaponHandler weaponHandler;
     private Image healthIcon;
     private Image sprintIcon;
     private Image ammoIcon;
@@ -90,7 +90,7 @@ public class Game extends BasicGameState implements KeyListener{
         kRight = false;
 
         enemyPos = Engine.GAME_WIDTH - 192;
-        weaponHandler = new WeaponHandler();
+       // weaponHandler = new WeaponHandler();
         try {
             InputStream inputStream = ResourceLoader.getResourceAsStream("/res/PressStart2P.ttf");
             loadingFont = Font.createFont(Font.TRUETYPE_FONT, inputStream);
@@ -227,7 +227,7 @@ public class Game extends BasicGameState implements KeyListener{
             graphics.setFont(fpsFont);
             graphics.drawString("FPS:" + fps, camera.getX() + Engine.GAME_WIDTH - 80, camera.getY() + Engine.GAME_HEIGHT - 16);
             //graphics.drawString("Time: " + timeElapsed / 1000, Engine.GAME_WIDTH / 2, Engine.GAME_HEIGHT / 2);
-            weaponHandler.getEquippedWeapon().render(graphics, (player.getXPos() - 128 + (14 * 4)), player.getYPos(), player.getDirection());
+           // weaponHandler.getEquippedWeapon().render(graphics, (player.getXPos() - 128 + (14 * 4)), player.getYPos(), player.getDirection());
             player.render(graphics);
         } else {
             if (isPaused) {
@@ -252,7 +252,7 @@ public class Game extends BasicGameState implements KeyListener{
         switch (code) {
             case Input.KEY_LEFT: {
 
-                    weaponHandler.getEquippedWeapon().setDirection(-1);
+                   // weaponHandler.getEquippedWeapon().setDirection(-1);
                     player.setMoving(true);
                     kLeft = true;
                     player.setDirection(-1);
@@ -261,7 +261,7 @@ public class Game extends BasicGameState implements KeyListener{
             }
             case Input.KEY_RIGHT: {
 
-                    weaponHandler.getEquippedWeapon().setDirection(1);
+                //    weaponHandler.getEquippedWeapon().setDirection(1);
                     player.setMoving(true);
                     kRight = true;
                     player.setDirection(1);
@@ -280,7 +280,7 @@ public class Game extends BasicGameState implements KeyListener{
             }
             case Input.KEY_SPACE: {
                 player.setSprintRequested(false);
-                weaponHandler.getEquippedWeapon().update(delta);
+             //   weaponHandler.getEquippedWeapon().update(delta);
                 break;
             }
             case Input.KEY_ESCAPE: {
@@ -298,19 +298,19 @@ public class Game extends BasicGameState implements KeyListener{
                 break;
             }
             case Input.KEY_1: {
-                weaponHandler.setWeapon(weaponHandler.getWeaponAt(0));
+                //weaponHandler.setWeapon(weaponHandler.getWeaponAt(0));
                 break;
             }
             case Input.KEY_2: {
-                weaponHandler.setWeapon(weaponHandler.getWeaponAt(1));
+                //weaponHandler.setWeapon(weaponHandler.getWeaponAt(1));
                 break;
             }
             case Input.KEY_Q: {
-                weaponHandler.cycleWeapon(-1, weaponHandler.getCurrentWeaponIndex());
+                //weaponHandler.cycleWeapon(-1, weaponHandler.getCurrentWeaponIndex());
                 break;
             }
             case Input.KEY_E: {
-                weaponHandler.cycleWeapon(1, weaponHandler.getCurrentWeaponIndex());
+                //weaponHandler.cycleWeapon(1, weaponHandler.getCurrentWeaponIndex());
                 break;
             }
             default: {
@@ -342,7 +342,7 @@ public class Game extends BasicGameState implements KeyListener{
             break;
             case Input.KEY_SPACE: {
                 isFired = false;
-                weaponHandler.getEquippedWeapon().reset();
+                //weaponHandler.getEquippedWeapon().reset();
 
             }
             break;

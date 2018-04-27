@@ -26,6 +26,7 @@ public class Level {
     private static String levelID;
     private static String levelPath;
     private float yAcc;
+    float gl = 0;
     public Rectangle[][] tiles;
     public boolean[][] blocked;
 
@@ -92,6 +93,7 @@ public class Level {
     }
 
     public void update(int delta) {
+
     }
     public void checkCollision(Rectangle foo) {
         //3 x 4 tile - player occupancy rectangles
